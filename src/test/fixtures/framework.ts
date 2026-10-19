@@ -67,7 +67,20 @@ export const fixtureDatasets: RawDatasets = {
         { slug: "wireframing", label: "Wireframing" },
         { slug: "prototype-creation", label: "Prototype Creation" },
       ],
+      Activities: [{ slug: "user-interviews", label: "User Interviews" }],
+      "Responsible Deliverables": [
+        { slug: "design-system", label: "Design System" },
+      ],
+      "Skills Required For the Duty": [
+        { slug: "visual-design", label: "Visual Design" },
+      ],
+      "Unique Required Tools": [{ slug: "figma", label: "Figma" }],
       "Duty Description": "Shaping the end-to-end experience.",
+      "Why Is This Duty Important to Project Success?":
+        "Because usable design drives adoption.",
+      "What Does It Take for This Duty To Succeed?":
+        "Curiosity and iteration.",
+      "First Step to Learn": "Sketch a simple flow.",
     },
     {
       id: 2,
