@@ -15,10 +15,12 @@ Layering, outer to inner:
   rules and no direct data access.
 - **Components** (`src/components`) and **app frame** (`src/app`) — presentation
   and layout only.
-- **Services / domain** (`src/services`, `src/domain` — added as phases land) —
-  own the decisions: framework-data loading, slug resolution, the job-description
-  matching engine, fit scoring, local persistence. UI calls these; these never
-  import React or touch the DOM.
+- **Services** (`src/services`) — own all browser I/O. `src/services/storage` is
+  the single owner of `localStorage`; `src/services/framework/loader` is the single
+  owner of network fetch. They may touch browser APIs; they never import React.
+- **Domain** (`src/domain`) — pure logic over already-loaded data: slug resolution,
+  coverage, and (later phases) the matching engine and fit scoring. No `fetch`, no
+  `localStorage`, no DOM, no React. Runnable and testable without a browser.
 - **Content** (`src/content`) — single-owner static text such as licensing and
   attribution.
 
@@ -38,17 +40,39 @@ Layering, outer to inner:
 
 - **No business logic in pages or components.** Matching, scoring, and resolution
   belong in a service/domain module that another part of the app could call.
-  (No such logic exists yet; this rule guards Phases 1+.)
 
-- **Local storage goes through one service.** When persistence lands, every read
-  and write of user data goes through a single storage owner, not scattered
-  `localStorage` calls.
+- **`localStorage` has one owner: `src/services/storage`.** Every read and write of
+  user data OR the framework cache goes through it. No other module calls
+  `localStorage`.
+
+  ```ts
+  // ❌ never — localStorage touched outside the storage service
+  localStorage.setItem("profile", JSON.stringify(profile))
+
+  // ✅ always — go through the single owner
+  userStore.set("profile", profile)
+  ```
+
+- **Network fetch has one owner: `src/services/framework/loader`.** No other module
+  calls `fetch`. It is the only gateway to the remote framework data.
+
+- **The domain layer is pure.** `src/domain/**` must not reference `fetch`,
+  `localStorage`, `window`, `document`, or React. If it needs data, it is passed in.
 
 - **The data is read-only.** Never fork or change the framework data's meaning.
-  When the data does not cover something, say so; do not guess.
+  When the data does not cover something, say so; do not guess (`src/domain/coverage`).
+
+## Mechanical gate (live)
+
+The boundary rules above are enforced by `npm run check:architecture`
+(`scripts/check-architecture.mjs`, [ADR-0003](docs/adr/0003-mechanical-architecture-gate.md)):
+domain purity, `localStorage` single-owner, and `fetch` single-owner. It runs in
+CI (`.github/workflows/ci.yml`) alongside the type-check, build, and tests, and
+has a discriminating test (`src/test/architecture-gate.test.ts`) that proves it
+detects planted violations.
 
 ## Pending (tracked, not yet built)
 
-- Mechanical architecture gate (`npm run check:architecture`) and CI wiring.
-- BDD feature index and CI test gate.
-- These become required as soon as Phase 1 adds business logic to review.
+- A formal Gherkin/BDD feature index (current behavior is covered by Vitest unit
+  and component tests; add the BDD layer when the user-facing flows land).
+- Branch protection to make the CI checks merge-blocking.
