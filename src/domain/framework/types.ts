@@ -90,5 +90,12 @@ export const DUTY_FIELD = {
   accountableTasks: "Accountable Tasks",
   consultedTasks: "Consulted Tasks",
   informedTasks: "Informed Tasks",
+  activities: "Activities",
+  responsibleDeliverables: "Responsible Deliverables",
+  skillsRequired: "Skills Required For the Duty",
+  uniqueTools: "Unique Required Tools",
   description: "Duty Description",
+  whyImportant: "Why Is This Duty Important to Project Success?",
+  whatItTakes: "What Does It Take for This Duty To Succeed?",
+  firstStep: "First Step to Learn",
 } as const;

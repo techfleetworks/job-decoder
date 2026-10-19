@@ -11,13 +11,11 @@ import {
   type FrameworkRecord,
 } from "./framework/types";
 import { getPrimaryName, listRecords } from "./framework/resolver";
+import { normalize } from "./text";
 
-/** Lowercase, strip punctuation, collapse whitespace. "UI/UX Designer" -> "ui ux designer". */
+/** Normalize a title for comparison. "UI/UX Designer" -> "ui ux designer". */
 export function normalizeTitle(input: string): string {
-  return input
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+  return normalize(input);
 }
 
 export interface SupportedTitle {
