@@ -26,9 +26,7 @@ authority for every claim the app shows.
 - **Two structural guards:** every returned slug must exist in SPF or it is
   dropped; every quote must occur verbatim in the posting or it is dropped. The
   model can only ever surface SPF items; it cannot invent one.
-- **Zero-AI fallback:** if the LLM is unavailable, deterministic keyword/synonym
-  matching against SPF runs instead (ADR-0007). The product works with no AI at
-  all.
+- **Deterministic matcher runs always, not only as a fallback** ([ADR-0014](0014-receipt-visible-misses-union-matching.md)): keyword/synonym matching against SPF is unioned with the LLM's recognitions on every decode, and is the full result when the LLM is unavailable. The product works with no AI at all.
 
 ## Consequences
 
