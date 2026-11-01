@@ -15,9 +15,13 @@ jobs:
           node-version: "20"
           cache: npm
       - run: npm ci
-      - name: Architecture gate (domain purity + I/O ownership)
+      - name: Architecture gate (tier boundaries + domain purity)
         run: npm run check:architecture
-      - name: Type-check and build
-        run: npm run build
-      - name: Tests
+      - name: Lint
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
+      - name: Unit and component tests
         run: npm run test:run
+      - name: Build
+        run: npm run build

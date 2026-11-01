@@ -11,3 +11,14 @@ coverage
 !.vscode/extensions.json
 .idea
 eval/postings-dataset.csv
+
+# Next.js
+.next/
+out/
+
+# Vercel
+.vercel
+
+# Local env files (never commit secrets; see .env.example)
+.env
+.env*.local
