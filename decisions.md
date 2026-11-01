@@ -6,23 +6,38 @@ rationale for each significant decision lives in `docs/adr/`.
 
 ## Intended shape (MVP #1)
 
-Static single-page app, no backend, all user data on-device. See
-[ADR-0001](docs/adr/0001-static-spa-no-backend-local-only.md).
+**Superseded 2026-10-31: this is now a three-tier app, not client-only.** See
+[ADR-0006](docs/adr/0006-three-tier-architecture.md) (three-tier),
+[ADR-0007](docs/adr/0007-grounded-llm-matching.md) (OpenRouter matching with a
+deterministic fallback), [ADR-0008](docs/adr/0008-framework-data-model-integrity.md)
+(data integrity), [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md)
+(security, resilience, gates), and [ADR-0005](docs/adr/0005-mvp1-scope-job-not-candidate.md)
+(scope). [ADR-0001](docs/adr/0001-static-spa-no-backend-local-only.md) and
+[ADR-0004](docs/adr/0004-on-device-matching-engine.md) are superseded. MVP 1 decodes
+one posting and explains the job, not the candidate (ADR-0005).
 
-Layering, outer to inner:
+Three tiers, each reached only through the tier above it:
 
-- **Pages** (`src/pages`) — one per route. Compose components; hold no business
-  rules and no direct data access.
-- **Components** (`src/components`) and **app frame** (`src/app`) — presentation
-  and layout only.
-- **Services** (`src/services`) — own all browser I/O. `src/services/storage` is
-  the single owner of `localStorage`; `src/services/framework/loader` is the single
-  owner of network fetch. They may touch browser APIs; they never import React.
-- **Domain** (`src/domain`) — pure logic over already-loaded data: slug resolution,
-  coverage, and (later phases) the matching engine and fit scoring. No `fetch`, no
-  `localStorage`, no DOM, no React. Runnable and testable without a browser.
-- **Content** (`src/content`) — single-owner static text such as licensing and
-  attribution.
+- **Tier 1, screens** (Next.js + Material UI, static on Vercel's CDN). Collect the
+  title and posting, show the result, save the scan on the device. Never calls the
+  database, never holds a secret, holds no business rules.
+- **Tier 2, server code** (`/api/decode` and the build step, on Vercel). The only
+  place secrets and business rules live. Holds the OpenRouter key; owns the Hat
+  Check logic; the only tier that talks to Supabase or OpenRouter.
+- **Tier 3, database** (Supabase Postgres). Public framework data only, no user
+  data. Row-level security on; only the server's service-role key writes.
+
+Layers (Fowler), which are about code organization, not where code runs:
+
+- **Presentation** — screens and components. Format and display; no business rules;
+  never talks to the data layer directly.
+- **Domain** — pure business logic over already-loaded data: title resolution,
+  matching, validation, classification, scoring, verdict, resume highlights. No
+  `fetch`, no storage, no DOM, no React. Runnable and testable without a browser.
+- **Data source** — all I/O: the framework snapshot read, the typed (entity, slug)
+  resolver (ADR-0008), the decode route's calls to OpenRouter and Supabase, and the
+  on-device store for saved scans. The domain never reaches past this layer.
+- **Content** — single-owner static text such as licensing and attribution.
 
 ## Standing rules
 

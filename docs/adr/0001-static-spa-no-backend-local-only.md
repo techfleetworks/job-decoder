@@ -1,6 +1,6 @@
 # ADR-0001: Static single-page app, no backend, local-only data
 
-- Status: Accepted
+- Status: **Superseded by [ADR-0006](0006-three-tier-architecture.md) (2026-10-31).** The "no backend, nothing leaves the device" premise no longer holds: Morgan chose an OpenRouter LLM step (ADR-0007) and a three-tier Vercel + Supabase design (ADR-0006). The React/TypeScript/testing choices below still stand; the client-only and privacy premises are replaced. Kept for the record, not erased.
 - Date: 2026-10-18
 - Deciders: Morgan (mdenner@techfleet.org)
 
