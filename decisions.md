@@ -1,101 +1,173 @@
 # Architecture decisions and boundaries
 
-This file is the quick reference for how Job Decoder is built. It records the
-boundaries that reviews (and the architecture gate) check against. Full
-rationale for each significant decision lives in `docs/adr/`.
+This file is the quick reference for how Hat Check (the Job Decoder app) is built.
+It records the boundaries that reviews and the architecture gate check against. The
+full rationale for each decision lives in `docs/adr/`.
 
-## Intended shape (MVP #1)
+## Intended shape (MVP 1)
 
-**Superseded 2026-10-31: this is now a three-tier app, not client-only.** See
-[ADR-0006](docs/adr/0006-three-tier-architecture.md) (three-tier),
-[ADR-0007](docs/adr/0007-grounded-llm-matching.md) (OpenRouter matching with a
-deterministic fallback), [ADR-0008](docs/adr/0008-framework-data-model-integrity.md)
-(data integrity), [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md)
-(security, resilience, gates), and [ADR-0005](docs/adr/0005-mvp1-scope-job-not-candidate.md)
-(scope). [ADR-0001](docs/adr/0001-static-spa-no-backend-local-only.md) and
-[ADR-0004](docs/adr/0004-on-device-matching-engine.md) are superseded. Later
-decisions: [ADR-0010](docs/adr/0010-framework-source-of-truth.md) (the framework is
-the single source of truth, the LLM recognizes wording only),
-[ADR-0011](docs/adr/0011-session-only-state.md) (session-only state, no saved
-history), [ADR-0012](docs/adr/0012-title-maps-to-job-function.md) (a title maps
-directly to a job function, no user disambiguation), and
-[ADR-0013](docs/adr/0013-ui-design-system-and-rules.md) (Material UI, information
-hierarchy, one result part per screen). MVP 1 decodes
-one posting and explains the job, not the candidate (ADR-0005).
+Hat Check decodes one pasted job posting against the Tech Fleet Skills and Practices
+Framework and explains the job, not the candidate
+([ADR-0005](docs/adr/0005-mvp1-scope-job-not-candidate.md)). It is a three-tier app
+([ADR-0006](docs/adr/0006-three-tier-architecture.md)), not the client-only app
+described in the superseded [ADR-0001](docs/adr/0001-static-spa-no-backend-local-only.md)
+and [ADR-0004](docs/adr/0004-on-device-matching-engine.md).
 
 Three tiers, each reached only through the tier above it:
 
-- **Tier 1, screens** (Next.js + Material UI, static on Vercel's CDN). Collect the
-  title and posting, show the result, save the scan on the device. Never calls the
-  database, never holds a secret, holds no business rules.
-- **Tier 2, server code** (`/api/decode` and the build step, on Vercel). The only
-  place secrets and business rules live. Holds the OpenRouter key; owns the Hat
-  Check logic; the only tier that talks to Supabase or OpenRouter.
-- **Tier 3, database** (Supabase Postgres). Public framework data only, no user
-  data. Row-level security on; only the server's service-role key writes.
+- **Tier 1, screens.** Next.js and Material UI, built to static assets served from
+  Vercel's CDN. Collects the title and posting and steps through the result. Never
+  calls the database, never holds a secret, holds no business rules.
+- **Tier 2, server code.** The `/api/decode` route and the build-time snapshot step,
+  running on Vercel. The only place secrets and business rules live. Holds the
+  OpenRouter key, owns the Hat Check decode logic, and is the only tier that talks to
+  Supabase or OpenRouter ([ADR-0007](docs/adr/0007-grounded-llm-matching.md)).
+- **Tier 3, database.** Supabase Postgres, holding the framework data only, no user
+  data. Row-level security is on for every table; only the server's service-role key
+  writes ([ADR-0022](docs/adr/0022-supabase-jsonb-sliced-snapshot.md),
+  [ADR-0008](docs/adr/0008-framework-data-model-integrity.md)).
 
-Layers (Fowler), which are about code organization, not where code runs:
+The browser never connects to Supabase. The framework reaches the browser as a
+read-only snapshot built at deploy time and served from the CDN. This is CQRS: the
+JSONB tables are the write side, the snapshot slices are the read side.
 
-- **Presentation** — screens and components. Format and display; no business rules;
-  never talks to the data layer directly.
-- **Domain** — pure business logic over already-loaded data: title resolution,
-  matching, validation, classification, scoring, verdict, resume highlights. No
-  `fetch`, no storage, no DOM, no React. Runnable and testable without a browser.
-- **Data source** — all I/O: the framework snapshot read, the typed (entity, slug)
-  resolver (ADR-0008), the decode route's calls to OpenRouter and Supabase, and the
-  session store (HTML5 sessionStorage) for the current scan only, no history
-  (ADR-0011). The domain never reaches past this layer.
-- **Content** — single-owner static text such as licensing and attribution.
+Layers (Fowler), about how code is organized, not where it runs:
+
+- **Presentation** (`app/`): screens and components. Format and display only. No
+  business rules. Never reaches the data layer directly.
+- **Domain** (`src/domain/`): pure logic over already-loaded data. Title resolution,
+  matching, roll-up, classification, scoring, verdict, and resume and application
+  prep. No `fetch`, no storage, no DOM, no React, no `request` or `response`. Runs
+  and tests without a browser or a server.
+- **Data source** (`src/data/`): all I/O. Reads the framework snapshot slice and the
+  shared item index, resolves links by the typed (entity, slug) resolver
+  ([ADR-0008](docs/adr/0008-framework-data-model-integrity.md)), calls OpenRouter and
+  Supabase from the server tier only, and holds the current scan in HTML5
+  `sessionStorage` on the client ([ADR-0011](docs/adr/0011-session-only-state.md)).
+  The domain never reaches past this layer.
+- **Content** (`src/content/`): single-owner static text such as licensing and
+  attribution.
 
 ## Standing rules
 
-- **Attribution has one owner.** The CC BY 4.0 credit line lives only in
-  `src/content/licensing.ts`. Anywhere framework data is shown reads it from
-  there; never hand-copy the credit line into a component.
+These are the boundaries. The ones the gate can check are noted; the rest are review
+rules until the gate covers them (see Current state).
+
+- **Session-only state. No device save, no history**
+  ([ADR-0011](docs/adr/0011-session-only-state.md)). The client keeps the current
+  scan in `sessionStorage` for the life of the tab. No `localStorage`, no IndexedDB,
+  no content cookies, no server-side user record.
 
   ```ts
+  // ❌ never — persists across tabs and visits; forbidden
+  localStorage.setItem("lastScan", JSON.stringify(result))
+
+  // ✅ always — current scan only, cleared when the tab closes
+  sessionStore.set("scan", result)
+  ```
+
+- **The browser never holds a secret or touches the database**
+  ([ADR-0006](docs/adr/0006-three-tier-architecture.md),
+  [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md)). Tier-1 code may
+  not import the Supabase client or read a server-only env var. Keys live only in
+  Vercel server env, never in a client bundle, a response, or a log.
+
+  ```ts
+  // ❌ never — secret or DB client in browser code
+  const sb = createClient(url, process.env.SUPABASE_SERVICE_ROLE_KEY)
+
+  // ✅ always — the browser reads a CDN snapshot; only /api/decode reaches Supabase
+  const slice = await loadSnapshotSlice(jobFunctionSlug)
+  ```
+
+- **Business rules live in the domain, reached through tier 2, not in screens or
+  route handlers.** A route handler turns the HTTP request into plain data, calls a
+  domain function, and turns the result back into a response. Matching, roll-up,
+  scoring, and the verdict belong in `src/domain` and are callable without HTTP.
+
+- **The domain is pure.** `src/domain/**` must not reference `fetch`, `localStorage`,
+  `sessionStorage`, `window`, `document`, React, `request`, or `response`. If it
+  needs data, the data is passed in.
+
+- **Resolve every framework link by (entity, slug), never slug alone**
+  ([ADR-0008](docs/adr/0008-framework-data-model-integrity.md)). 183 slugs occur in
+  more than one entity, so a slug by itself is ambiguous. All resolution goes through
+  the typed resolver.
+
+- **The framework is the single source of truth; the AI decides nothing**
+  ([ADR-0010](docs/adr/0010-framework-source-of-truth.md)). Every hat, count, and
+  verdict is computed from the framework. The LLM only recognizes which framework
+  items a posting's wording describes and returns a verbatim quote. A proposal is
+  dropped unless its item exists in the framework and its quote appears in the
+  posting ([ADR-0014](docs/adr/0014-receipt-visible-misses-union-matching.md),
+  [ADR-0025](docs/adr/0025-match-all-items-ai-matches-need-quotes.md)).
+
+- **Attribution has one owner.** The CC BY 4.0 credit line lives only in
+  `src/content/licensing.ts`. Every screen that shows framework data reads it from
+  there.
+
+  ```tsx
   // ❌ never — credit line hand-copied into a component
   <p>The Skills & Practices Framework by Tech Fleet, licensed under CC BY 4.0.</p>
 
   // ✅ always — read the single source
-  <p>{FRAMEWORK_ATTRIBUTION.creditLine}</p>
+  <FrameworkCredit />
   ```
 
-- **No business logic in pages or components.** Matching, scoring, and resolution
-  belong in a service/domain module that another part of the app could call.
+- **The data is read-only.** Never fork or change the framework's meaning. When it
+  does not cover something, say so; do not guess.
 
-- **`localStorage` has one owner: `src/services/storage`.** Every read and write of
-  user data OR the framework cache goes through it. No other module calls
-  `localStorage`.
+- **Colors and type come from the Material UI theme, configured once**
+  ([ADR-0013](docs/adr/0013-ui-design-system-and-rules.md)). No literal color in a
+  component.
 
-  ```ts
-  // ❌ never — localStorage touched outside the storage service
-  localStorage.setItem("profile", JSON.stringify(profile))
+## Resilience and error handling
 
-  // ✅ always — go through the single owner
-  userStore.set("profile", profile)
-  ```
+See [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md).
 
-- **Network fetch has one owner: `src/services/framework/loader`.** No other module
-  calls `fetch`. It is the only gateway to the remote framework data.
+- Every out-of-process call (OpenRouter, Supabase) has a timeout and a budget. The
+  OpenRouter call times out at 8 seconds and is not retried in v1.
+- An OpenRouter failure, timeout, invalid output, or a hit cost cap degrades to the
+  keyword-only result, labeled "basic read." The decode never crashes.
+- Fail closed on cost and data: if the spend or rate check cannot run, deny the LLM
+  call and serve the keyword result. If Supabase is unreachable at build time, the
+  build fails loudly rather than shipping an empty snapshot.
+- Every `catch` recovers, retries, or reports. None is empty.
 
-- **The domain layer is pure.** `src/domain/**` must not reference `fetch`,
-  `localStorage`, `window`, `document`, or React. If it needs data, it is passed in.
+## Mechanical gate
 
-- **The data is read-only.** Never fork or change the framework data's meaning.
-  When the data does not cover something, say so; do not guess (`src/domain/coverage`).
+`npm run check:architecture` (`scripts/check-architecture.mjs`,
+[ADR-0003](docs/adr/0003-mechanical-architecture-gate.md)) enforces the boundaries
+above and runs in CI with a discriminating test that proves it detects planted
+violations ([ADR-0009](docs/adr/0009-security-resilience-quality-gates.md), Part C).
 
-## Mechanical gate (live)
+Rules the gate enforces (target): domain purity; session-only state (no
+`localStorage` or IndexedDB in client code); the browser does not import the Supabase
+client or read a secret; tier-1 holds no business rules; framework links resolve only
+through the typed (entity, slug) resolver; no literal colors in components. Each rule
+fails closed and has a test that goes red when the rule is turned into a no-op.
 
-The boundary rules above are enforced by `npm run check:architecture`
-(`scripts/check-architecture.mjs`, [ADR-0003](docs/adr/0003-mechanical-architecture-gate.md)):
-domain purity, `localStorage` single-owner, and `fetch` single-owner. It runs in
-CI (`.github/workflows/ci.yml`) alongside the type-check, build, and tests, and
-has a discriminating test (`src/test/architecture-gate.test.ts`) that proves it
-detects planted violations.
+## Current state (migration in progress)
+
+The decisions above are the target. The repository still contains the Phase 0 to 2
+client-only React and Vite code (built under the superseded ADR-0001 and ADR-0004)
+and its gate, which enforced the old client-only rules. The three-tier Next.js and
+Material UI app, and the extended tier-aware gate, land in the app-platform work
+(backlog T10). Until then, do not read the old `src/` layout or the old gate rules as
+current; this file and the ADRs are the source of truth for the intended shape.
+
+Built so far: the decisions of record (ADRs 0001 to 0025) and the eval harness
+(`eval/`) that validated the matching approach and will choose the model.
 
 ## Pending (tracked, not yet built)
 
-- A formal Gherkin/BDD feature index (current behavior is covered by Vitest unit
-  and component tests; add the BDD layer when the user-facing flows land).
+- The Next.js and Material UI three-tier app shell and the extended architecture gate
+  (T10).
+- The Supabase data tier and the build-time snapshot pipeline (T11).
+- The decode engine ported from the eval harness into tier 2 (T03 to T09).
+- The screens and the result stepper (T01, T02, T06 to T08) and resume and
+  application prep (T16).
+- The quality gates: a Gherkin BDD feature index wired into CI, coverage and mutation
+  gates, the accessibility gates, the accuracy eval gate (threshold and labels still
+  open), and dependency scanning (T12 to T15).
 - Branch protection to make the CI checks merge-blocking.
