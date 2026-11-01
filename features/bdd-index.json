@@ -1,0 +1,136 @@
+{
+  "scenarios": [
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "A hard-coded color in a component is blocked",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-literal-color"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "low"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "A secret in the server tier is allowed",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-server-secret-ok"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "A server-only secret in client code is blocked",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-secret"
+      ],
+      "categories": [
+        "permission"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "localStorage in client code is blocked",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-session-only"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "The database client in browser code is blocked",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-db-client"
+      ],
+      "categories": [
+        "permission"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/architecture/architecture.feature",
+      "feature": "The architecture gate holds the tier boundaries",
+      "scenario": "The real source tree passes the gate",
+      "domain": "architecture",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "gate-clean"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    }
+  ]
+}
