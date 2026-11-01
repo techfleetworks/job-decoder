@@ -17,6 +17,15 @@
  * "Tier-1 holds no business rules" stays a review rule (judge-arch); it is not
  * reliably checkable by a text scan.
  *
+ * Known limitations (judge-arch review, 2026-11-01):
+ *   - no-literal-color catches hex and rgb/rgba/hsl/hsla, not CSS named colors
+ *     (e.g. "rebeccapurple"). A named-color allowlist is a tracked follow-up; a
+ *     naive check would wrongly flag MUI theme tokens like color="primary".
+ *   - the hex check could match a hex-like anchor href (#abc), not just a color.
+ *   - secret and DB-client detection is import- and process.env-shaped, so a
+ *     dynamic import or a lowercased env name would slip. Layered, not absolute
+ *     (ADR-0009); the client bundle cannot reach a server-only env at runtime.
+ *
  * Usage: `node scripts/check-architecture.mjs [root]` (defaults to the repo root).
  * Scans <root>/app and <root>/src. Exits non-zero on any violation.
  */
