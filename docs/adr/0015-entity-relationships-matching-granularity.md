@@ -17,7 +17,10 @@ alone. It must work at the item level and roll up.
 - **Relationships (from SPF).** One job function has many duties (its standard
   hats). One duty has many activities, skills, deliverables, and tools, each linked
   to the duty in the framework.
-- **Matchable units** are a duty's activities, deliverables, tools, and skills. The
+- **Matchable units** are a duty's activities, deliverables, and tools. (Skills are
+  NOT a direct match target; a skill in the posting routes to its activity, see
+  [ADR-0017](0017-skills-route-to-activities.md). This supersedes the earlier
+  inclusion of skills as a matchable unit here.) The
   app matches the posting's language to these items by exact wording and by
   synonym or similar language (ADR-0010 recognition plus the ADR-0014 keyword
   union). Activities are the primary signal; deliverables, tools, and skills are

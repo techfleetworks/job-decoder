@@ -18,7 +18,8 @@ Matching always runs **posting text → leaf item → duty → job function**, n
 posting text → Duty by the duty's name.
 
 **1. The leaf match.** Match the posting's wording to a framework **activity,
-deliverable, tool, or skill** by exact or similar language (ADR-0010 recognition
+deliverable, or tool** by exact or similar language (a skill in the posting routes
+to its activity instead, [ADR-0017](0017-skills-route-to-activities.md)) (ADR-0010 recognition
 unioned with keyword matching, ADR-0014). Every match is validated against SPF and
 carries its quote.
 
