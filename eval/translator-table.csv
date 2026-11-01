@@ -1,0 +1,301 @@
+term,spf_entity,spf_slug,spf_label,relation,doc_frequency,pct_postings,top_titles,source
+metrics,deliverable,key-performance-indicators-kpis,Key Performance Indicators (KPI's),synonym,282,30.2,Product Manager (85); Project Manager (65); Developer (61),observed
+interviews,activity,interviewing,Interviewing,variant,281,30.1,UX Designer (93); Project Manager (42); Developer (40),observed
+roadmap,deliverable,roadmap,Roadmap,exact,279,29.9,Product Manager (158); Developer (47); Project Manager (34),observed
+analytics,activity,collecting-analytics,Collecting Analytics,synonym,225,24.1,Product Manager (65); Project Manager (42); Developer (42),observed
+product management,duty,product-management,Product Management,exact,211,22.6,Product Manager (147); Product Owner (22); UX Designer (15),observed
+prioritize,activity,identifying-priorities,Identifying Priorities,variant,182,19.5,Product Manager (50); Project Manager (40); UX Designer (27),observed
+product manager,duty,product-management,Product Management,variant,180,19.3,Product Manager (148); Product Owner (20); UX Researcher (4),observed
+product design,duty,ux-user-experience-design,UX (User Experience) Design,synonym,165,17.7,UX Designer (70); Developer (51); Project Manager (14),observed
+project management,duty,project-management,Project Management,exact,159,17.0,Project Manager (101); UX Designer (35); Business Analyst (9),observed
+problem solving,skill,problem-solving,Problem-Solving,exact,137,14.7,Project Manager (43); Developer (24); Business Analyst (24),observed
+figma,tool,figma,Figma,exact,136,14.6,UX Designer (101); Developer (11); Project Manager (9),observed
+python,skill,server-side-scripting-languages,Server-Side Scripting Languages,synonym,128,13.7,Developer (88); Product Manager (12); Business Analyst (11),observed
+sql,skill,database-queries,Database Queries,synonym,118,12.6,Developer (35); Business Analyst (27); Product Manager (22),observed
+prioritization,activity,identifying-priorities,Identifying Priorities,synonym,113,12.1,Product Manager (45); Project Manager (28); Product Owner (21),observed
+experimentation,activity,experiment-design,Experiment Design,synonym,112,12.0,UX Designer (39); Product Manager (37); Developer (27),observed
+prototyping,activity,prototype-creation,Prototype Creation,synonym,111,11.9,UX Designer (62); Product Owner (17); Developer (14),observed
+accessibility,skill,accessibility,Accessibility,exact,109,11.7,Product Manager (38); UX Designer (35); Project Manager (12),observed
+deployment,activity,deploying-code,Deploying Code,synonym,107,11.5,Developer (40); Project Manager (21); Product Manager (18),observed
+program management,duty,project-management,Project Management,synonym,101,10.8,Project Manager (91); Product Manager (6); UX Engineer (2),observed
+visual design,duty,graphic-design,Graphic Design,synonym,97,10.4,UX Designer (93); UX Engineer (2); UX Researcher (2),observed
+software development,duty,development,Development,synonym,94,10.1,Developer (38); Project Manager (19); Product Owner (17),observed
+specifications,activity,writing-requirements,Writing Requirements,synonym,93,10.0,UX Designer (27); Project Manager (17); Business Analyst (17),observed
+prototype,activity,prototype-creation,Prototype Creation,variant,87,9.3,UX Designer (39); Product Manager (22); Developer (15),observed
+interviewing,activity,interviewing,Interviewing,exact,86,9.2,Product Manager (27); Developer (23); Project Manager (19),observed
+mentorship,activity,coaching-team-mates,Coaching Team Mates,synonym,85,9.1,Developer (34); UX Designer (16); Product Manager (13),observed
+design systems,deliverable,design-system,Design System,variant,79,8.5,UX Designer (56); Project Manager (6); UX Engineer (6),observed
+software engineering,duty,development,Development,synonym,76,8.1,Developer (52); Project Manager (11); Product Manager (9),observed
+project manager,duty,project-management,Project Management,variant,76,8.1,Project Manager (56); Product Owner (16); UX Designer (2),observed
+kpis,deliverable,key-performance-indicators-kpis,Key Performance Indicators (KPI's),abbreviation,74,7.9,Project Manager (21); UX Designer (21); Product Manager (17),observed
+stakeholder management,skill,stakeholder-management,Stakeholder Management,exact,73,7.8,Project Manager (43); Product Manager (10); Business Analyst (10),observed
+design system,deliverable,design-system,Design System,exact,72,7.7,UX Designer (56); UX Engineer (8); Project Manager (3),observed
+mentoring,activity,coaching-team-mates,Coaching Team Mates,synonym,71,7.6,Developer (26); UX Designer (22); Product Manager (9),observed
+go-to-market,activity,developing-go-to-market-strategy,Developing Go-To-Market Strategy,synonym,68,7.3,Product Manager (47); Project Manager (13); Developer (3),observed
+prototypes,activity,prototype-creation,Prototype Creation,variant,68,7.3,UX Designer (44); Product Manager (10); UX Engineer (8),observed
+storytelling,skill,storytelling,Storytelling,exact,68,7.3,UX Designer (48); UX Researcher (5); Project Manager (4),observed
+ideation,activity,rapid-ideation,Rapid Ideation,synonym,66,7.1,UX Designer (37); Product Manager (13); Developer (5),observed
+gtm,activity,developing-go-to-market-strategy,Developing Go-To-Market Strategy,abbreviation,64,6.9,Product Manager (36); Project Manager (16); Business Analyst (5),observed
+excel,tool,spreadsheet-tools,Spreadsheet Tools,synonym,64,6.9,Project Manager (22); Developer (13); Product Manager (11),observed
+typography,skill,typography,Typography,exact,62,6.6,UX Designer (61); UX Engineer (1),observed
+customer success,duty,account-management,Account Management,synonym,56,6.0,Product Manager (20); Project Manager (17); Developer (11),observed
+use cases,deliverable,use-case-scenarios,Use Case Scenarios,variant,53,5.7,Product Manager (25); Business Analyst (8); Developer (8),observed
+pricing,activity,price-testing,Price Testing,synonym,51,5.5,Product Manager (27); Developer (7); Project Manager (7),observed
+brainstorming,activity,rapid-ideation,Rapid Ideation,synonym,48,5.1,UX Designer (32); Developer (11); Product Manager (3),observed
+interaction design,skill,interaction-design,Interaction Design,exact,47,5.0,UX Designer (41); UX Engineer (4); Developer (1),observed
+scrum,skill,scrum-management,Scrum Management,synonym,46,4.9,Project Manager (24); Business Analyst (13); Product Owner (5),observed
+risk management,activity,analyzing-project-risk,Analyzing Project Risk,synonym,42,4.5,Project Manager (31); Business Analyst (5); Product Manager (4),observed
+data analysis,skill,data-analysis,Data Analysis,exact,42,4.5,Business Analyst (17); Product Manager (8); Project Manager (7),observed
+product analytics,activity,collecting-analytics,Collecting Analytics,synonym,39,4.2,Product Owner (18); Product Manager (10); Product Analyst (6),observed
+zoom,tool,zoom,Zoom,exact,39,4.2,Developer (16); Product Manager (11); Project Manager (5),observed
+presentations,activity,creating-presentations,Creating Presentations,variant,37,4.0,Project Manager (13); UX Designer (11); Business Analyst (10),observed
+javascript,skill,web-scripting-languages,Web Scripting Languages,synonym,37,4.0,Developer (27); UX Designer (5); UX Engineer (3),observed
+ui design,duty,ux-user-experience-design,UX (User Experience) Design,synonym,36,3.9,UX Designer (31); Project Manager (3); Developer (2),observed
+product ownership,duty,product-ownership,Product Ownership,exact,35,3.7,Product Owner (18); Product Manager (12); Product Analyst (5),observed
+prioritizing,activity,identifying-priorities,Identifying Priorities,variant,34,3.6,Product Manager (15); Developer (7); Project Manager (5),observed
+intake,activity,kickoff-intake,Kickoff / Intake,variant,34,3.6,Project Manager (20); Business Analyst (5); Developer (4),observed
+user research,duty,ux-user-experience-research,UX (User Experience) Research,synonym,34,3.6,UX Designer (18); Product Manager (9); UX Researcher (5),observed
+product owner,duty,product-ownership,Product Ownership,variant,33,3.5,Product Owner (24); Business Analyst (6); Developer (1),observed
+ux/ui design,duty,ux-user-experience-design,UX (User Experience) Design,synonym,33,3.5,UX Designer (30); Project Manager (3),observed
+user stories,activity,user-story-generation,User Story Generation,synonym,32,3.4,Business Analyst (15); Product Manager (7); Product Owner (6),observed
+product roadmap,activity,product-roadmap-maintenance,Product Roadmap Maintenance,synonym,31,3.3,Product Manager (20); Developer (5); Product Owner (3),observed
+product roadmap,deliverable,roadmap,Roadmap,variant,31,3.3,Product Manager (20); Developer (5); Product Owner (3),observed
+business analyst,duty,business-analysis,Business Analysis,variant,31,3.3,Business Analyst (26); Product Manager (2); Project Manager (2),observed
+ci/cd,activity,deploying-code,Deploying Code,synonym,30,3.2,Developer (13); Project Manager (9); Product Manager (6),observed
+copywriting,activity,copywriting,Copywriting,exact,26,2.8,UX Designer (26),observed
+specs,activity,writing-requirements,Writing Requirements,synonym,26,2.8,UX Designer (8); Product Manager (8); Business Analyst (4),observed
+html,skill,web-scripting-languages,Web Scripting Languages,synonym,26,2.8,UX Designer (17); Developer (5); UX Engineer (3),observed
+css,skill,web-scripting-languages,Web Scripting Languages,synonym,26,2.8,UX Designer (17); Developer (5); UX Engineer (3),observed
+acceptance criteria,activity,creating-acceptance-criteria,Creating Acceptance Criteria,synonym,25,2.7,Business Analyst (11); Product Manager (5); Project Manager (4),observed
+instrumentation,activity,collecting-analytics,Collecting Analytics,synonym,24,2.6,Developer (10); Product Manager (9); Project Manager (4),observed
+cybersecurity,duty,information-security-analysis,Information Security Analysis,synonym,24,2.6,Project Manager (10); Product Analyst (5); Business Analyst (4),observed
+quality assurance,duty,qa-analysis,QA Analysis,synonym,24,2.6,Project Manager (11); UX Designer (6); Business Analyst (4),observed
+a/b testing,activity,a-b-prototype-test-creation,A/B Prototype Test Creation,synonym,23,2.5,Developer (9); UX Designer (6); Product Manager (3),observed
+business analysis,duty,business-analysis,Business Analysis,exact,23,2.5,Business Analyst (19); Project Manager (4),observed
+graphic design,duty,graphic-design,Graphic Design,exact,23,2.5,UX Designer (22); Project Manager (1),observed
+usability testing,activity,usability-testing,Usability Testing,exact,22,2.4,UX Designer (17); UX Researcher (5),observed
+uat,activity,user-acceptance-testing,User Acceptance Testing,abbreviation,22,2.4,Business Analyst (10); Project Manager (6); Product Manager (2),observed
+acceptance testing,activity,user-acceptance-testing,User Acceptance Testing,variant,22,2.4,Business Analyst (13); Project Manager (6); UX Designer (1),observed
+personas,deliverable,user-personas,User Personas,variant,22,2.4,Product Manager (10); UX Designer (6); Project Manager (3),observed
+ux design,duty,ux-user-experience-design,UX (User Experience) Design,synonym,22,2.4,UX Designer (15); Product Manager (5); UX Engineer (1),observed
+requirements gathering,activity,requirements-gathering,Requirements Gathering,exact,21,2.2,Business Analyst (12); Project Manager (6); Product Manager (1),observed
+user acceptance testing,activity,user-acceptance-testing,User Acceptance Testing,exact,21,2.2,Business Analyst (13); Project Manager (5); UX Designer (1),observed
+data modeling,activity,entity-relationship-creation,Entity Relationship Creation,synonym,20,2.1,Developer (13); Business Analyst (3); Product Manager (2),observed
+data visualization,skill,information-visualization,Information Visualization,synonym,20,2.1,Business Analyst (7); UX Designer (6); Developer (5),observed
+wireframes,activity,wireframing,Wireframing,variant,19,2.0,UX Designer (16); Business Analyst (3),observed
+okrs,deliverable,objectives-and-key-results-okrs,Objectives and Key Results (OKR's),abbreviation,19,2.0,Project Manager (9); Product Analyst (5); Product Manager (4),observed
+design thinking,skill,design-thinking,Design Thinking,exact,19,2.0,UX Designer (10); Project Manager (5); UX Engineer (2),observed
+strategic thinking,skill,strategic-thinking,Strategic Thinking,exact,19,2.0,UX Designer (9); Project Manager (7); Product Manager (2),observed
+segmentation,activity,customer-segmentation,Customer Segmentation,variant,18,1.9,UX Engineer (8); Product Manager (3); Project Manager (3),observed
+surveys,activity,surveys,Surveys,exact,17,1.8,UX Researcher (5); Product Manager (4); UX Designer (3),observed
+key performance indicators,deliverable,key-performance-indicators-kpis,Key Performance Indicators (KPI's),synonym,17,1.8,Project Manager (6); Product Manager (5); Product Analyst (5),observed
+information architecture,activity,developing-information-architecture,Developing Information Architecture,synonym,16,1.7,UX Designer (10); Product Manager (2); UX Researcher (2),observed
+retrospectives,activity,sprint-retrospective-facilitation,Sprint Retrospective Facilitation,synonym,16,1.7,Project Manager (9); Developer (5); Product Manager (1),observed
+risk assessment,deliverable,risk-analysis,Risk Analysis,synonym,16,1.7,Project Manager (13); Business Analyst (1); Product Owner (1),observed
+sow,deliverable,statement-of-work,Statement of Work,abbreviation,16,1.7,UX Designer (8); Project Manager (6); UX Engineer (2),observed
+scrum master,duty,scrum-master,Scrum Master,exact,16,1.7,Project Manager (13); Business Analyst (3),observed
+critical thinking,skill,critical-thinking,Critical Thinking,exact,16,1.7,Business Analyst (8); UX Designer (4); Project Manager (2),observed
+chatgpt,tool,chatgpt,ChatGPT,exact,16,1.7,Project Manager (5); Product Manager (4); UX Designer (3),observed
+github,tool,github,GitHub,exact,16,1.7,Developer (8); Product Manager (3); UX Designer (2),observed
+technical specifications,deliverable,technical-architecture-specifications,Technical Architecture Specifications,synonym,15,1.6,Business Analyst (6); Project Manager (4); UX Engineer (2),observed
+account management,duty,account-management,Account Management,exact,15,1.6,Developer (6); Product Manager (4); Project Manager (2),observed
+information security,duty,information-security-analysis,Information Security Analysis,synonym,15,1.6,Project Manager (7); Business Analyst (5); UX Engineer (2),observed
+design research,duty,ux-user-experience-research,UX (User Experience) Research,synonym,15,1.6,Product Manager (5); UX Designer (5); Project Manager (2),observed
+prompt engineering,activity,creating-ai-prompts,Creating AI Prompts,synonym,14,1.5,UX Designer (6); Developer (3); UX Researcher (2),observed
+wcag,deliverable,accessibility-analysis,Accessibility Analysis,synonym,14,1.5,UX Designer (9); Project Manager (4); UX Engineer (1),observed
+product operations,duty,product-operations,Product Operations,exact,14,1.5,Project Manager (6); Product Analyst (5); Developer (1),observed
+content design,duty,ux-user-experience-writing,UX (User Experience) Writing,synonym,14,1.5,UX Designer (14),observed
+google sheets,tool,spreadsheet-tools,Spreadsheet Tools,synonym,14,1.5,Project Manager (9); Business Analyst (4); Product Analyst (1),observed
+automated testing,activity,autotest-creation,Autotest Creation,synonym,13,1.4,Developer (11); Project Manager (2),observed
+interactive prototypes,activity,clickable-prototype-creation,Clickable Prototype Creation,synonym,13,1.4,UX Designer (12); Product Owner (1),observed
+design operations,activity,defining-ux-design-operations,Defining UX Design Operations,synonym,13,1.4,Product Manager (7); UX Designer (4); Project Manager (2),observed
+sprint planning,activity,sprint-planning,Sprint Planning,exact,13,1.4,Project Manager (6); Business Analyst (3); Product Manager (2),observed
+ux research,duty,ux-user-experience-research,UX (User Experience) Research,synonym,13,1.4,UX Researcher (10); UX Designer (2); Product Owner (1),observed
+problem statements,activity,generating-problem-statements,Generating Problem Statements,variant,11,1.2,Project Manager (5); Product Manager (4); UX Designer (2),observed
+problem framing,activity,generating-problem-statements,Generating Problem Statements,synonym,11,1.2,UX Designer (6); Project Manager (2); Product Manager (1),observed
+user flows,deliverable,task-flows,Task Flows,synonym,11,1.2,UX Designer (10); Product Manager (1),observed
+powerpoint,tool,presentation-tools,Presentation Tools,synonym,11,1.2,Business Analyst (5); UX Designer (3); Project Manager (3),observed
+ia,activity,developing-information-architecture,Developing Information Architecture,abbreviation,10,1.1,Project Manager (4); UX Designer (4); Business Analyst (1),observed
+market research,activity,market-research,Market Research,exact,10,1.1,Product Manager (9); Project Manager (1),observed
+data architecture,deliverable,database-architecture,Database Architecture,synonym,10,1.1,Product Manager (3); Project Manager (3); UX Designer (2),observed
+epics,deliverable,epics-and-features,Epics and Features,variant,10,1.1,Product Manager (5); Product Owner (3); Project Manager (1),observed
+requirements management,skill,requirements-management,Requirements Management,exact,10,1.1,Business Analyst (6); Project Manager (4),observed
+front-end development,activity,front-end-coding,Front-End Coding,synonym,9,1.0,UX Designer (7); UX Engineer (1); Project Manager (1),observed
+seo,activity,search-engine-optimization-seo-design,Search Engine Optimization (SEO) Design,abbreviation,9,1.0,Developer (5); UX Designer (2); UX Engineer (1),observed
+test cases,deliverable,qa-test-cases,QA Test Cases,synonym,9,1.0,Business Analyst (7); Developer (1); Product Manager (1),observed
+release management,skill,release-management,Release Management,exact,9,1.0,Product Manager (4); Project Manager (3); Product Analyst (1),observed
+estimation,activity,level-of-effort-estimation,Level of Effort Estimation,synonym,8,0.9,Project Manager (5); Business Analyst (2); Product Owner (1),observed
+backlog refinement,activity,requirements-refinement,Requirements Refinement,synonym,8,0.9,Project Manager (4); Product Owner (2); Product Manager (1),observed
+backend development,activity,server-side-coding,Server-Side Coding,synonym,8,0.9,Developer (8),observed
+mockups,deliverable,high-fidelity-prototypes,High-Fidelity Prototypes,synonym,8,0.9,UX Designer (7); Developer (1),observed
+statement of work,deliverable,statement-of-work,Statement of Work,exact,8,0.9,UX Designer (8),observed
+research operations,activity,defining-research-operations,Defining Research Operations,synonym,7,0.7,UX Researcher (4); Project Manager (2); Business Analyst (1),observed
+product positioning,activity,product-positioning,Product Positioning,exact,7,0.7,Product Manager (7),observed
+server-side,activity,server-side-coding,Server-Side Coding,variant,7,0.7,Developer (6); UX Engineer (1),observed
+user personas,deliverable,user-personas,User Personas,exact,7,0.7,Product Manager (4); UX Researcher (1); UX Designer (1),observed
+content strategy,duty,ux-user-experience-writing,UX (User Experience) Writing,synonym,7,0.7,UX Designer (3); Business Analyst (3); Product Owner (1),observed
+responsive design,skill,responsive-design,Responsive Design,exact,7,0.7,UX Designer (7),observed
+research synthesis,activity,analyzing-research-findings,Analyzing Research Findings,synonym,6,0.6,UX Designer (3); Product Manager (1); Product Owner (1),observed
+experiment design,activity,experiment-design,Experiment Design,exact,6,0.6,Developer (3); Product Manager (3),observed
+user interviews,activity,interviewing,Interviewing,synonym,6,0.6,UX Designer (3); UX Researcher (2); Product Manager (1),observed
+stakeholder interviews,activity,interviewing,Interviewing,synonym,6,0.6,Business Analyst (3); Project Manager (3),observed
+kickoff,activity,kickoff-intake,Kickoff / Intake,variant,6,0.6,Project Manager (6),observed
+technical architecture,activity,technical-architecture-creation,Technical Architecture Creation,synonym,6,0.6,Project Manager (3); UX Designer (2); UX Engineer (1),observed
+design tokens,deliverable,design-system,Design System,synonym,6,0.6,UX Engineer (3); UX Designer (3),observed
+value proposition,deliverable,unique-value-proposition,Unique Value Proposition,synonym,6,0.6,Developer (3); Product Manager (2); Project Manager (1),observed
+notion,tool,notion,Notion,exact,6,0.6,Project Manager (5); UX Designer (1),observed
+journey mapping,activity,customer-experience-mapping,Customer Experience Mapping,synonym,5,0.5,UX Designer (3); UX Researcher (1); Business Analyst (1),observed
+ui components,activity,design-component-creation,Design Component Creation,synonym,5,0.5,Developer (4); UX Designer (1),observed
+competitive analysis,activity,investigating-competitors,Investigating Competitors,synonym,5,0.5,Product Manager (4); Project Manager (1),observed
+accessibility testing,activity,measuring-accessibility,Measuring Accessibility,synonym,5,0.5,Project Manager (4); Developer (1),observed
+roadmapping,activity,product-roadmap-maintenance,Product Roadmap Maintenance,synonym,5,0.5,Project Manager (4); Product Manager (1),observed
+qa testing,activity,qa-testing,QA Testing,synonym,5,0.5,Project Manager (4); Business Analyst (1),observed
+backlog grooming,activity,requirements-refinement,Requirements Refinement,synonym,5,0.5,Project Manager (3); Product Manager (1); Business Analyst (1),observed
+writing user stories,activity,user-story-generation,User Story Generation,synonym,5,0.5,Business Analyst (3); Project Manager (1); Product Owner (1),observed
+component library,deliverable,component-library,Component Library,exact,5,0.5,UX Engineer (3); UX Designer (2),observed
+high-fidelity mockups,deliverable,high-fidelity-prototypes,High-Fidelity Prototypes,synonym,5,0.5,UX Designer (5),observed
+objectives and key results,deliverable,objectives-and-key-results-okrs,Objectives and Key Results (OKR's),synonym,5,0.5,Product Analyst (5),observed
+research findings,deliverable,research-report,Research Report,synonym,5,0.5,UX Designer (3); UX Researcher (2),observed
+web development,duty,development,Development,synonym,5,0.5,Developer (2); UX Designer (2); Project Manager (1),observed
+ux strategy,duty,ux-user-experience-strategy,UX (User Experience) Strategy,synonym,5,0.5,UX Designer (3); UX Researcher (1); UX Engineer (1),observed
+public speaking,skill,public-speaking,Public Speaking,exact,5,0.5,UX Designer (3); Developer (2),observed
+statistical analysis,activity,calculating-statistics,Calculating Statistics,synonym,4,0.4,Developer (3); UX Researcher (1),observed
+illustration,activity,creating-illustrations,Creating Illustrations,variant,4,0.4,UX Designer (2); UX Engineer (1); Business Analyst (1),observed
+rest apis,activity,creating-rest-apis,Creating REST APIs,synonym,4,0.4,Developer (2); Business Analyst (2),observed
+backlog management,activity,product-backlog-maintenance,Product Backlog Maintenance,synonym,4,0.4,Business Analyst (2); Product Owner (2),observed
+gathering requirements,activity,requirements-gathering,Requirements Gathering,variant,4,0.4,Project Manager (2); Business Analyst (2),observed
+storyboarding,activity,storyboarding,Storyboarding,exact,4,0.4,UX Designer (4),observed
+product-market fit,deliverable,product-market-fit-analysis,Product-Market Fit Analysis,synonym,4,0.4,Developer (3); Product Manager (1),observed
+project plan,deliverable,project-plan,Project Plan,exact,4,0.4,Project Manager (3); Business Analyst (1),observed
+taxonomy,deliverable,taxonomy,Taxonomy,exact,4,0.4,Developer (3); Business Analyst (1),observed
+software architecture,duty,solutions-architecture,Solutions Architecture,synonym,4,0.4,Developer (1); Project Manager (1); Product Manager (1),observed
+user experience design,duty,ux-user-experience-design,UX (User Experience) Design,synonym,4,0.4,UX Designer (3); UX Engineer (1),observed
+ux writing,duty,ux-user-experience-writing,UX (User Experience) Writing,synonym,4,0.4,UX Designer (4),observed
+backlog management,skill,backlog-management,Backlog Management,exact,4,0.4,Business Analyst (2); Product Owner (2),observed
+contextual inquiry,activity,contextual-inquiries,Contextual Inquiries,variant,3,0.3,UX Researcher (2); UX Designer (1),observed
+facilitating workshops,activity,facilitating-agile-workshops,Facilitating Agile Workshops,synonym,3,0.3,Project Manager (2); UX Designer (1),observed
+penetration testing,activity,penetration-testing,Penetration Testing,exact,3,0.3,Project Manager (2); Developer (1),observed
+concept testing,activity,prototype-concept-testing,Prototype Concept Testing ,synonym,3,0.3,UX Researcher (3),observed
+threat modeling,activity,threat-modeling,Threat Modeling,exact,3,0.3,Project Manager (2); Developer (1),observed
+high fidelity designs,deliverable,high-fidelity-prototypes,High-Fidelity Prototypes,synonym,3,0.3,UX Designer (2); UX Engineer (1),observed
+synthesizing research,activity,analyzing-research-findings,Analyzing Research Findings,synonym,2,0.2,Product Manager (2),observed
+redlines,activity,creating-annotations,Creating Annotations,synonym,2,0.2,UX Designer (2),observed
+customer journey mapping,activity,customer-experience-mapping,Customer Experience Mapping,synonym,2,0.2,UX Researcher (1); Business Analyst (1),observed
+database design,activity,database-creation,Database Creation,synonym,2,0.2,UX Designer (2),observed
+design components,activity,design-component-creation,Design Component Creation,variant,2,0.2,UX Designer (2),observed
+frontend development,activity,front-end-coding,Front-End Coding,synonym,2,0.2,Developer (1); UX Designer (1),observed
+requirements elicitation,activity,requirements-gathering,Requirements Gathering,synonym,2,0.2,Business Analyst (2),observed
+back-end development,activity,server-side-coding,Server-Side Coding,synonym,2,0.2,Developer (2),observed
+documenting requirements,activity,writing-requirements,Writing Requirements,synonym,2,0.2,Product Manager (1); Business Analyst (1),observed
+raci,deliverable,raci-charts,RACI Charts,abbreviation,2,0.2,Project Manager (2),observed
+design specs,deliverable,ui-development-specifications,UI Development Specifications,synonym,2,0.2,UX Designer (2),observed
+agile coaching,duty,agile-coaching,Agile Coaching,exact,2,0.2,Project Manager (2),observed
+solutions architecture,duty,solutions-architecture,Solutions Architecture,exact,2,0.2,Product Manager (2),observed
+user experience research,duty,ux-user-experience-research,UX (User Experience) Research,synonym,2,0.2,UX Designer (2),observed
+dovetail,tool,dovetail,Dovetail,exact,2,0.2,Project Manager (2),observed
+figjam,tool,figjam,Figjam,exact,2,0.2,Business Analyst (1); UX Designer (1),observed
+multivariate testing,activity,a-b-prototype-test-creation,A/B Prototype Test Creation,synonym,1,0.1,Product Manager (1),observed
+risk analysis,activity,analyzing-project-risk,Analyzing Project Risk,synonym,1,0.1,Project Manager (1),observed
+test automation,activity,autotest-creation,Autotest Creation,synonym,1,0.1,Developer (1),observed
+api development,activity,creating-rest-apis,Creating REST APIs,synonym,1,0.1,Product Manager (1),observed
+building apis,activity,creating-rest-apis,Creating REST APIs,synonym,1,0.1,Developer (1),observed
+workshop facilitation,activity,facilitating-agile-workshops,Facilitating Agile Workshops,synonym,1,0.1,UX Researcher (1),observed
+ethnography,activity,observing-ethnography,Observing (Ethnography),synonym,1,0.1,UX Researcher (1),observed
+field studies,activity,observing-ethnography,Observing (Ethnography),synonym,1,0.1,UX Researcher (1),observed
+ui kit,activity,ui-kit-creation,UI Kit Creation,variant,1,0.1,UX Designer (1),observed
+usability studies,activity,usability-testing,Usability Testing,variant,1,0.1,UX Researcher (1),observed
+user testing,activity,usability-testing,Usability Testing,synonym,1,0.1,Project Manager (1),observed
+heuristic evaluation,activity,ux-heuristics-analysis,UX Heuristics Analysis,synonym,1,0.1,UX Designer (1),observed
+wireframing,activity,wireframing,Wireframing,exact,1,0.1,UX Designer (1),observed
+wireframe,activity,wireframing,Wireframing,variant,1,0.1,UX Designer (1),observed
+prd,activity,writing-requirements,Writing Requirements,abbreviation,1,0.1,Product Owner (1),observed
+content inventory,deliverable,content-inventory,Content Inventory,exact,1,0.1,Business Analyst (1),observed
+high-fidelity ui,deliverable,high-fidelity-prototypes,High-Fidelity Prototypes,synonym,1,0.1,UX Designer (1),observed
+production screens,deliverable,high-fidelity-prototypes,High-Fidelity Prototypes,synonym,1,0.1,UX Designer (1),observed
+brand assets,deliverable,logo-and-brand-assets,Logo and Brand Assets,synonym,1,0.1,UX Designer (1),observed
+low fidelity prototypes,deliverable,low-fidelity-prototypes,Low-Fidelity Prototypes,exact,1,0.1,UX Designer (1),observed
+sketches,deliverable,sketches,Sketches,exact,1,0.1,UX Designer (1),observed
+sprint goals,deliverable,sprint-goals,Sprint Goals,exact,1,0.1,Project Manager (1),observed
+task flows,deliverable,task-flows,Task Flows,exact,1,0.1,UX Designer (1),observed
+developer handoff,deliverable,ui-development-specifications,UI Development Specifications,synonym,1,0.1,UX Designer (1),observed
+journey map,deliverable,user-journey-map,User Journey Map,synonym,1,0.1,Product Manager (1),observed
+requirements analysis,duty,business-analysis,Business Analysis,synonym,1,0.1,Business Analyst (1),observed
+backlog ownership,duty,product-ownership,Product Ownership,synonym,1,0.1,Product Owner (1),observed
+design systems management,skill,design-systems-management,Design Systems Management,exact,1,0.1,UX Designer (1),observed
+survey design,skill,survey-design,Survey Design,exact,1,0.1,UX Researcher (1),observed
+user interface design,skill,user-interface-design,User Interface Design,exact,1,0.1,Product Manager (1),observed
+maze,tool,maze-co,Maze.co,variant,1,0.1,UX Researcher (1),observed
+trello,tool,trello,Trello,exact,1,0.1,Project Manager (1),observed
+ab testing,activity,a-b-prototype-test-creation,A/B Prototype Test Creation,variant,0,0.0,,domain
+split testing,activity,a-b-prototype-test-creation,A/B Prototype Test Creation,synonym,0,0.0,,domain
+analyzing research,activity,analyzing-research-findings,Analyzing Research Findings,variant,0,0.0,,domain
+blockchain development,activity,blockchain-coding,Blockchain Coding,synonym,0,0.0,,domain
+web3,activity,blockchain-coding,Blockchain Coding,synonym,0,0.0,,domain
+clickable prototype,activity,clickable-prototype-creation,Clickable Prototype Creation,variant,0,0.0,,domain
+coaching teammates,activity,coaching-team-mates,Coaching Team Mates,synonym,0,0.0,,domain
+ai prompts,activity,creating-ai-prompts,Creating AI Prompts,variant,0,0.0,,domain
+design annotations,activity,creating-annotations,Creating Annotations,synonym,0,0.0,,domain
+research plan,activity,creating-research-plans,Creating Research Plans,variant,0,0.0,,domain
+experience mapping,activity,customer-experience-mapping,Customer Experience Mapping,variant,0,0.0,,domain
+customer segmentation,activity,customer-segmentation,Customer Segmentation,exact,0,0.0,,domain
+designops,activity,defining-ux-design-operations,Defining UX Design Operations,variant,0,0.0,,domain
+component creation,activity,design-component-creation,Design Component Creation,synonym,0,0.0,,domain
+security audit,activity,information-security-audit,Information Security Audit,synonym,0,0.0,,domain
+content audit,activity,inventorying-content,Inventorying Content,synonym,0,0.0,,domain
+competitor analysis,activity,investigating-competitors,Investigating Competitors,synonym,0,0.0,,domain
+agile transformation,activity,leading-agile-transformation,Leading Agile Transformation,synonym,0,0.0,,domain
+story pointing,activity,level-of-effort-estimation,Level of Effort Estimation,synonym,0,0.0,,domain
+accessibility audit,activity,measuring-accessibility,Measuring Accessibility,synonym,0,0.0,,domain
+pen testing,activity,penetration-testing,Penetration Testing,variant,0,0.0,,domain
+managing the backlog,activity,product-backlog-maintenance,Product Backlog Maintenance,synonym,0,0.0,,domain
+quality assurance testing,activity,qa-testing,QA Testing,synonym,0,0.0,,domain
+eliciting requirements,activity,requirements-gathering,Requirements Gathering,synonym,0,0.0,,domain
+search engine optimization,activity,search-engine-optimization-seo-design,Search Engine Optimization (SEO) Design,synonym,0,0.0,,domain
+tree testing,activity,site-map-testing,Site Map Testing,synonym,0,0.0,,domain
+sprint review,activity,sprint-demo-facilitation,Sprint Demo Facilitation,synonym,0,0.0,,domain
+sprint demo,activity,sprint-demo-facilitation,Sprint Demo Facilitation,variant,0,0.0,,domain
+retrospective,activity,sprint-retrospective-facilitation,Sprint Retrospective Facilitation,synonym,0,0.0,,domain
+sprint retro,activity,sprint-retrospective-facilitation,Sprint Retrospective Facilitation,variant,0,0.0,,domain
+usability study,activity,usability-testing,Usability Testing,variant,0,0.0,,domain
+ux audit,activity,ux-heuristics-analysis,UX Heuristics Analysis,synonym,0,0.0,,domain
+writing requirements,activity,writing-requirements,Writing Requirements,exact,0,0.0,,domain
+product requirements document,activity,writing-requirements,Writing Requirements,synonym,0,0.0,,domain
+accessibility audit,deliverable,accessibility-analysis,Accessibility Analysis,synonym,0,0.0,,domain
+affinity map,deliverable,affinity-map,Affinity Map,exact,0,0.0,,domain
+affinity diagram,deliverable,affinity-map,Affinity Map,synonym,0,0.0,,domain
+bdd,deliverable,behavior-driven-development-scenarios,Behavior-Driven Development Scenarios,abbreviation,0,0.0,,domain
+gherkin,deliverable,behavior-driven-development-scenarios,Behavior-Driven Development Scenarios,synonym,0,0.0,,domain
+burndown chart,deliverable,burn-down-chart,Burn Down Chart,variant,0,0.0,,domain
+business plan,deliverable,business-plan,Business Plan,exact,0,0.0,,domain
+content outline,deliverable,content-outline,Content Outline,exact,0,0.0,,domain
+style guide,deliverable,editorial-style-guide,Editorial Style Guide,synonym,0,0.0,,domain
+empathy map,deliverable,empathy-map,Empathy Map,exact,0,0.0,,domain
+entity relationship diagram,deliverable,entity-relationship-diagrams,Entity Relationship Diagrams,synonym,0,0.0,,domain
+erd,deliverable,entity-relationship-diagrams,Entity Relationship Diagrams,abbreviation,0,0.0,,domain
+epics and features,deliverable,epics-and-features,Epics and Features,exact,0,0.0,,domain
+gantt chart,deliverable,gantt-chart,Gantt Chart,exact,0,0.0,,domain
+go-to-market plan,deliverable,go-to-market-plan,Go-To-Market Plan,exact,0,0.0,,domain
+how might we,deliverable,how-might-we-hmw-statements,How Might We (HMW) Statements,synonym,0,0.0,,domain
+kanban board,deliverable,kanban-board-statuses,Kanban Board Statuses,synonym,0,0.0,,domain
+marketing plan,deliverable,marketing-plan,Marketing Plan,exact,0,0.0,,domain
+microcopy,deliverable,microcopy,Microcopy,exact,0,0.0,,domain
+pitch deck,deliverable,pitch-deck,Pitch Deck,exact,0,0.0,,domain
+pmf,deliverable,product-market-fit-analysis,Product-Market Fit Analysis,abbreviation,0,0.0,,domain
+test plan,deliverable,qa-test-plan,QA Test Plan,synonym,0,0.0,,domain
+research plan,deliverable,research-plan,Research Plan,exact,0,0.0,,domain
+research report,deliverable,research-report,Research Report,exact,0,0.0,,domain
+seo strategy,deliverable,seo-strategy,SEO Strategy,exact,0,0.0,,domain
+sitemap,deliverable,sitemap,Sitemap,exact,0,0.0,,domain
+site map,deliverable,sitemap,Sitemap,variant,0,0.0,,domain
+sprint plan,deliverable,sprint-plan,Sprint Plan,exact,0,0.0,,domain
+architecture diagram,deliverable,system-architecture-diagram,System Architecture Diagram,synonym,0,0.0,,domain
+task analysis,deliverable,task-analysis,Task Analysis,exact,0,0.0,,domain
+team charter,deliverable,team-charter,Team Charter,exact,0,0.0,,domain
+tech specs,deliverable,technical-architecture-specifications,Technical Architecture Specifications,variant,0,0.0,,domain
+design handoff,deliverable,ui-development-specifications,UI Development Specifications,synonym,0,0.0,,domain
+uvp,deliverable,unique-value-proposition,Unique Value Proposition,abbreviation,0,0.0,,domain
+usability report,deliverable,usability-test-report,Usability Test Report,synonym,0,0.0,,domain
+user journey map,deliverable,user-journey-map,User Journey Map,exact,0,0.0,,domain
+customer journey map,deliverable,user-journey-map,User Journey Map,synonym,0,0.0,,domain
+agile coach,duty,agile-coaching,Agile Coaching,variant,0,0.0,,domain
+product ops,duty,product-operations,Product Operations,variant,0,0.0,,domain

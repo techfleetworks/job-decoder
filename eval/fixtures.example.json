@@ -1,0 +1,24 @@
+[
+  {
+    "name": "UX Designer (example, strong match)",
+    "_note": "EXAMPLE DATA. Replace with real postings labeled by a human. 'expected' lists the framework item slugs a human says this posting describes.",
+    "title": "UX Designer",
+    "posting": "UX Designer wanted. You will own wireframing and prototype creation, including clickable prototype creation, and developing information architecture for our product. You will hand off specs to engineering. Experience with Figma is required.",
+    "expected": {
+      "activities": [
+        "wireframing",
+        "prototype-creation",
+        "clickable-prototype-creation",
+        "developing-information-architecture"
+      ],
+      "deliverables": [],
+      "tools": ["figma"]
+    }
+  },
+  {
+    "name": "UX Designer title on an engineering posting (example, expected mismatch)",
+    "_note": "EXAMPLE DATA, unlabeled. Shows the title-fit verdict when the posting does not describe the title's hats. No 'expected' set, so it is not scored.",
+    "title": "UX Designer",
+    "posting": "We need someone to build and ship backend services, write unit tests, run the CI/CD pipeline, and deploy with Docker and Kubernetes. Strong SQL and API design skills required."
+  }
+]

@@ -1,0 +1,1542 @@
+[
+  {
+    "id": 1,
+    "slug": "figma",
+    "Tool Name": "Figma",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://figma.com",
+    "Tool Logo": [
+      {
+        "name": "figma.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/RkZQ8YnIuh2oyvQUZcZDY9XODXPuXrcN_ddfd248ffa9293feb739393a03a821508fada1c701b9b35b1923ff3ee43ed142.png"
+      }
+    ],
+    "Category": "User Experience",
+    "Tool Description": "Figma is a design tool where teams build the actual screens of a product, from rough wireframes to polished, clickable prototypes. Because it runs in the browser and lets people work together in real time, it is often where design and development meet, with designers laying out interfaces and handing off clear specs for engineers to build.",
+    "Tool Features": "1. Build low fidelity interfaces\n1. Build high fidelity interfaces\n1. Create animations\n1. Create design components\n1. Define the UI styles\n1. Define the specifications for development",
+    "Tool Direct Competitors": "1. [Sketch](https://www.sketch.com/)\n1. [InVision](https://www.invisionapp.com/)\n1. [Balsamiq](https://balsamiq.com/)\n1. [Axure](https://www.axure.com/)\n1. [Framer](https://www.framer.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "wireframing",
+        "label": "Wireframing"
+      },
+      {
+        "slug": "design-component-creation",
+        "label": "Design Component Creation"
+      },
+      {
+        "slug": "brand-identity-formation",
+        "label": "Brand Identity Formation"
+      },
+      {
+        "slug": "icon-and-logo-creation",
+        "label": "Icon and Logo Creation"
+      },
+      {
+        "slug": "storyboarding",
+        "label": "Storyboarding"
+      },
+      {
+        "slug": "ui-kit-creation",
+        "label": "UI Kit Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "prototype-creation",
+        "label": "Prototype Creation"
+      },
+      {
+        "slug": "clickable-prototype-creation",
+        "label": "Clickable Prototype Creation"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "rapid-ideation",
+        "label": "Rapid Ideation"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "creating-illustrations",
+        "label": "Creating Illustrations"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "choosing-research-methods",
+        "label": "Choosing Research Methods"
+      },
+      {
+        "slug": "release-vision-definition",
+        "label": "Release Vision Definition"
+      },
+      {
+        "slug": "optimizing-seo",
+        "label": "Optimizing SEO"
+      },
+      {
+        "slug": "creating-annotations",
+        "label": "Creating Annotations"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "graphic-design",
+        "label": "Graphic Design"
+      }
+    ],
+    "Where Can I Learn More?": "https://help.figma.com/"
+  },
+  {
+    "id": 2,
+    "slug": "notion",
+    "Tool Name": "Notion",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://notion.so",
+    "Tool Logo": [
+      {
+        "name": "notion.jpg",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/JtoWY68TiPhL6wOR6G73dOZunT3H5N7T_c35888332ff517f574f8577be7f1e8a9396eda1b7d2b9e4310e5f872e557aeec.jpg"
+      }
+    ],
+    "Category": "Operations, User Experience, Product Management",
+    "Tool Description": "Notion is an all-in-one workspace for notes, documents, wikis, and simple databases. Teams use it to keep everything in one place, meeting notes, project plans, and shared knowledge that would otherwise get scattered, so anyone can find what they need without digging through a dozen tools.",
+    "Tool Features": "1. Create docs and wikis\n2. Build databases and boards\n3. Organize a team knowledge base\n4. Track tasks and backlogs\n5. Collaborate in real time",
+    "Tool Direct Competitors": "1. [Confluence](https://www.atlassian.com/software/confluence)\n1. [Gitbook](http://gitbook.com)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "brand-identity-formation",
+        "label": "Brand Identity Formation"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "feature-vision-definition",
+        "label": "Feature Vision Definition"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "tracking-milestone-progress",
+        "label": "Tracking Milestone Progress"
+      },
+      {
+        "slug": "tracking-epic-progress",
+        "label": "Tracking Epic Progress"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "market-research",
+        "label": "Market Research"
+      },
+      {
+        "slug": "scheduling-meetings",
+        "label": "Scheduling Meetings"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "autotest-creation",
+        "label": "Autotest Creation"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      },
+      {
+        "slug": "threat-modeling",
+        "label": "Threat Modeling"
+      },
+      {
+        "slug": "penetration-testing",
+        "label": "Penetration Testing"
+      },
+      {
+        "slug": "firewall-configuration",
+        "label": "Firewall Configuration"
+      },
+      {
+        "slug": "security-protocol-definition",
+        "label": "Security Protocol Definition"
+      },
+      {
+        "slug": "information-security-audit",
+        "label": "Information Security Audit"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "technical-architecture-creation",
+        "label": "Technical Architecture Creation"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "price-testing",
+        "label": "Price Testing"
+      },
+      {
+        "slug": "documenting-code",
+        "label": "Documenting Code"
+      },
+      {
+        "slug": "defining-team-process",
+        "label": "Defining Team Process"
+      },
+      {
+        "slug": "entity-relationship-creation",
+        "label": "Entity Relationship Creation"
+      },
+      {
+        "slug": "creating-rest-apis",
+        "label": "Creating REST APIs"
+      },
+      {
+        "slug": "search-engine-optimization-seo-design",
+        "label": "Search Engine Optimization (SEO) Design"
+      },
+      {
+        "slug": "creating-research-plans",
+        "label": "Creating Research Plans"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "collecting-analytics",
+        "label": "Collecting Analytics"
+      },
+      {
+        "slug": "analyzing-project-risk",
+        "label": "Analyzing Project Risk"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "product-backlog-maintenance",
+        "label": "Product Backlog Maintenance"
+      },
+      {
+        "slug": "optimizing-seo",
+        "label": "Optimizing SEO"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "development",
+        "label": "Development"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "Deliverables": "Kanban Board Statuses, API LIbrary",
+    "Where Can I Learn More?": "https://www.notion.so/help"
+  },
+  {
+    "id": 3,
+    "slug": "figjam",
+    "Tool Name": "Figjam",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://www.figma.com/figjam/",
+    "Tool Logo": [
+      {
+        "name": "figjam.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/1dhW70uHFcgcxLPDLJPb5U6sPNKnaGCr_0c68cc1b258018ce0b7d00df99d02f496f1023dff018fda40f6eddbc634a9d4b.png"
+      }
+    ],
+    "Category": "User Experience, Product Management",
+    "Tool Description": "FigJam is an online whiteboard made by Figma, built for the messy, collaborative early stages of work. Teams use it to brainstorm, map ideas on sticky notes, run workshops, and sketch flows together, making it a natural home for group thinking before designs get polished.",
+    "Tool Features": "1. Run sticky-note workshops\n2. Draw diagrams and flows\n3. Brainstorm as a group\n4. Vote and react in real time\n5. Start from templates",
+    "Tool Direct Competitors": "1. [Miro](https://miro.com/)\n1. [Lucidspark](https://lucidspark.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "wireframing",
+        "label": "Wireframing"
+      },
+      {
+        "slug": "release-scope-definition",
+        "label": "Release Scope Definition"
+      },
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "feature-vision-definition",
+        "label": "Feature Vision Definition"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "strategy-definition",
+        "label": "Strategy Definition"
+      },
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "identifying-priorities",
+        "label": "Identifying Priorities"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "storyboarding",
+        "label": "Storyboarding"
+      },
+      {
+        "slug": "product-positioning",
+        "label": "Product Positioning"
+      },
+      {
+        "slug": "diary-studies",
+        "label": "Diary Studies"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "prototype-creation",
+        "label": "Prototype Creation"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      },
+      {
+        "slug": "information-security-audit",
+        "label": "Information Security Audit"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "identifying-research-patterns",
+        "label": "Identifying Research Patterns"
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "technical-architecture-creation",
+        "label": "Technical Architecture Creation"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "developing-go-to-market-strategy",
+        "label": "Developing Go-To-Market Strategy"
+      },
+      {
+        "slug": "customer-segmentation",
+        "label": "Customer Segmentation"
+      },
+      {
+        "slug": "defining-team-process",
+        "label": "Defining Team Process"
+      },
+      {
+        "slug": "customer-experience-mapping",
+        "label": "Customer Experience Mapping"
+      },
+      {
+        "slug": "entity-relationship-creation",
+        "label": "Entity Relationship Creation"
+      },
+      {
+        "slug": "search-engine-optimization-seo-design",
+        "label": "Search Engine Optimization (SEO) Design"
+      },
+      {
+        "slug": "creating-research-plans",
+        "label": "Creating Research Plans"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "measuring-accessibility",
+        "label": "Measuring Accessibility"
+      },
+      {
+        "slug": "site-map-testing",
+        "label": "Site Map Testing"
+      },
+      {
+        "slug": "copywriting",
+        "label": "Copywriting"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "solutions-architecture",
+        "label": "Solutions Architecture"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      }
+    ],
+    "Where Can I Learn More?": "https://help.figma.com/hc/en-us/categories/1500002092581"
+  },
+  {
+    "id": 4,
+    "slug": "zoom",
+    "Tool Name": "Zoom",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://zoom.us",
+    "Tool Logo": [
+      {
+        "name": "zoom.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/ciE55XPDE4u8oSL2GudGJNCCqwnJUL7G_6cb4a8d2cbbf4dad87d00ea19c410184b5855e4448b08c1cb35a38fafa18274b.png"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "Zoom is a video conferencing tool teams use to meet, run workshops, and talk face to face when they are not in the same room. For teams spread across places, it is often where daily standups, client calls, and working sessions happen.",
+    "Tool Features": "1. Host video meetings\n2. Record sessions\n3. Share your screen\n4. Use breakout rooms\n5. Run remote interviews and workshops",
+    "Tool Direct Competitors": "1. [Google Meet](http://meet.google.com)\n1. [Around.co](http://Around.co)\n1. [Whereby](http://whereby.com)\n1. [Jitsi](http://jitsi.org)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "moderating-ux-research",
+        "label": "Moderating UX Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "scheduling-meetings",
+        "label": "Scheduling Meetings"
+      },
+      {
+        "slug": "facilitating-agile-workshops",
+        "label": "Facilitating Agile Workshops"
+      },
+      {
+        "slug": "coaching-team-mates",
+        "label": "Coaching Team Mates"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      }
+    ],
+    "Where Can I Learn More?": "https://support.zoom.com/"
+  },
+  {
+    "id": 5,
+    "slug": "dovetail",
+    "Tool Name": "Dovetail",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://dovetail.com/",
+    "Tool Logo": [
+      {
+        "name": "dovetail.webp",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/rzgPIP6qg6M0PpQWnYgQHKWSbY5YLao3_0ed950895e5c3a74dfd07e1ebbb5a5f38a3e81e0a186134f8fe747b751ddad0d.webp"
+      }
+    ],
+    "Category": "User Experience",
+    "Tool Description": "Dovetail is a research tool for storing and making sense of what users say. Researchers use it to keep interviews and notes in one place, tag patterns across them, and turn raw feedback into clear insights the whole team can search and revisit.",
+    "Tool Features": "1. Store research data\n2. Tag and code notes\n3. Find themes across studies\n4. Build insight repositories\n5. Share findings with the team",
+    "Tool Direct Competitors": "1. [Notion](http://notion.so)\n1. [Condens](http://condens.io)\n1. [Looppanel](https://www.looppanel.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      }
+    ],
+    "Where Can I Learn More?": "https://dovetail.com/help/"
+  },
+  {
+    "id": 6,
+    "slug": "trello",
+    "Tool Name": "Trello",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://trello.com",
+    "Tool Logo": [
+      {
+        "name": "trello.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/QjQRV5vijkDUcASVxAuvBwqpdwzYxZsY_a59ae184b93277c30818f4ec89f89cfac0fa000702f33d37649f251f5fe675fa.png"
+      }
+    ],
+    "Category": "Operations, Product Management",
+    "Tool Description": "Trello is a simple visual board that tracks work as cards moving across columns like To Do, Doing, and Done. Teams use it to see at a glance who is working on what and what is coming next, which fits the steady, visible flow of agile work.",
+    "Tool Features": "1. Create boards, lists, and cards\n2. Track task status\n3. Assign work to people\n4. Add checklists and due dates\n5. Automate simple workflows",
+    "Tool Direct Competitors": "1. [JIRA](https://www.atlassian.com/software/jira)\n1. [Notion](http://notion.so)\n1. [Monday.com](https://monday.com/)\n1. [ClickUp](https://clickup.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "requirements-gathering",
+        "label": "Requirements Gathering"
+      },
+      {
+        "slug": "requirements-refinement",
+        "label": "Requirements Refinement"
+      },
+      {
+        "slug": "writing-requirements",
+        "label": "Writing Requirements"
+      },
+      {
+        "slug": "feature-scope-definition",
+        "label": "Feature Scope Definition"
+      },
+      {
+        "slug": "generating-problem-statements",
+        "label": "Generating Problem Statements"
+      },
+      {
+        "slug": "sprint-planning",
+        "label": "Sprint Planning"
+      },
+      {
+        "slug": "level-of-effort-estimation",
+        "label": "Level of Effort Estimation"
+      },
+      {
+        "slug": "velocity-calculation",
+        "label": "Velocity Calculation"
+      },
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "kickoff-intake",
+        "label": "Kickoff / Intake"
+      },
+      {
+        "slug": "defining-team-working-agreements",
+        "label": "Defining Team Working Agreements"
+      },
+      {
+        "slug": "team-role-and-responsibility-definition",
+        "label": "Team Role and Responsibility Definition"
+      },
+      {
+        "slug": "tracking-epic-progress",
+        "label": "Tracking Epic Progress"
+      },
+      {
+        "slug": "product-roadmap-maintenance",
+        "label": "Product Roadmap Maintenance"
+      },
+      {
+        "slug": "tracking-sprint-progress",
+        "label": "Tracking Sprint Progress"
+      },
+      {
+        "slug": "user-acceptance-testing",
+        "label": "User Acceptance Testing"
+      },
+      {
+        "slug": "sprint-retrospective-facilitation",
+        "label": "Sprint Retrospective Facilitation"
+      },
+      {
+        "slug": "user-story-generation",
+        "label": "User Story Generation"
+      },
+      {
+        "slug": "creating-acceptance-criteria",
+        "label": "Creating Acceptance Criteria"
+      },
+      {
+        "slug": "choosing-an-agile-method",
+        "label": "Choosing an Agile Method"
+      },
+      {
+        "slug": "leading-agile-transformation",
+        "label": "Leading Agile Transformation"
+      },
+      {
+        "slug": "defining-research-operations",
+        "label": "Defining Research Operations"
+      },
+      {
+        "slug": "defining-ux-design-operations",
+        "label": "Defining UX Design Operations"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      }
+    ],
+    "Deliverables": "Kanban Board Statuses",
+    "Where Can I Learn More?": "https://support.atlassian.com/trello/"
+  },
+  {
+    "id": 7,
+    "slug": "chatgpt",
+    "Tool Name": "ChatGPT",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://openai.com/index/chatgpt/",
+    "Tool Logo": [
+      {
+        "name": "chat gpt.webp",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/WKi3MnypsMaFFCkFWFHuboAmtn9eAP8E_a978da5184354a2d1f67325ca2529d29f9dbc4f10dc16234705a031a8f3caa03.webp"
+      }
+    ],
+    "Category": "User Experience, Product Management, Operations, Development",
+    "Tool Description": "ChatGPT is an AI assistant that can draft text, brainstorm ideas, summarize notes, and answer questions in plain language. Teams use it as a thinking partner to speed up early drafts and explore options, though the output always needs a human to check and refine it.",
+    "Tool Features": "1. Draft and edit text\n2. Brainstorm ideas\n3. Summarize documents\n4. Help with analysis and code\n5. Answer questions conversationally",
+    "Tool Direct Competitors": "1. [Google LaMDA](https://blog.google/technology/ai/lamda/)\n1. [Microsoft Copilot](https://www.bing.com/chat?toWww=1&redig=4AE5DF4EB59F439F8CF189FE63F6D433)\n1. [Google Gemini](https://gemini.google.com/?hl=en)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      }
+    ],
+    "Where Can I Learn More?": "https://help.openai.com/"
+  },
+  {
+    "id": 8,
+    "slug": "maze-co",
+    "Tool Name": "Maze.co",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://maze.co",
+    "Tool Logo": [
+      {
+        "name": "maze.png",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/g9VXwIRYLuEM8NH0XImj6vvE6PuY3sn1_8ea533ee189070d89d47c24104beafe8c017545a236b16d56ee359a858a2b959.png"
+      }
+    ],
+    "Category": "User Experience",
+    "Tool Description": "Maze is a tool for running quick, remote tests on designs and prototypes. Teams use it to get fast feedback from real people, measuring how they move through a design so problems show up early and the team can keep improving.",
+    "Tool Features": "1. Test prototypes with users\n2. Run unmoderated usability tests\n3. Create surveys\n4. Measure task success\n5. Generate reports automatically",
+    "Tool Direct Competitors": "1. [Usertesting.com](http://Usertesting.com)\n1. [Optimal Workshop](https://www.optimalworkshop.com/)\n1. [UXtweak](https://www.uxtweak.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      }
+    ],
+    "Where Can I Learn More?": "https://help.maze.co/"
+  },
+  {
+    "id": 9,
+    "slug": "optimal-workshop",
+    "Tool Name": "Optimal Workshop",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://optimalworkshop.com",
+    "Tool Logo": [
+      {
+        "name": "ow.webp",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/0BEBnT8wgt7VmwwceiFjyyq8ahziBsIc_a37c34bbedf005e3b4c8768bbfca0acc4d991ad132617a0db6d417f45ab2ee58.webp"
+      }
+    ],
+    "Category": "User Experience",
+    "Tool Description": "Optimal Workshop is a set of research tools for understanding how people organize and find information. Teams use it for things like card sorting and tree testing to shape a product's structure so it matches the way users actually think.",
+    "Tool Features": "1. Card sorting\n2. Tree testing\n3. First-click testing\n4. Surveys\n5. Qualitative insights",
+    "Tool Direct Competitors": "1. [Usertesting.com](http://Usertesting.com)\n1. [Maze.co](http://maze.co)\n1. [UXtweak](https://www.uxtweak.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      }
+    ],
+    "Where Can I Learn More?": "https://www.optimalworkshop.com/101/"
+  },
+  {
+    "id": 10,
+    "slug": "lettucemeet",
+    "Tool Name": "Lettucemeet",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://lettucemeet.com",
+    "Tool Logo": [
+      {
+        "name": "lettucemeet.jpg",
+        "url": "https://baserow-backend-production20240528124524339000000001.s3.amazonaws.com/user_files/0Hyg32BbPnmhXfvk5Kp4tmtgr4IqXtMA_e46d3dc7e7ea5c4f234d76ff5b901f3f35dddceaf337218f2ca89212ca8da56d.jpg"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "LettuceMeet is a lightweight scheduling tool that finds a time that works for a whole group. Teams use it to line up meetings and workshops without the endless back-and-forth of comparing calendars.",
+    "Tool Features": "1. Share your availability\n2. Find overlapping free times\n3. Coordinate group meetings\n4. Use it without an account\n5. Simple grid interface",
+    "Tool Direct Competitors": "1. [Crab Fit](https://crab.fit/)\n1. [Calendly](https://calendly.com/)",
+    "Roles": [
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ],
+    "Where Can I Learn More?": "https://lettucemeet.com"
+  },
+  {
+    "id": 11,
+    "slug": "spreadsheet-tools",
+    "Tool Name": "Spreadsheet Tools",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "Spreadsheet tools, like Google Sheets or Excel, are flexible grids for organizing data, running calculations, and tracking information. Teams reach for them constantly, from planning and budgeting to analyzing research numbers, because almost anything can start life in a spreadsheet.",
+    "Tool Features": "1. Organize data in tables\n2. Run formulas and calculations\n3. Make charts\n4. Sort and filter data\n5. Share and collaborate",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "analyzing-research-findings",
+        "label": "Analyzing Research Findings"
+      },
+      {
+        "slug": "secondary-research",
+        "label": "Secondary Research"
+      },
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "interviewing",
+        "label": "Interviewing"
+      },
+      {
+        "slug": "surveys",
+        "label": "Surveys"
+      },
+      {
+        "slug": "diary-studies",
+        "label": "Diary Studies"
+      },
+      {
+        "slug": "contextual-inquiries",
+        "label": "Contextual Inquiries"
+      },
+      {
+        "slug": "observing-ethnography",
+        "label": "Observing (Ethnography)"
+      },
+      {
+        "slug": "usability-testing",
+        "label": "Usability Testing"
+      },
+      {
+        "slug": "prototype-concept-testing",
+        "label": "Prototype Concept Testing "
+      },
+      {
+        "slug": "a-b-prototype-test-creation",
+        "label": "A/B Prototype Test Creation"
+      },
+      {
+        "slug": "developing-information-architecture",
+        "label": "Developing Information Architecture"
+      },
+      {
+        "slug": "ux-heuristics-analysis",
+        "label": "UX Heuristics Analysis"
+      },
+      {
+        "slug": "qa-testing",
+        "label": "QA Testing"
+      },
+      {
+        "slug": "information-security-audit",
+        "label": "Information Security Audit"
+      },
+      {
+        "slug": "inventorying-content",
+        "label": "Inventorying Content"
+      },
+      {
+        "slug": "investigating-competitors",
+        "label": "Investigating Competitors"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "information-security-analysis",
+        "label": "Information Security Analysis"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "qa-analysis",
+        "label": "QA Analysis"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "slug": "presentation-tools",
+    "Tool Name": "Presentation Tools",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "Presentation tools, like Google Slides, PowerPoint, or Keynote, help teams turn ideas into clear slides for sharing. They show up whenever a team needs to walk others through their thinking, from sprint demos to client updates.",
+    "Tool Features": "1. Build slide decks\n2. Add visuals and charts\n3. Present to stakeholders\n4. Collaborate on slides\n5. Export and share",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "presenting-research-results",
+        "label": "Presenting Research Results"
+      },
+      {
+        "slug": "sprint-demo-facilitation",
+        "label": "Sprint Demo Facilitation"
+      },
+      {
+        "slug": "creating-presentations",
+        "label": "Creating Presentations"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "ux-user-experience-design",
+        "label": "UX (User Experience) Design"
+      },
+      {
+        "slug": "ux-user-experience-research",
+        "label": "UX (User Experience) Research"
+      },
+      {
+        "slug": "business-analysis",
+        "label": "Business Analysis"
+      },
+      {
+        "slug": "product-ownership",
+        "label": "Product Ownership"
+      },
+      {
+        "slug": "product-management",
+        "label": "Product Management"
+      },
+      {
+        "slug": "scrum-master",
+        "label": "Scrum Master"
+      },
+      {
+        "slug": "project-management",
+        "label": "Project Management"
+      },
+      {
+        "slug": "ux-user-experience-writing",
+        "label": "UX (User Experience) Writing"
+      },
+      {
+        "slug": "agile-coaching",
+        "label": "Agile Coaching"
+      },
+      {
+        "slug": "account-management",
+        "label": "Account Management"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "slug": "integrated-development-environment-ide-tools",
+    "Tool Name": "Integrated Development Environment (IDE) Tools",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Category": "Development",
+    "Tool Description": "An IDE, short for integrated development environment, is the software developers write code in, with helpful features like error-checking and shortcuts built in. It is a developer's main workspace, the place where designs and requirements actually turn into working software.",
+    "Tool Features": "1. Write and edit code\n2. Debug programs\n3. Run and test code\n4. Manage version control\n5. Extend with plugins",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "server-side-coding",
+        "label": "Server-Side Coding"
+      },
+      {
+        "slug": "front-end-coding",
+        "label": "Front-End Coding"
+      },
+      {
+        "slug": "database-creation",
+        "label": "Database Creation"
+      },
+      {
+        "slug": "blockchain-coding",
+        "label": "Blockchain Coding"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "slug": "github",
+    "Tool Name": "GitHub",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://github.com",
+    "Category": "Development",
+    "Tool Description": "GitHub is where developers store, share, and manage code together. It tracks every change, lets people review each other's work, and keeps a full history, which makes it possible for a whole team to build the same software without overwriting each other.",
+    "Tool Features": "1. Host Git repositories\n2. Review code with pull requests\n3. Track issues\n4. Automate with Actions\n5. Collaborate on code",
+    "Tool Direct Competitors": "1. [GitLab](https://about.gitlab.com/)\n2. [Bitbucket](https://bitbucket.org/)\n3. [Azure DevOps](https://azure.microsoft.com/en-us/products/devops)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "documenting-code",
+        "label": "Documenting Code"
+      },
+      {
+        "slug": "deploying-code",
+        "label": "Deploying Code"
+      },
+      {
+        "slug": "creating-rest-apis",
+        "label": "Creating REST APIs"
+      }
+    ],
+    "Roles": [
+      {
+        "slug": "development",
+        "label": "Development"
+      }
+    ],
+    "Where Can I Learn More?": "https://docs.github.com/"
+  },
+  {
+    "id": 15,
+    "slug": "ux-tweak",
+    "Tool Name": "UX Tweak",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Tool URL": "https://www.uxtweak.com",
+    "Category": "User Experience",
+    "Tool Description": "UXtweak is a research platform for testing usability and studying how people interact with a product. Teams use it to run studies like usability tests and card sorts, gathering real evidence about what works and what confuses users.",
+    "Tool Features": "1. Usability testing\n2. Card sorting and tree testing\n3. Session recordings\n4. Surveys\n5. Recruit participants",
+    "Tool Direct Competitors": "1. [Maze](https://maze.co/)\n2. [Optimal Workshop](https://www.optimalworkshop.com/)\n3. [Lyssna](https://www.lyssna.com/)",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "card-sorting",
+        "label": "Card Sorting "
+      },
+      {
+        "slug": "experiment-design",
+        "label": "Experiment Design"
+      },
+      {
+        "slug": "primary-research",
+        "label": "Primary Research"
+      },
+      {
+        "slug": "choosing-research-methods",
+        "label": "Choosing Research Methods"
+      }
+    ],
+    "Where Can I Learn More?": "https://www.uxtweak.com/"
+  },
+  {
+    "id": 16,
+    "slug": "statistics-tools",
+    "Tool Name": "Statistics Tools",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "Statistics tools help teams make sense of numbers, spotting patterns and checking whether a result is actually meaningful. Researchers and analysts use them to turn raw data into findings they can trust rather than guesses.",
+    "Tool Features": "1. Analyze quantitative data\n2. Run statistical tests\n3. Summarize survey results\n4. Measure significance\n5. Visualize data",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "calculating-statistics",
+        "label": "Calculating Statistics"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "slug": "ai-model",
+    "Tool Name": "AI Model",
+    "Data Type": [
+      {
+        "slug": "tool",
+        "label": "Tool"
+      }
+    ],
+    "Category": "Operations",
+    "Tool Description": "An AI model is the engine behind smart tools that can generate text, images, or predictions from data. Teams use AI models to speed up tasks like drafting, summarizing, and analyzing, treating them as powerful assistants that still need human judgment to guide and check them.",
+    "Tool Features": "1. Generate text or images\n2. Summarize and analyze\n3. Answer questions\n4. Assist with drafts\n5. Support decision-making",
+    "Common Tasks Using the Tool": [
+      {
+        "slug": "creating-ai-prompts",
+        "label": "Creating AI Prompts"
+      }
+    ]
+  }
+]

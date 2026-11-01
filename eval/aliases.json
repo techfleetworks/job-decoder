@@ -1,0 +1,506 @@
+{
+  "deliverable:key-performance-indicators-kpis": [
+    "metrics",
+    "kpis",
+    "key performance indicators"
+  ],
+  "activity:interviewing": [
+    "interviews",
+    "interviewing",
+    "user interviews",
+    "stakeholder interviews"
+  ],
+  "deliverable:roadmap": [
+    "roadmap",
+    "product roadmap"
+  ],
+  "activity:collecting-analytics": [
+    "analytics",
+    "product analytics",
+    "instrumentation"
+  ],
+  "activity:identifying-priorities": [
+    "prioritize",
+    "prioritization",
+    "prioritizing"
+  ],
+  "tool:figma": [
+    "figma"
+  ],
+  "activity:experiment-design": [
+    "experimentation",
+    "experiment design"
+  ],
+  "activity:prototype-creation": [
+    "prototyping",
+    "prototype",
+    "prototypes"
+  ],
+  "activity:deploying-code": [
+    "deployment",
+    "ci/cd"
+  ],
+  "activity:writing-requirements": [
+    "specifications",
+    "specs",
+    "documenting requirements",
+    "prd",
+    "writing requirements",
+    "product requirements document"
+  ],
+  "activity:coaching-team-mates": [
+    "mentorship",
+    "mentoring",
+    "coaching teammates"
+  ],
+  "deliverable:design-system": [
+    "design systems",
+    "design system",
+    "design tokens"
+  ],
+  "activity:developing-go-to-market-strategy": [
+    "go-to-market",
+    "gtm"
+  ],
+  "activity:rapid-ideation": [
+    "ideation",
+    "brainstorming"
+  ],
+  "tool:spreadsheet-tools": [
+    "excel",
+    "google sheets"
+  ],
+  "deliverable:use-case-scenarios": [
+    "use cases"
+  ],
+  "activity:price-testing": [
+    "pricing"
+  ],
+  "activity:analyzing-project-risk": [
+    "risk management",
+    "risk analysis"
+  ],
+  "tool:zoom": [
+    "zoom"
+  ],
+  "activity:creating-presentations": [
+    "presentations"
+  ],
+  "activity:kickoff-intake": [
+    "intake",
+    "kickoff"
+  ],
+  "activity:user-story-generation": [
+    "user stories",
+    "writing user stories"
+  ],
+  "activity:product-roadmap-maintenance": [
+    "product roadmap",
+    "roadmapping"
+  ],
+  "activity:copywriting": [
+    "copywriting"
+  ],
+  "activity:creating-acceptance-criteria": [
+    "acceptance criteria"
+  ],
+  "activity:a-b-prototype-test-creation": [
+    "a/b testing",
+    "multivariate testing",
+    "ab testing",
+    "split testing"
+  ],
+  "activity:usability-testing": [
+    "usability testing",
+    "usability studies",
+    "user testing",
+    "usability study"
+  ],
+  "activity:user-acceptance-testing": [
+    "uat",
+    "acceptance testing",
+    "user acceptance testing"
+  ],
+  "deliverable:user-personas": [
+    "personas",
+    "user personas"
+  ],
+  "activity:requirements-gathering": [
+    "requirements gathering",
+    "gathering requirements",
+    "requirements elicitation",
+    "eliciting requirements"
+  ],
+  "activity:entity-relationship-creation": [
+    "data modeling"
+  ],
+  "activity:wireframing": [
+    "wireframes",
+    "wireframing",
+    "wireframe"
+  ],
+  "deliverable:objectives-and-key-results-okrs": [
+    "okrs",
+    "objectives and key results"
+  ],
+  "activity:customer-segmentation": [
+    "segmentation",
+    "customer segmentation"
+  ],
+  "activity:surveys": [
+    "surveys"
+  ],
+  "activity:developing-information-architecture": [
+    "information architecture",
+    "ia"
+  ],
+  "activity:sprint-retrospective-facilitation": [
+    "retrospectives",
+    "retrospective",
+    "sprint retro"
+  ],
+  "deliverable:risk-analysis": [
+    "risk assessment"
+  ],
+  "deliverable:statement-of-work": [
+    "sow",
+    "statement of work"
+  ],
+  "tool:chatgpt": [
+    "chatgpt"
+  ],
+  "tool:github": [
+    "github"
+  ],
+  "deliverable:technical-architecture-specifications": [
+    "technical specifications",
+    "tech specs"
+  ],
+  "activity:creating-ai-prompts": [
+    "prompt engineering",
+    "ai prompts"
+  ],
+  "deliverable:accessibility-analysis": [
+    "wcag",
+    "accessibility audit"
+  ],
+  "activity:autotest-creation": [
+    "automated testing",
+    "test automation"
+  ],
+  "activity:clickable-prototype-creation": [
+    "interactive prototypes",
+    "clickable prototype"
+  ],
+  "activity:defining-ux-design-operations": [
+    "design operations",
+    "designops"
+  ],
+  "activity:sprint-planning": [
+    "sprint planning"
+  ],
+  "activity:generating-problem-statements": [
+    "problem statements",
+    "problem framing"
+  ],
+  "deliverable:task-flows": [
+    "user flows",
+    "task flows"
+  ],
+  "tool:presentation-tools": [
+    "powerpoint"
+  ],
+  "activity:market-research": [
+    "market research"
+  ],
+  "deliverable:database-architecture": [
+    "data architecture"
+  ],
+  "deliverable:epics-and-features": [
+    "epics",
+    "epics and features"
+  ],
+  "activity:front-end-coding": [
+    "front-end development",
+    "frontend development"
+  ],
+  "activity:search-engine-optimization-seo-design": [
+    "seo",
+    "search engine optimization"
+  ],
+  "deliverable:qa-test-cases": [
+    "test cases"
+  ],
+  "activity:level-of-effort-estimation": [
+    "estimation",
+    "story pointing"
+  ],
+  "activity:requirements-refinement": [
+    "backlog refinement",
+    "backlog grooming"
+  ],
+  "activity:server-side-coding": [
+    "backend development",
+    "server-side",
+    "back-end development"
+  ],
+  "deliverable:high-fidelity-prototypes": [
+    "mockups",
+    "high-fidelity mockups",
+    "high fidelity designs",
+    "high-fidelity ui",
+    "production screens"
+  ],
+  "activity:defining-research-operations": [
+    "research operations"
+  ],
+  "activity:product-positioning": [
+    "product positioning"
+  ],
+  "activity:analyzing-research-findings": [
+    "research synthesis",
+    "synthesizing research",
+    "analyzing research"
+  ],
+  "activity:technical-architecture-creation": [
+    "technical architecture"
+  ],
+  "deliverable:unique-value-proposition": [
+    "value proposition",
+    "uvp"
+  ],
+  "tool:notion": [
+    "notion"
+  ],
+  "activity:customer-experience-mapping": [
+    "journey mapping",
+    "customer journey mapping",
+    "experience mapping"
+  ],
+  "activity:design-component-creation": [
+    "ui components",
+    "design components",
+    "component creation"
+  ],
+  "activity:investigating-competitors": [
+    "competitive analysis",
+    "competitor analysis"
+  ],
+  "activity:measuring-accessibility": [
+    "accessibility testing",
+    "accessibility audit"
+  ],
+  "activity:qa-testing": [
+    "qa testing",
+    "quality assurance testing"
+  ],
+  "deliverable:component-library": [
+    "component library"
+  ],
+  "deliverable:research-report": [
+    "research findings",
+    "research report"
+  ],
+  "activity:calculating-statistics": [
+    "statistical analysis"
+  ],
+  "activity:creating-illustrations": [
+    "illustration"
+  ],
+  "activity:creating-rest-apis": [
+    "rest apis",
+    "api development",
+    "building apis"
+  ],
+  "activity:product-backlog-maintenance": [
+    "backlog management",
+    "managing the backlog"
+  ],
+  "activity:storyboarding": [
+    "storyboarding"
+  ],
+  "deliverable:product-market-fit-analysis": [
+    "product-market fit",
+    "pmf"
+  ],
+  "deliverable:project-plan": [
+    "project plan"
+  ],
+  "deliverable:taxonomy": [
+    "taxonomy"
+  ],
+  "activity:contextual-inquiries": [
+    "contextual inquiry"
+  ],
+  "activity:facilitating-agile-workshops": [
+    "facilitating workshops",
+    "workshop facilitation"
+  ],
+  "activity:penetration-testing": [
+    "penetration testing",
+    "pen testing"
+  ],
+  "activity:prototype-concept-testing": [
+    "concept testing"
+  ],
+  "activity:threat-modeling": [
+    "threat modeling"
+  ],
+  "activity:creating-annotations": [
+    "redlines",
+    "design annotations"
+  ],
+  "activity:database-creation": [
+    "database design"
+  ],
+  "deliverable:raci-charts": [
+    "raci"
+  ],
+  "deliverable:ui-development-specifications": [
+    "design specs",
+    "developer handoff",
+    "design handoff"
+  ],
+  "tool:dovetail": [
+    "dovetail"
+  ],
+  "tool:figjam": [
+    "figjam"
+  ],
+  "activity:observing-ethnography": [
+    "ethnography",
+    "field studies"
+  ],
+  "activity:ui-kit-creation": [
+    "ui kit"
+  ],
+  "activity:ux-heuristics-analysis": [
+    "heuristic evaluation",
+    "ux audit"
+  ],
+  "deliverable:content-inventory": [
+    "content inventory"
+  ],
+  "deliverable:logo-and-brand-assets": [
+    "brand assets"
+  ],
+  "deliverable:low-fidelity-prototypes": [
+    "low fidelity prototypes"
+  ],
+  "deliverable:sketches": [
+    "sketches"
+  ],
+  "deliverable:sprint-goals": [
+    "sprint goals"
+  ],
+  "deliverable:user-journey-map": [
+    "journey map",
+    "user journey map",
+    "customer journey map"
+  ],
+  "tool:maze-co": [
+    "maze"
+  ],
+  "tool:trello": [
+    "trello"
+  ],
+  "activity:blockchain-coding": [
+    "blockchain development",
+    "web3"
+  ],
+  "activity:creating-research-plans": [
+    "research plan"
+  ],
+  "activity:information-security-audit": [
+    "security audit"
+  ],
+  "activity:inventorying-content": [
+    "content audit"
+  ],
+  "activity:leading-agile-transformation": [
+    "agile transformation"
+  ],
+  "activity:site-map-testing": [
+    "tree testing"
+  ],
+  "activity:sprint-demo-facilitation": [
+    "sprint review",
+    "sprint demo"
+  ],
+  "deliverable:affinity-map": [
+    "affinity map",
+    "affinity diagram"
+  ],
+  "deliverable:behavior-driven-development-scenarios": [
+    "bdd",
+    "gherkin"
+  ],
+  "deliverable:burn-down-chart": [
+    "burndown chart"
+  ],
+  "deliverable:business-plan": [
+    "business plan"
+  ],
+  "deliverable:content-outline": [
+    "content outline"
+  ],
+  "deliverable:editorial-style-guide": [
+    "style guide"
+  ],
+  "deliverable:empathy-map": [
+    "empathy map"
+  ],
+  "deliverable:entity-relationship-diagrams": [
+    "entity relationship diagram",
+    "erd"
+  ],
+  "deliverable:gantt-chart": [
+    "gantt chart"
+  ],
+  "deliverable:go-to-market-plan": [
+    "go-to-market plan"
+  ],
+  "deliverable:how-might-we-hmw-statements": [
+    "how might we"
+  ],
+  "deliverable:kanban-board-statuses": [
+    "kanban board"
+  ],
+  "deliverable:marketing-plan": [
+    "marketing plan"
+  ],
+  "deliverable:microcopy": [
+    "microcopy"
+  ],
+  "deliverable:pitch-deck": [
+    "pitch deck"
+  ],
+  "deliverable:qa-test-plan": [
+    "test plan"
+  ],
+  "deliverable:research-plan": [
+    "research plan"
+  ],
+  "deliverable:seo-strategy": [
+    "seo strategy"
+  ],
+  "deliverable:sitemap": [
+    "sitemap",
+    "site map"
+  ],
+  "deliverable:sprint-plan": [
+    "sprint plan"
+  ],
+  "deliverable:system-architecture-diagram": [
+    "architecture diagram"
+  ],
+  "deliverable:task-analysis": [
+    "task analysis"
+  ],
+  "deliverable:team-charter": [
+    "team charter"
+  ],
+  "deliverable:usability-test-report": [
+    "usability report"
+  ]
+}
