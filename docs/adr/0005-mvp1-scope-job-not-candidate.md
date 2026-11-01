@@ -38,7 +38,7 @@ In scope (about the job):
   (Responsible and Accountable tasks) before nice-to-show (Consulted and
   Informed), and hidden hats first.
 - An evidence quote from the posting for every claim.
-- No account, local save on the device, and a one-action clear-all.
+- No account. Client state is session-only (HTML5 sessionStorage); no device save, no saved history, no clear-all. **Superseded by [ADR-0011](0011-session-only-state.md)** (this originally said "local save on the device, and a one-action clear-all").
 
 Out of scope for MVP 1 (deferred, not dropped). Each is deferred for a stated
 reason, not because it is unimportant:

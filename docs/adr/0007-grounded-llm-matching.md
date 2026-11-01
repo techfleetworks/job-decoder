@@ -1,6 +1,6 @@
 # ADR-0007: Framework-grounded LLM matching via OpenRouter, with a deterministic fallback
 
-- Status: Accepted (2026-10-31). **Supersedes [ADR-0004](0004-on-device-matching-engine.md).**
+- Status: Accepted (2026-10-31). **Supersedes [ADR-0004](0004-on-device-matching-engine.md).** Refined by [ADR-0010](0010-framework-source-of-truth.md): the framework is the single source of truth and the model determines nothing.
 - Deciders: Morgan (mdenner@techfleet.org)
 - Relates to: [ADR-0006](0006-three-tier-architecture.md), [ADR-0008](0008-framework-data-model-integrity.md), [ADR-0009](0009-security-resilience-quality-gates.md)
 

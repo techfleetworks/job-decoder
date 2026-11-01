@@ -1,6 +1,6 @@
 # ADR-0008: Framework data model and integrity rules
 
-- Status: Accepted (2026-10-31)
+- Status: Accepted (2026-10-31). **Rule 5 (ambiguous-title disambiguation) superseded by [ADR-0012](0012-title-maps-to-job-function.md):** the app resolves a title directly to its job function and never asks the user to disambiguate.
 - Deciders: Morgan (mdenner@techfleet.org)
 - Relates to: [ADR-0006](0006-three-tier-architecture.md), [ADR-0007](0007-grounded-llm-matching.md), [ADR-0009](0009-security-resilience-quality-gates.md)
 - Evidence: measured against the framework clone at commit `636635a` (combined content hash `9072373e7186a04b`)

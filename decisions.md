@@ -13,7 +13,14 @@ deterministic fallback), [ADR-0008](docs/adr/0008-framework-data-model-integrity
 (data integrity), [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md)
 (security, resilience, gates), and [ADR-0005](docs/adr/0005-mvp1-scope-job-not-candidate.md)
 (scope). [ADR-0001](docs/adr/0001-static-spa-no-backend-local-only.md) and
-[ADR-0004](docs/adr/0004-on-device-matching-engine.md) are superseded. MVP 1 decodes
+[ADR-0004](docs/adr/0004-on-device-matching-engine.md) are superseded. Later
+decisions: [ADR-0010](docs/adr/0010-framework-source-of-truth.md) (the framework is
+the single source of truth, the LLM recognizes wording only),
+[ADR-0011](docs/adr/0011-session-only-state.md) (session-only state, no saved
+history), [ADR-0012](docs/adr/0012-title-maps-to-job-function.md) (a title maps
+directly to a job function, no user disambiguation), and
+[ADR-0013](docs/adr/0013-ui-design-system-and-rules.md) (Material UI, information
+hierarchy, one result part per screen). MVP 1 decodes
 one posting and explains the job, not the candidate (ADR-0005).
 
 Three tiers, each reached only through the tier above it:
@@ -36,7 +43,8 @@ Layers (Fowler), which are about code organization, not where code runs:
   `fetch`, no storage, no DOM, no React. Runnable and testable without a browser.
 - **Data source** — all I/O: the framework snapshot read, the typed (entity, slug)
   resolver (ADR-0008), the decode route's calls to OpenRouter and Supabase, and the
-  on-device store for saved scans. The domain never reaches past this layer.
+  session store (HTML5 sessionStorage) for the current scan only, no history
+  (ADR-0011). The domain never reaches past this layer.
 - **Content** — single-owner static text such as licensing and attribution.
 
 ## Standing rules
