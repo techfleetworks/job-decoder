@@ -1,0 +1,8 @@
+{
+  "description": "The declared audiences for Hat Check. Every scenario's @audience tag must be one of these, and the BDD tag gate enforces it. Keep this list in sync with the people the product actually serves.",
+  "audiences": [
+    "job-seeker",
+    "engineer",
+    "assistive-tech"
+  ]
+}

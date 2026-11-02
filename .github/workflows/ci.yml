@@ -23,5 +23,15 @@ jobs:
         run: npm run typecheck
       - name: Unit and component tests
         run: npm run test:run
+      - name: Gherkin is valid
+        run: npm run check:gherkin
+      - name: BDD tags are complete and in-vocabulary
+        run: npm run check:bdd-tags
+      - name: BDD coverage (matrix, datastore, log)
+        run: npm run check:bdd-coverage
+      - name: BDD scenarios run (strict)
+        run: npm run test:bdd
+      - name: BDD scenarios all executed and passed
+        run: npm run check:bdd-executed
       - name: Build
         run: npm run build

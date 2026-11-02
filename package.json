@@ -16,7 +16,13 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
-    "check:architecture": "node scripts/check-architecture.mjs"
+    "test:bdd": "cucumber-js",
+    "bdd:index": "node scripts/gen-bdd-index.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check:gherkin": "node scripts/check-gherkin-valid.mjs",
+    "check:bdd-tags": "node scripts/check-bdd-tags.mjs",
+    "check:bdd-coverage": "node scripts/check-bdd-coverage.mjs",
+    "check:bdd-executed": "node scripts/check-bdd-executed.mjs"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
@@ -30,6 +36,9 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^11.2.0",
+    "@cucumber/gherkin": "^30.0.4",
+    "@cucumber/messages": "^27.0.1",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
