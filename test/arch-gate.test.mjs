@@ -1,0 +1,284 @@
+// Discriminating tests for .claude/skills/judge-arch/scripts/arch-gate.mjs
+//
+// Each test builds a throwaway fixture directory (its own config, waivers, and source files) and
+// runs the REAL gate with cwd set there, per check-test-patterns.md. Covered:
+//   S3b  the emptyCatch regex is ReDoS-safe (a crafted non-empty catch completes fast, not >5s)
+//        AND still DETECTS a genuinely empty catch (the check isn't neutered by the fix)
+//   S3a  a rule's `message` reaches the report output
+//   S6   waivers must carry rule+reason+approvedBy+expires (fail closed), expire, and glob-match only
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { writeFileSync, mkdtempSync, chmodSync, readFileSync, existsSync, mkdirSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+// Resolve the gate in EITHER layout (upstream .claude/skills/<skill>/scripts, or a consumer's scripts/ci),
+// because this test is copied verbatim into a consumer and must find the gate wherever it lives.
+const UPSTREAM = resolve(REPO, ".claude/skills/judge-arch/scripts/arch-gate.mjs");
+// Resolve the gate to the copy CI actually runs, not a vendored .claude/skills copy (issue #112). A consumer
+// keeps the gate at scripts/ci/arch-gate.mjs (its GATE_DIR path, which the workflow sets); vendoring the skills also
+// drops a copy under .claude/skills that must NOT be the one tested. Prefer the GATE_DIR copy; fall back to the
+// upstream skill copy (this repo has no scripts/ci).
+const CI_DIR = process.env.GATE_DIR || resolve(REPO, "scripts/ci");
+const CONSUMER = resolve(CI_DIR, "arch-gate.mjs");
+const CHECK = [CONSUMER, UPSTREAM].find((p) => existsSync(p)) ?? UPSTREAM;
+test("gate resolution: tests the scripts/ci (GATE_DIR) copy CI runs, not a vendored .claude/skills copy (issue #112)", () => {
+  // In a consumer that vendors the skills both copies exist; the discrimination test must exercise the
+  // scripts/ci copy the aggregator runs. Upstream has no scripts/ci, so this is a no-op pass there.
+  if (existsSync(CONSUMER)) assert.equal(CHECK, CONSUMER, "must test the scripts/ci (GATE_DIR) gate, not the .claude/skills copy");
+});
+
+// Create a fixture dir; `files` maps relative name -> contents (config/waivers written as JSON).
+function fixture({ config, waivers, files = {} }) {
+  const dir = mkdtempSync(join(tmpdir(), "arch-gate-"));
+  writeFileSync(join(dir, "arch-gate.config.json"), JSON.stringify(config, null, 2));
+  if (waivers !== undefined) writeFileSync(join(dir, "arch-gate.waivers.json"), JSON.stringify(waivers, null, 2));
+  for (const [name, body] of Object.entries(files)) writeFileSync(join(dir, name), body);
+  return dir;
+}
+
+function runGate(dir, args = [], timeout = 10000) {
+  const started = Date.now();
+  const res = spawnSync(process.execPath, [CHECK, ...args], { cwd: dir, encoding: "utf8", timeout });
+  return { status: res.status, signal: res.signal, out: (res.stdout || "") + (res.stderr || ""), ms: Date.now() - started };
+}
+
+const EMPTY_CATCH = "function f(){ try { g(); } catch (e) {} }\n";
+// A NON-empty catch padded with balanced block comments + a trailing char that forces the final
+// brace to fail — the exact shape that made the old nested-quantifier regex backtrack forever.
+const REDOS_PROBE = "function f(){ try { g(); } catch (e) {" + "/* x */ ".repeat(800) + "X } }\n";
+
+test("S3b: ReDoS probe completes fast and does not hang the gate", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "probe.js": REDOS_PROBE } });
+  const r = runGate(dir);
+  assert.notEqual(r.signal, "SIGTERM", "gate timed out — regex is still ReDoS-able");
+  assert.ok(typeof r.status === "number", "gate did not exit cleanly");
+  assert.ok(r.ms < 4000, `gate took ${r.ms}ms — expected sub-second on ~6KB`);
+});
+
+test("S3b: emptyCatch still DETECTS a genuinely empty catch (exit 1) — discriminating", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "empty.js": EMPTY_CATCH } });
+  const r = runGate(dir);
+  assert.equal(r.status, 1, "an empty catch should fail the gate");
+  assert.match(r.out, /catch does nothing/);
+});
+
+// Final-pass hardening: the two most natural do-nothing catches used to slip (catch{;} and catch{return;}).
+test("hardening: emptyCatch flags a catch whose body is only an empty statement (discriminating)", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "semi.js": "function f(){ try { g(); } catch (e) { ; } }\n" } });
+  assert.equal(runGate(dir).status, 1, "catch { ; } must fail");
+});
+test("hardening: swallowReturn flags a bare and an empty-value return (discriminating)", () => {
+  for (const body of ["return;", "return null;", "return [];", "return {};", 'return "";', "return 0;"]) {
+    const dir = fixture({ config: { builtins: { swallowReturn: true } }, files: { "sw.js": `function f(){ try { g(); } catch (e) { ${body} } }\n` } });
+    assert.equal(runGate(dir).status, 1, `catch { ${body} } must fail`);
+  }
+});
+test("hardening: swallowReturn does NOT flag a catch that returns a real recovery value (no false positive)", () => {
+  const dir = fixture({ config: { builtins: { swallowReturn: true } }, files: { "ok.js": "function f(){ try { g(); } catch (e) { return computeFallback(e); } }\n" } });
+  assert.equal(runGate(dir).status, 0, "returning a real fallback is recovery, not a swallow");
+});
+
+test("S3a: a rule's message is printed in the report — discriminating", () => {
+  const MSG = "route handlers must not import supabase directly; go through a service";
+  const dir = fixture({
+    config: { rules: [{ name: "no-db-in-routes", include: ["**/*.js"], forbid: ["from\\('supabase'\\)"], message: MSG }] },
+    files: { "route.js": "const x = from('supabase');\n" },
+  });
+  const r = runGate(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.out, new RegExp(MSG.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+});
+
+test("S6: a waiver missing required fields fails closed (exit 2) — discriminating", () => {
+  const dir = fixture({
+    config: { builtins: { emptyCatch: true } },
+    waivers: [{ rule: "emptyCatch", path: "empty.js" }],
+    files: { "empty.js": EMPTY_CATCH },
+  });
+  const r = runGate(dir);
+  assert.equal(r.status, 2, "an unattributed/never-expiring waiver must be rejected");
+  assert.match(r.out, /missing required field/);
+});
+
+test("S6: a valid, non-expired waiver suppresses the violation (exit 0)", () => {
+  const RULE = "emptyCatch";
+  const dir = fixture({
+    config: { builtins: { emptyCatch: true } },
+    waivers: [{ rule: RULE, path: "empty.js", reason: "legacy", approvedBy: "tester", expires: "2999-01-01" }],
+    files: { "empty.js": EMPTY_CATCH },
+  });
+  const r = runGate(dir);
+  assert.equal(r.status, 0, "a complete, future-dated waiver should suppress");
+});
+
+test("S6: an expired waiver no longer suppresses (exit 1)", () => {
+  const RULE = "emptyCatch";
+  const dir = fixture({
+    config: { builtins: { emptyCatch: true } },
+    waivers: [{ rule: RULE, path: "empty.js", reason: "legacy", approvedBy: "tester", expires: "2000-01-01" }],
+    files: { "empty.js": EMPTY_CATCH },
+  });
+  const r = runGate(dir);
+  assert.equal(r.status, 1, "an expired waiver must stop suppressing");
+});
+
+test("builtin rule NAME is the stable short id, not the prose label (a label reword cannot break a waiver)", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "empty.js": EMPTY_CATCH } });
+  const r = runGate(dir);
+  assert.equal(r.status, 1);
+  assert.match(r.out, /emptyCatch/, "violations group under the stable short id");
+  assert.match(r.out, /catch does nothing/, "the prose label is still shown as the fix message");
+});
+
+// Finding C (docs/arch-reviews/log.jsonl): a file that is present and stat-able but UNREADABLE must
+// be REPORTED, not silently skipped — otherwise it ships unscanned with no diagnostic. This exercises
+// the read-failure branch (arch-gate.mjs read catch). chmod 000 is enforced for the owner on POSIX
+// non-root (incl. the Linux CI runner, the authoritative `test (20)/(24)` gate); on Windows and when
+// running as root the OS won't remove read permission, so the test self-detects that and SKIPS rather
+// than asserting a condition the platform can't create. One code path runs everywhere (ADR-0002).
+test("Finding C: arch-gate reports (does not silently skip) an unreadable existing file", (t) => {
+  const dir = fixture({ config: {}, files: { "locked.mjs": "export const x = 1;\n" } });
+  const victim = join(dir, "locked.mjs");
+  let enforced = false;
+  try { chmodSync(victim, 0o000); readFileSync(victim, "utf8"); }
+  catch { enforced = true; }
+  if (!enforced) { chmodSync(victim, 0o644); return t.skip("OS/privilege does not enforce chmod 000 here (Windows or root)"); }
+  const r = runGate(dir);
+  chmodSync(victim, 0o644); // restore so the throwaway fixture can be cleaned up
+  assert.match(r.out, /could not read[^\n]*locked\.mjs/i,
+    "an unreadable but present code file must produce a WARNING, not a silent skip");
+});
+
+// --- optional config: the gate travels into consumers with a safe default (ADR-0063) -------------
+// With NO arch-gate.config.json present, the gate falls back to {} with the built-ins ON, so a consumer that
+// has not written a config still gets real tree-wide enforcement rather than a confusing exit 2. These tests
+// write NO config file (unlike fixture(), which always writes one) and run the gate with cwd there.
+function noConfigDir(files) {
+  const dir = mkdtempSync(join(tmpdir(), "arch-gate-noconfig-"));
+  for (const [name, body] of Object.entries(files)) writeFileSync(join(dir, name), body);
+  return dir;
+}
+test("optional config: NO config file present → built-ins still DETECT an empty catch (exit 1, discriminating)", () => {
+  const r = runGate(noConfigDir({ "a.js": EMPTY_CATCH }));
+  assert.equal(r.status, 1, r.out);
+  assert.match(r.out, /emptyCatch/, "the built-in empty-catch check must still fire with no config");
+});
+test("optional config: NO config file + clean code → PASS (exit 0, not fail-closed exit 2)", () => {
+  const r = runGate(noConfigDir({ "clean.js": "export const x = 1;\n" }));
+  assert.equal(r.status, 0, r.out);
+});
+test("optional config: NO config + no code files → PASS (exit 0, travels into a config-less consumer)", () => {
+  const r = runGate(noConfigDir({ "README.md": "# docs\n" }));
+  assert.equal(r.status, 0, r.out);
+});
+test("optional config: an EXPLICIT --config that is missing still fails closed (exit 2), not a silent {} fallback", () => {
+  // The {} fallback is ONLY for the default path (a config-less consumer). A caller who names a config and
+  // mistypes it must hear about it, not silently lose their custom rules - the gate cannot be weakened.
+  const r = runGate(noConfigDir({ "clean.js": "export const x = 1;\n" }), ["--config", "does-not-exist.json"]);
+  assert.equal(r.status, 2, r.out);
+});
+
+// --- --ignore <relpath>: skip the vendored gate infra (scripts/ci) without an evasion hole -----------
+// The manifest invoke passes "--ignore scripts/ci --ignore .githooks" so the copied gate/hook machinery
+// (which uses deliberate best-effort catches) is not arch-checked. The path is cwd-anchored, so a decoy dir
+// named scripts/ci elsewhere in the tree is still scanned. invoke is provenance-frozen (a consumer cannot
+// widen it). These prove the skip is real and precise.
+function nestedDir(files) {
+  const dir = mkdtempSync(join(tmpdir(), "arch-gate-ign-"));
+  for (const [rel, body] of Object.entries(files)) {
+    const f = join(dir, rel);
+    mkdirSync(dirname(f), { recursive: true });
+    writeFileSync(f, body);
+  }
+  return dir;
+}
+test("--ignore scripts/ci skips the vendored gate infra but still flags product code (discriminating)", () => {
+  const dir = nestedDir({
+    "scripts/ci/arch-gate.mjs": "function f(){ try { g(); } catch (e) {} }\n", // vendored infra: must be skipped
+    "src/clean.js": "export const x = 1;\n",
+  });
+  assert.equal(runGate(dir, ["--ignore", "scripts/ci"]).status, 0, "scripts/ci must be skipped");
+});
+test("--ignore scripts/ci does NOT suppress an empty catch in product code (discriminating)", () => {
+  const dir = nestedDir({ "src/bad.js": "function g(){ try { h(); } catch (e) {} }\n" });
+  const r = runGate(dir, ["--ignore", "scripts/ci"]);
+  assert.equal(r.status, 1, r.out);
+  assert.match(r.out, /emptyCatch/);
+});
+test("--ignore scripts/ci is cwd-anchored: a decoy src/scripts/ci is still scanned (anti-evasion)", () => {
+  const dir = nestedDir({ "src/scripts/ci/sneaky.js": "function g(){ try { h(); } catch (e) {} }\n" });
+  const r = runGate(dir, ["--ignore", "scripts/ci"]);
+  assert.equal(r.status, 1, r.out);
+  assert.match(r.out, /sneaky\.js/);
+});
+
+// ISSUE-142: a config.ignore ENTRY THAT IS A PATH (.claude/skills) must skip that anchored subtree, and the
+// --ignore flag must too; a violation in product code is still caught. Before #142 a config path-ignore was a
+// silent no-op (ignoreDirs matched single segment names only), so a vendoring consumer's arch-gate went red.
+test("ISSUE-142: config.ignore and --ignore skip an anchored path (.claude/skills), product code still caught", () => {
+  const emptyCatch = "export function f(){ try { g(); } catch (e) {} }\n";
+  // (a) config.ignore as a PATH skips the vendored subtree -> PASS
+  const dir = fixture({ config: { ignore: [".claude/skills"], builtins: { emptyCatch: true } } });
+  mkdirSync(join(dir, ".claude", "skills", "judge-arch"), { recursive: true });
+  writeFileSync(join(dir, ".claude", "skills", "judge-arch", "v.js"), emptyCatch);
+  assert.equal(runGate(dir).status, 0, "config.ignore path must skip .claude/skills: " + runGate(dir).out);
+  // (b) the same violation in product code is still caught -> FAIL (gate not blinded)
+  writeFileSync(join(dir, "prod.js"), emptyCatch);
+  assert.equal(runGate(dir).status, 1, "an empty catch in product code must still be caught");
+  // (c) the --ignore flag form also skips it, anchored
+  const dir2 = fixture({ config: { builtins: { emptyCatch: true } } });
+  mkdirSync(join(dir2, ".claude", "skills"), { recursive: true });
+  writeFileSync(join(dir2, ".claude", "skills", "v.js"), emptyCatch);
+  assert.equal(runGate(dir2, ["--ignore", ".claude/skills"]).status, 0, "--ignore .claude/skills must skip it");
+  // (d) ANTI-EVASION: the ignore is ANCHORED, so a DECOY src/.claude/skills elsewhere is still scanned and
+  // caught - a consumer cannot smuggle product code under a same-named nested path.
+  const dir3 = fixture({ config: { ignore: [".claude/skills"], builtins: { emptyCatch: true } } });
+  mkdirSync(join(dir3, "src", ".claude", "skills"), { recursive: true });
+  writeFileSync(join(dir3, "src", ".claude", "skills", "evil.js"), emptyCatch);
+  assert.equal(runGate(dir3).status, 1, "a decoy src/.claude/skills must still be scanned (anchored ignore)");
+});
+
+// ISSUE-124: emptyCatch must also flag an empty PROMISE arrow handler `.catch(() => {})`, not only `catch {}`.
+test("ISSUE-124: emptyCatch flags an empty .catch() arrow handler, passes a non-empty one", () => {
+  const bad = fixture({ config: { builtins: { emptyCatch: true } }, files: { "p.js": "doThing().catch(() => {});\n" } });
+  assert.equal(runGate(bad).status, 1, "empty .catch(() => {}) must be flagged");
+  const bad2 = fixture({ config: { builtins: { emptyCatch: true } }, files: { "p.js": "doThing().catch((e) => {});\n" } });
+  assert.equal(runGate(bad2).status, 1, "empty .catch((e) => {}) must be flagged");
+  const ok = fixture({ config: { builtins: { emptyCatch: true } }, files: { "p.js": "doThing().catch((e) => { report(e); });\n" } });
+  assert.equal(runGate(ok).status, 0, "a .catch with a real body must pass (no false positive)");
+});
+
+// ISSUE-127: the summary reports files EVALUATED, not merely walked - a non-code-heavy tree does not inflate it.
+test("ISSUE-127: summary reports evaluated count, not the walked total", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "a.js": "ok();\n", "b.md": "x", "c.txt": "y", "d.json": "{}" } });
+  assert.match(runGate(dir).out, /evaluated 1 of/, "only the .js is evaluated; the count must not be the walked total");
+});
+
+// ISSUE-146: built-ins cover Python (except: pass), and a tree with no code files warns rather than passing silent.
+test("ISSUE-146: a Python except: pass is flagged, with its fix hint printed", () => {
+  const dir = fixture({ config: { builtins: { emptyExcept: true } }, files: { "m.py": "try:\n    risky()\nexcept Exception:\n    pass\n" } });
+  const r = runGate(dir);
+  assert.equal(r.status, 1, "Python except: pass must be flagged");
+  assert.match(r.out, /handle the error or re-raise/, "the emptyExcept fix hint must print (PY_BUILTIN_CHECKS registered in ruleMessages)");
+});
+test("ISSUE-146: a tree with files but no code warns (0 code files evaluated), not a silent PASS", () => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "readme.md": "x", "notes.txt": "y" } });
+  assert.match(runGate(dir).out, /0 code files evaluated/i, "a no-code tree must warn, not silently PASS");
+});
+
+// ISSUE-149: an unreadable file makes the scan INCOMPLETE -> fail closed (exit 2), never a silent PASS.
+test("ISSUE-149: an unreadable code file fails the gate closed (exit 2)", (t) => {
+  const dir = fixture({ config: { builtins: { emptyCatch: true } }, files: { "x.js": "ok();\n" } });
+  const target = join(dir, "x.js");
+  try { chmodSync(target, 0); } catch { /* ignore */ }
+  let readable = true;
+  try { readFileSync(target, "utf8"); } catch { readable = false; }
+  if (readable) { t.skip("this platform ignores 0-perms (Windows); CI/Linux enforces the unreadable case"); return; }
+  const r = runGate(dir);
+  assert.equal(r.status, 2, "an unreadable file must fail closed (exit 2), not PASS");
+  assert.match(r.out, /FAIL CLOSED/, "must report that it failed closed");
+});
