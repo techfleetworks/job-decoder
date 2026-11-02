@@ -1,0 +1,12 @@
+{
+  "next": {
+    "severity": "critical",
+    "reason": "Fix requires a major upgrade to Next 16, which cascades to React 19 and MUI 7 with breaking changes across the app. Tracked for a dedicated upgrade PR. This app is static pages plus one server route, not the vulnerable surface for most of the Next advisories.",
+    "reviewBy": "2026-12-15"
+  },
+  "postcss": {
+    "severity": "high",
+    "reason": "Transitive build-time dependency pulled in through Next; it is fixed by the same Next 16 upgrade and is not on the request path.",
+    "reviewBy": "2026-12-15"
+  }
+}
