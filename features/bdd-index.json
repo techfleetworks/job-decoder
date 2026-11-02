@@ -131,6 +131,116 @@
         "high"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/data-tier/data-tier.feature",
+      "feature": "The framework data tier and snapshot build",
+      "scenario": "A dangling framework link fails the build",
+      "domain": "data-tier",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "integrity-dangling"
+      ],
+      "categories": [
+        "error"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/data-tier/data-tier.feature",
+      "feature": "The framework data tier and snapshot build",
+      "scenario": "A function and duty that disagree fail the build",
+      "domain": "data-tier",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "integrity-disagree"
+      ],
+      "categories": [
+        "error"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/data-tier/data-tier.feature",
+      "feature": "The framework data tier and snapshot build",
+      "scenario": "The content hash does not depend on record order",
+      "domain": "data-tier",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "content-hash-stable"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "reliability"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/data-tier/data-tier.feature",
+      "feature": "The framework data tier and snapshot build",
+      "scenario": "The framework tables are closed to the browser",
+      "domain": "data-tier",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "framework-rls"
+      ],
+      "categories": [
+        "permission"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/data-tier/data-tier.feature",
+      "feature": "The framework data tier and snapshot build",
+      "scenario": "The pinned framework data builds the snapshot read model",
+      "domain": "data-tier",
+      "audiences": [
+        "engineer"
+      ],
+      "usecases": [
+        "snapshot-build"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
     }
   ]
 }
