@@ -4,7 +4,7 @@ This is the living release tracker for MVP 1 of Hat Check (the Job Decoder). It 
 updated on every push, so the status here always reflects what is merged and what is in
 flight. Status values are Done, In progress, and To do.
 
-Last updated: 2026-11-02 (T11 data tier complete, PR open for review).
+Last updated: 2026-11-02 (T11 live; T10 closed out: gate now reports file:line, and branch protection on `main` makes the CI checks merge-blocking).
 
 ## Release items
 
@@ -18,7 +18,7 @@ Last updated: 2026-11-02 (T11 data tier complete, PR open for review).
 | — | CI pipeline (arch, lint, types, tests, BDD, build) | Infra | ✅ Done |
 | — | Vercel deploy — production live | Infra | ✅ Done |
 | — | PR stack merged, `main` on Next.js | Infra | ✅ Done |
-| T11 | Supabase data tier + snapshot pipeline | Data | 🟢 In review (PR open, all gates + judge-arch green) |
+| T11 | Supabase data tier + snapshot pipeline | Data | ✅ Done (merged PR #7) |
 | T03 | Text extraction (port eval `text`) | Decode engine | ⬜ To do |
 | T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | ⬜ To do |
 | T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do |
@@ -33,9 +33,9 @@ Last updated: 2026-11-02 (T11 data tier complete, PR open for review).
 | T13 | Dependency-scan gate | Quality gates | ⬜ To do |
 | T14 | OWASP secure-coding scenarios + gate | Quality gates | ⬜ To do |
 | T15 | WCAG axe gate + licensing gate | Quality gates | ⬜ To do |
-| — | Branch protection (make checks merge-blocking) | Infra | ⬜ To do |
+| — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 8 done, 1 in review (T11), 14 to do.
+Tally: 10 done, 13 to do.
 
 ## T11 sub-progress
 
@@ -50,7 +50,9 @@ Tally: 8 done, 1 in review (T11), 14 to do.
 | Sync + snapshot entry scripts + npm wiring | ✅ Done |
 | Tests + @security BDD + ADR-0027 | ✅ Done |
 | `judge-arch` fresh-context review (4 findings, all fixed) | ✅ Done |
-| PR open, awaiting merge | 🟡 In review |
+| Merged to main (PR #7) | ✅ Done |
+| Supabase migration applied (tables live) | ✅ Done |
+| Data load: 250 records synced; snapshot round-trips from Supabase | ✅ Done |
 
 ## Sequencing notes
 
