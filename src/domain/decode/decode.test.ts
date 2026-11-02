@@ -2,7 +2,7 @@
 // prove the matcher tiers, the roll-up and classification, the verdict bands, line
 // accountability, and the never-guess rule when a title is not covered.
 import { describe, expect, it } from "vitest";
-import { decode, keywordMatch, resolveTitle, unionMatches } from "@/domain/decode";
+import { decode, isDecodeResult, keywordMatch, resolveTitle, unionMatches } from "@/domain/decode";
 import type { FunctionSlice, Match, SnapshotItem, SnapshotTitles } from "@/domain/decode/types";
 
 const items: SnapshotItem[] = [
@@ -96,5 +96,50 @@ describe("resolveTitle", () => {
   it("resolves a known title and returns null for an unknown one", () => {
     expect(resolveTitle(titles, "UX Designer")).toBe("ux-designer");
     expect(resolveTitle(titles, "Astronaut")).toBeNull();
+  });
+});
+
+describe("isDecodeResult", () => {
+  // A minimal value with every field the guard requires.
+  const base = {
+    verdict: "strong",
+    covered: [],
+    missing: [],
+    nonStandard: [],
+    matched: [],
+    coverage: [],
+    pctWhole: 50,
+  };
+  // Every list the prep screen reads back.
+  const prepGuide = {
+    technicalSkills: [],
+    interpersonalSkills: [],
+    activities: [],
+    deliverables: [],
+    outcomeTemplates: [],
+    atsKeywords: [],
+    coverLetterPoints: [],
+    interviewPoints: [],
+  };
+
+  it("accepts a well-shaped result, with or without a prep guide", () => {
+    expect(isDecodeResult(base)).toBe(true);
+    expect(isDecodeResult({ ...base, prepGuide: null })).toBe(true);
+    expect(isDecodeResult({ ...base, prepGuide })).toBe(true);
+  });
+
+  it("rejects a result missing a required field", () => {
+    const { coverage: _omit, ...withoutCoverage } = base;
+    expect(isDecodeResult(withoutCoverage)).toBe(false);
+    expect(isDecodeResult({ ...base, verdict: "nonsense" })).toBe(false);
+    expect(isDecodeResult(null)).toBe(false);
+  });
+
+  // The fail-closed branch F1 added: a stale-shape prep guide is rejected with the whole
+  // scan, so the prep screen never dereferences a missing list after a cross-deploy restore.
+  it("rejects a result whose prep guide is a stale shape", () => {
+    const { atsKeywords: _dropped, ...staleGuide } = prepGuide;
+    expect(isDecodeResult({ ...base, prepGuide: staleGuide })).toBe(false);
+    expect(isDecodeResult({ ...base, prepGuide: "not-an-object" })).toBe(false);
   });
 });
