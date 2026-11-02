@@ -36,7 +36,7 @@ comment on table public.spf_release is
 -- At most one published release at a time. The sync step archives the previous
 -- published release before publishing a new one, so "the published release" is
 -- always a single, unambiguous row.
-create unique index if not exists spf_release_one_published
+create unique index if not exists spf_release_one_published -- migration-safety:ignore initial migration, empty table at creation; runs once at first deploy, never against live data (ADR-0031)
   on public.spf_release (status)
   where status = 'published';
 
@@ -59,7 +59,7 @@ comment on table public.spf_record is
 
 -- The snapshot build reads a whole entity for one release ("all activities in the
 -- published release"), so index that access path.
-create index if not exists spf_record_entity_idx
+create index if not exists spf_record_entity_idx -- migration-safety:ignore initial migration, empty table at creation; redundant with the (release_id, entity, slug) PK and dropped in 0002 (ADR-0033)
   on public.spf_record (release_id, entity);
 
 -- Row-level security is on for every table (ADR-0006, ADR-0022). No policy is
