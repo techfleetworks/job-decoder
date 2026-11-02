@@ -24,7 +24,10 @@ export function saveScan(scan: unknown): void {
 
 export function loadScan<T>(): T | null {
   try {
-    const raw = sessionStorage.getItem(KEY) ?? memoryScan;
+    // Prefer the in-memory copy: it is set only when a write did not reach storage, so
+    // when present it is the freshest value (storage may still hold a stale one). When it
+    // is null the last write persisted, so storage is canonical.
+    const raw = memoryScan ?? sessionStorage.getItem(KEY);
     return raw ? (JSON.parse(raw) as T) : null;
   } catch {
     // Store unreadable: recover from the in-memory copy instead of losing the scan.
