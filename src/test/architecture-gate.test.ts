@@ -161,4 +161,26 @@ describe("mechanical architecture gate", () => {
     });
     expect(runGate(root).code).toBe(0);
   });
+
+  it("names the file and the exact line of the violation (T10 acceptance 8)", () => {
+    const root = fixture({
+      // fetch is on line 3, after two clean lines.
+      "src/domain/thing.ts":
+        "export const a = 1;\nexport const b = 2;\nexport const go = () => fetch('/x');\n",
+    });
+    const { code, output } = runGate(root);
+    expect(code).toBe(1);
+    expect(output).toMatch(/src\/domain\/thing\.ts:3:/);
+  });
+
+  it("reports the correct line even after a multi-line block comment", () => {
+    const root = fixture({
+      // a 5-line block comment, then fetch on line 6; the strip must keep the newlines.
+      "src/domain/thing.ts":
+        "/*\n a\n b\n c\n*/\nexport const go = () => fetch('/x');\n",
+    });
+    const { code, output } = runGate(root);
+    expect(code).toBe(1);
+    expect(output).toMatch(/:6:/);
+  });
 });

@@ -14,6 +14,11 @@
  *   5. no-literal-color    - components read color from the theme, never a literal
  *                            (ADR-0013).
  *
+ * Each violation names the file, the line, and the rule broken (T10 acceptance 8), so
+ * a failure points straight at the offending line. Comments and strings are blanked
+ * before matching, with their newlines preserved, so line numbers stay accurate and a
+ * term named only in prose is not flagged.
+ *
  * "Tier-1 holds no business rules" stays a review rule (judge-arch); it is not
  * reliably checkable by a text scan.
  *
@@ -51,18 +56,32 @@ const RE = {
   cssColorFn: /\b(?:rgb|rgba|hsl|hsla)\s*\(/,
 };
 
+/** Blank out everything matched except newlines, so positions and line counts hold. */
+function blankKeepingNewlines(text) {
+  return text.replace(/[^\n]/g, " ");
+}
+
 /** Remove comments but keep strings (needed to see import paths and color literals). */
 function stripComments(src) {
-  let s = src.replace(/\/\*[\s\S]*?\*\//g, " ");
-  s = s.replace(/(^|[^:"'`\\])\/\/[^\n]*/g, "$1 ");
+  let s = src.replace(/\/\*[\s\S]*?\*\//g, blankKeepingNewlines);
+  s = s.replace(/(^|[^:"'`\\])\/\/[^\n]*/g, (m, p1) => p1 + blankKeepingNewlines(m.slice(p1.length)));
   return s;
 }
 /** Also blank string contents, so a bare identifier in a string is not matched. */
 function stripStrings(src) {
-  let s = src.replace(/`(?:\\.|[^`\\])*`/g, "``");
-  s = s.replace(/'(?:\\.|[^'\\])*'/g, "''");
-  s = s.replace(/"(?:\\.|[^"\\])*"/g, '""');
+  let s = src.replace(/`(?:\\.|[^`\\])*`/g, blankKeepingNewlines);
+  s = s.replace(/'(?:\\.|[^'\\])*'/g, blankKeepingNewlines);
+  s = s.replace(/"(?:\\.|[^"\\])*"/g, blankKeepingNewlines);
   return s;
+}
+
+/** 1-based line number of the first match of re in haystack, or 1 if none. */
+function lineOf(haystack, re) {
+  const m = re.exec(haystack);
+  if (!m) return 1;
+  let line = 1;
+  for (let i = 0; i < m.index; i++) if (haystack[i] === "\n") line++;
+  return line;
 }
 
 const EXCLUDE_DIRS = new Set([
@@ -111,48 +130,51 @@ export function scanDir(root) {
       rel.startsWith("src/components/");
     const isClient = !isServer && !isDomain;
 
-    const add = (rule, detail) => violations.push({ file: rel, rule, detail });
+    // flag(rule, text, re, haystack): records the file, the 1-based line of the match,
+    // the rule, and the detail, so the output points straight at the offending line.
+    const flag = (rule, text, re, haystack) =>
+      violations.push({ file: rel, line: lineOf(haystack, re), rule, detail: text });
 
     if (isDomain) {
-      if (RE.fetch.test(code)) add("domain-purity", 'domain references "fetch"');
-      if (RE.localStorage.test(code)) add("domain-purity", 'domain references "localStorage"');
-      if (RE.sessionStorage.test(code)) add("domain-purity", 'domain references "sessionStorage"');
-      if (RE.indexedDB.test(code)) add("domain-purity", 'domain references "indexedDB"');
-      if (RE.window.test(code)) add("domain-purity", 'domain references "window"');
-      if (RE.document.test(code)) add("domain-purity", 'domain references "document"');
-      if (RE.reactImport.test(noComments)) add("domain-purity", "domain imports React");
-      if (RE.nextImport.test(noComments)) add("domain-purity", "domain imports next/*");
-      if (RE.requestResponse.test(code)) add("domain-purity", "domain references NextRequest/NextResponse");
-      if (RE.secretEnv.test(code)) add("domain-purity", "domain reads process.env");
+      if (RE.fetch.test(code)) flag("domain-purity", 'domain references "fetch"', RE.fetch, code);
+      if (RE.localStorage.test(code)) flag("domain-purity", 'domain references "localStorage"', RE.localStorage, code);
+      if (RE.sessionStorage.test(code)) flag("domain-purity", 'domain references "sessionStorage"', RE.sessionStorage, code);
+      if (RE.indexedDB.test(code)) flag("domain-purity", 'domain references "indexedDB"', RE.indexedDB, code);
+      if (RE.window.test(code)) flag("domain-purity", 'domain references "window"', RE.window, code);
+      if (RE.document.test(code)) flag("domain-purity", 'domain references "document"', RE.document, code);
+      if (RE.reactImport.test(noComments)) flag("domain-purity", "domain imports React", RE.reactImport, noComments);
+      if (RE.nextImport.test(noComments)) flag("domain-purity", "domain imports next/*", RE.nextImport, noComments);
+      if (RE.requestResponse.test(code)) flag("domain-purity", "domain references NextRequest/NextResponse", RE.requestResponse, code);
+      if (RE.secretEnv.test(code)) flag("domain-purity", "domain reads process.env", RE.secretEnv, code);
       continue;
     }
 
     // session-only state (applies to every non-domain file too).
     if (RE.localStorage.test(code)) {
-      add("session-only", "localStorage is forbidden; state is session-only (ADR-0011)");
+      flag("session-only", "localStorage is forbidden; state is session-only (ADR-0011)", RE.localStorage, code);
     }
     if (RE.indexedDB.test(code)) {
-      add("session-only", "IndexedDB is forbidden; state is session-only (ADR-0011)");
+      flag("session-only", "IndexedDB is forbidden; state is session-only (ADR-0011)", RE.indexedDB, code);
     }
     if (RE.sessionStorage.test(code) && !isSessionOwner) {
-      add("session-only", `sessionStorage is only allowed in ${SESSION_OWNER}`);
+      flag("session-only", `sessionStorage is only allowed in ${SESSION_OWNER}`, RE.sessionStorage, code);
     }
 
     if (isClient) {
       if (RE.supabaseImport.test(noComments)) {
-        add("browser-no-db-client", "client code imports the Supabase client (only tier 2 may)");
+        flag("browser-no-db-client", "client code imports the Supabase client (only tier 2 may)", RE.supabaseImport, noComments);
       }
       if (RE.secretEnv.test(code)) {
-        add("browser-no-secret", "client code reads a server-only env var (only NEXT_PUBLIC_* is allowed)");
+        flag("browser-no-secret", "client code reads a server-only env var (only NEXT_PUBLIC_* is allowed)", RE.secretEnv, code);
       }
     }
 
     if (isComponent && !isTheme) {
       if (RE.hexColor.test(noComments)) {
-        add("no-literal-color", "a hex color literal in a component (read it from the theme)");
+        flag("no-literal-color", "a hex color literal in a component (read it from the theme)", RE.hexColor, noComments);
       }
       if (RE.cssColorFn.test(noComments)) {
-        add("no-literal-color", "a CSS color function in a component (read it from the theme)");
+        flag("no-literal-color", "a CSS color function in a component (read it from the theme)", RE.cssColorFn, noComments);
       }
     }
   }
@@ -165,7 +187,7 @@ function main() {
   if (violations.length > 0) {
     console.error(`Architecture gate: ${violations.length} violation(s)`);
     for (const v of violations) {
-      console.error(`  [${v.rule}] ${v.file}: ${v.detail}`);
+      console.error(`  [${v.rule}] ${v.file}:${v.line}: ${v.detail}`);
     }
     process.exit(1);
   }

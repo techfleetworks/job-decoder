@@ -141,33 +141,35 @@ See [ADR-0009](docs/adr/0009-security-resilience-quality-gates.md).
 above and runs in CI with a discriminating test that proves it detects planted
 violations ([ADR-0009](docs/adr/0009-security-resilience-quality-gates.md), Part C).
 
-Rules the gate enforces (target): domain purity; session-only state (no
-`localStorage` or IndexedDB in client code); the browser does not import the Supabase
-client or read a secret; tier-1 holds no business rules; framework links resolve only
-through the typed (entity, slug) resolver; no literal colors in components. Each rule
-fails closed and has a test that goes red when the rule is turned into a no-op.
+Rules the gate enforces: domain purity; session-only state (no `localStorage` or
+IndexedDB in client code, `sessionStorage` only in the session store owner); the
+browser does not import the Supabase client or read a server-only secret; no literal
+colors in components. Each rule fails closed, names the file, the line, and the rule,
+and has a test that goes red when the rule is turned into a no-op. Two boundaries stay
+review rules, checked by `judge-arch` rather than the scanner, because a text scan
+cannot reliably catch them: tier-1 holding no business rules, and framework links
+resolving only through the typed (entity, slug) resolver.
 
-## Current state (migration in progress)
+## Current state
 
-The decisions above are the target. The repository still contains the Phase 0 to 2
-client-only React and Vite code (built under the superseded ADR-0001 and ADR-0004)
-and its gate, which enforced the old client-only rules. The three-tier Next.js and
-Material UI app, and the extended tier-aware gate, land in the app-platform work
-(backlog T10). Until then, do not read the old `src/` layout or the old gate rules as
-current; this file and the ADRs are the source of truth for the intended shape.
+Built and merged to `main`:
 
-Built so far: the decisions of record (ADRs 0001 to 0025) and the eval harness
-(`eval/`) that validated the matching approach and will choose the model.
+- The three-tier Next.js and Material UI app shell and the extended, tier-aware
+  architecture gate (T10). The old Phase 0 to 2 client-only React and Vite code is
+  removed. Each gate violation names the file, the line, and the rule.
+- The decisions of record (ADRs 0001 to 0027) and the eval harness (`eval/`) that
+  validated the matching approach.
+- The Supabase data tier and the build-time snapshot pipeline (T11). The framework is
+  synced to Supabase as one published release, and the snapshot read model round-trips
+  from it (title index, shared item index, one slice per job function).
+- The Gherkin BDD feature index and gate suite wired into CI, and branch protection on
+  `main` that requires the CI checks to pass before a merge.
 
 ## Pending (tracked, not yet built)
 
-- The Next.js and Material UI three-tier app shell and the extended architecture gate
-  (T10).
-- The Supabase data tier and the build-time snapshot pipeline (T11).
 - The decode engine ported from the eval harness into tier 2 (T03 to T09).
 - The screens and the result stepper (T01, T02, T06 to T08) and resume and
   application prep (T16).
-- The quality gates: a Gherkin BDD feature index wired into CI, coverage and mutation
-  gates, the accessibility gates, the accuracy eval gate (threshold and labels still
-  open), and dependency scanning (T12 to T15).
-- Branch protection to make the CI checks merge-blocking.
+- The remaining quality gates: coverage and mutation gates, the accessibility gates,
+  the accuracy eval gate (threshold and labels still open), and dependency scanning
+  (T12 to T15).
