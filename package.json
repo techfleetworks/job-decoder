@@ -22,7 +22,11 @@
     "check:gherkin": "node scripts/check-gherkin-valid.mjs",
     "check:bdd-tags": "node scripts/check-bdd-tags.mjs",
     "check:bdd-coverage": "node scripts/check-bdd-coverage.mjs",
-    "check:bdd-executed": "node scripts/check-bdd-executed.mjs"
+    "check:bdd-executed": "node scripts/check-bdd-executed.mjs",
+    "sync:framework": "node pipeline/sync-framework.mjs",
+    "build:snapshot": "node pipeline/build-snapshot.mjs --source=supabase",
+    "build:snapshot:local": "node pipeline/build-snapshot.mjs --source=local",
+    "check:snapshot-integrity": "node pipeline/build-snapshot.mjs --source=local --out=.snapshot-check"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
@@ -31,6 +35,7 @@
     "@fontsource/roboto": "^5.1.0",
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^5.16.6",
+    "@supabase/supabase-js": "^2.118.0",
     "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

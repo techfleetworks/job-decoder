@@ -23,3 +23,20 @@ history is the receipt.
   `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS. The ticket feature files (T01 to T16) are added
   with their implementations in later PRs, each appending an entry here.
+
+## 2026-11-02 — T11 framework data tier and snapshot build
+
+- Change: `feat/data-tier` (T11). Adds the Supabase data tier (`spf_release` and
+  `spf_record` JSONB, RLS on), the shared relation logic, the ADR-0008 integrity
+  gate, and the build-time snapshot pipeline that derives the CDN read model.
+- Scenarios added. Feature "The framework data tier and snapshot build"
+  (`@audience:engineer`):
+  - `snapshot-build` (happy, functional, high)
+  - `integrity-dangling` (error, functional, critical)
+  - `integrity-disagree` (error, functional, critical)
+  - `content-hash-stable` (boundary, reliability, medium)
+  - `framework-rls` (permission, security, critical)
+- Gate result: `test:bdd` ran all scenarios green; `check-gherkin-valid`,
+  `check-bdd-tags`, `check-bdd-coverage`, `check-bdd-executed`, and
+  `check:snapshot-integrity` all PASS. The decode-engine and screen tickets add
+  their own feature files and entries in later PRs.
