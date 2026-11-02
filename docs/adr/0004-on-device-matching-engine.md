@@ -1,6 +1,6 @@
 # ADR-0004: On-device keyword/phrase matching engine
 
-- Status: Accepted
+- Status: **Superseded by [ADR-0007](0007-grounded-llm-matching.md) (2026-10-31).** Morgan chose the OpenRouter LLM step this ADR said "would require a new ADR revisiting the privacy promise." The deterministic engine described here is KEPT, moved to the server, as the reliability fallback in ADR-0007. Kept for the record, not erased.
 - Date: 2026-10-18
 - Deciders: Morgan (mdenner@techfleet.org)
 - Builds on: [ADR-0001](0001-static-spa-no-backend-local-only.md), [ADR-0002](0002-framework-data-layer.md)
