@@ -15,8 +15,8 @@ checked only by human and judge review. A future change — a component reaching
 for `localStorage` directly, or domain code importing `fetch` — would pass tests
 and the type-checker and only be caught if a reviewer happened to notice.
 
-The repo's own rule (global `CLAUDE.md`, `decisions.md`) is that when an
-architectural change needs a mechanical gate and none exists, building it is part
+The repo's own rule (the global engineering rules and `decisions.md`) is that when
+an architectural change needs a mechanical gate and none exists, building it is part
 of that change, not a follow-up, and it may not be self-waived as "trivial."
 
 ## Decision

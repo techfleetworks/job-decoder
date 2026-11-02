@@ -24,9 +24,10 @@ function hatNames(hats: { name: string }[]): string {
 async function copy(text: string): Promise<void> {
   try {
     await navigator.clipboard.writeText(text);
-  } catch {
-    // The clipboard can be blocked (permissions, insecure context). It is a convenience,
-    // so a failure is a no-op rather than an error shown to the person.
+  } catch (err) {
+    // The clipboard can be blocked (permissions, insecure context). There is nothing to
+    // recover (the text stays on screen to select by hand), so report it and move on.
+    console.warn("Clipboard copy failed; the text can be selected manually.", err);
   }
 }
 
