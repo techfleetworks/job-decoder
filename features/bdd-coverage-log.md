@@ -40,3 +40,20 @@ history is the receipt.
   `check-bdd-tags`, `check-bdd-coverage`, `check-bdd-executed`, and
   `check:snapshot-integrity` all PASS. The decode-engine and screen tickets add
   their own feature files and entries in later PRs.
+
+## 2026-11-02 — T03 to T09 decode engine (keyword path)
+
+- Change: `feat/decode-engine`. Ports the matcher and scoring into a pure TypeScript
+  domain (`src/domain/decode`), adds the server snapshot reader (`src/data/server`) and
+  the `/api/decode` route, and wires the snapshot into the build. The grounded LLM
+  recognizer (T05) is a follow-up. BDD steps are now TypeScript, run under the tsx loader.
+- Scenarios added. Feature "Decode a job posting into the hats it expects"
+  (`@audience:job-seeker`):
+  - `decode-covered` (happy, functional, high)
+  - `decode-missing` (boundary, functional, high)
+  - `decode-non-standard` (adverse, functional, medium)
+  - `decode-not-covered` (negative, functional, high)
+  - `decode-line-audit` (happy, reliability, medium)
+- Gate result: `test:bdd` ran 16 scenarios and 49 steps green; `check-gherkin-valid`,
+  `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The route
+  and domain also carry Vitest tests (13 cases).

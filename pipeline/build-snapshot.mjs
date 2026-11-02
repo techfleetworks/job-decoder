@@ -59,6 +59,7 @@ export async function buildSnapshot({ source, out, dataDir }) {
   writeJson(join(out, "manifest.json"), snap.manifest);
   writeJson(join(out, "titles.json"), snap.titles);
   writeJson(join(out, "items.json"), snap.items);
+  writeJson(join(out, "duties.json"), snap.duties);
   for (const [slug, slice] of Object.entries(snap.functionSlices)) {
     writeJson(join(out, "functions", `${slug}.json`), slice);
   }

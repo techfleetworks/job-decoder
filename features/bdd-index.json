@@ -241,6 +241,116 @@
         "high"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/decode/decode.feature",
+      "feature": "Decode a job posting into the hats it expects",
+      "scenario": "A covered title with matching work reads as a strong fit",
+      "domain": "decode",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-covered"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/decode/decode.feature",
+      "feature": "Decode a job posting into the hats it expects",
+      "scenario": "An expected hat that is not named is reported as missing",
+      "domain": "decode",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-missing"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/decode/decode.feature",
+      "feature": "Decode a job posting into the hats it expects",
+      "scenario": "An unknown title is reported as not covered, never guessed",
+      "domain": "decode",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-not-covered"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/decode/decode.feature",
+      "feature": "Decode a job posting into the hats it expects",
+      "scenario": "Every posting line is accounted for",
+      "domain": "decode",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-line-audit"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "reliability"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/decode/decode.feature",
+      "feature": "Decode a job posting into the hats it expects",
+      "scenario": "Work the title does not normally cover is shown as non-standard",
+      "domain": "decode",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-non-standard"
+      ],
+      "categories": [
+        "adverse"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
     }
   ]
 }

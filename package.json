@@ -9,14 +9,16 @@
     "node": ">=20"
   },
   "scripts": {
+    "predev": "npm run build:snapshot:local",
     "dev": "next dev",
+    "prebuild": "npm run build:snapshot:local",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:bdd": "cucumber-js",
+    "test:bdd": "node --import tsx node_modules/@cucumber/cucumber/bin/cucumber.js",
     "bdd:index": "node scripts/gen-bdd-index.mjs",
     "check:architecture": "node scripts/check-architecture.mjs",
     "check:gherkin": "node scripts/check-gherkin-valid.mjs",
@@ -56,6 +58,7 @@
     "eslint-config-next": "^14.2.15",
     "jest-axe": "^9.0.0",
     "jsdom": "^25.0.1",
+    "tsx": "^4.23.15",
     "typescript": "^5.6.3",
     "vitest": "^2.1.3"
   }

@@ -4,7 +4,7 @@ This is the living release tracker for MVP 1 of Hat Check (the Job Decoder). It 
 updated on every push, so the status here always reflects what is merged and what is in
 flight. Status values are Done, In progress, and To do.
 
-Last updated: 2026-11-02 (T11 live; T10 closed out: gate now reports file:line, and branch protection on `main` makes the CI checks merge-blocking).
+Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode reads the snapshot, matches, rolls up to hats, scores the verdict; T11 live; T10 closed).
 
 ## Release items
 
@@ -19,10 +19,10 @@ Last updated: 2026-11-02 (T11 live; T10 closed out: gate now reports file:line, 
 | — | Vercel deploy — production live | Infra | ✅ Done |
 | — | PR stack merged, `main` on Next.js | Infra | ✅ Done |
 | T11 | Supabase data tier + snapshot pipeline | Data | ✅ Done (merged PR #7) |
-| T03 | Text extraction (port eval `text`) | Decode engine | ⬜ To do |
-| T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | ⬜ To do |
-| T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do |
-| T09 | Scoring + verdict bands | Decode engine | ⬜ To do |
+| T03 | Text extraction (port eval `text`) | Decode engine | 🟢 In review (decode PR) |
+| T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | 🟢 In review (decode PR) |
+| T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do (next decode PR) |
+| T09 | Scoring + verdict bands | Decode engine | 🟢 In review (decode PR) |
 | T01 | Input screen (title + posting) | Screens | ⬜ To do |
 | T02 | Title resolution (covered / not-covered / ambiguous) | Screens | ⬜ To do |
 | T06 | Results stepper (covered / missed / added hats) | Screens | ⬜ To do |
@@ -35,7 +35,7 @@ Last updated: 2026-11-02 (T11 live; T10 closed out: gate now reports file:line, 
 | T15 | WCAG axe gate + licensing gate | Quality gates | ⬜ To do |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 10 done, 13 to do.
+Tally: 10 done, 3 in review (decode engine keyword path), 10 to do.
 
 ## T11 sub-progress
 
