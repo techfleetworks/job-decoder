@@ -1,15 +1,13 @@
-// Vitest global setup: make sure the snapshot read model exists before the suite runs,
-// so the decode route test has data to read. It builds from the local pinned framework
-// data (no database needed) only when the snapshot is not already there.
+// Vitest global setup: build the snapshot read model before the suite runs, so the decode
+// route test has current data to read. It always rebuilds from the local pinned framework
+// data (no database needed), so a stale snapshot from an earlier build with a different
+// shape cannot make a test read missing files.
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
 
 export default function setup(): void {
-  if (!existsSync("public/snapshot/manifest.json")) {
-    execFileSync(
-      "node",
-      ["pipeline/build-snapshot.mjs", "--source=local", "--out=public/snapshot"],
-      { stdio: "ignore" },
-    );
-  }
+  execFileSync(
+    "node",
+    ["pipeline/build-snapshot.mjs", "--source=local", "--out=public/snapshot"],
+    { stdio: "ignore" },
+  );
 }

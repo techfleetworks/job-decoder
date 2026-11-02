@@ -24,4 +24,5 @@ export const ENTITIES = [
   { entity: "activity",     file: "activities.json",    namePattern: /^activity name$/i },
   { entity: "deliverable",  file: "deliverables.json",  namePattern: /^deliverable name$/i },
   { entity: "tool",         file: "tools.json",         namePattern: /^tool name$/i },
+  { entity: "skill",        file: "skills.json",        namePattern: /^skill name$/i },
 ];

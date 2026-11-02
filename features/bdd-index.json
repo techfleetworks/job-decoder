@@ -353,6 +353,138 @@
       "status": "covered"
     },
     {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "A posting with no non-standard hats has no extra-scope items",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-empty-set"
+      ],
+      "categories": [
+        "empty-overflow"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "An ATS keyword appears only once",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-ats-dedup"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "An uncovered title gets no prep guide",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-not-covered"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "Each activity has an outcome template with blanks and no made-up numbers",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-outcomes"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "Every prep item traces to a hat",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-traceable"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "Resume skills are split and the hidden hat comes first",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-skills"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
       "file": "features/screens/screens.feature",
       "feature": "The result screen speaks plainly",
       "scenario": "A keyword-only result is labeled a basic read",

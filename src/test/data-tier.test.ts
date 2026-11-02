@@ -46,6 +46,7 @@ function cleanFixture(): Record<string, Rec[]> {
       { id: 1, slug: "mockup", "Deliverable Name": "Mockup", "Duty Who Owns the Deliverable": [{ slug: "design", label: "Design" }] },
     ],
     "tools.json": [{ id: 1, slug: "figma", "Tool Name": "Figma" }],
+    "skills.json": [],
   };
 }
 
@@ -112,5 +113,15 @@ describe("integrity gate fails the build", () => {
     const { code, output } = build(writeFixture(files));
     expect(code).toBe(1);
     expect(output).toContain("R2");
+  });
+
+  it("fails when a referenced skill has no Skill Type (R4)", () => {
+    const files = cleanFixture();
+    // The duty requires a skill that exists but has no Skill Type.
+    files["duties.json"]![0]!["Skills Required For the Duty"] = [{ slug: "design", label: "Design" }];
+    files["skills.json"] = [{ id: 1, slug: "design", "Skill Name": "Design" }];
+    const { code, output } = build(writeFixture(files));
+    expect(code).toBe(1);
+    expect(output).toContain("R4");
   });
 });

@@ -10,6 +10,29 @@ export interface SnapshotItem {
   label: string;
   aliases: string[];
   duties: string[]; // the duties this item rolls up to (ADR-0021)
+  skills?: string[]; // activity only: the skills it lists (ADR-0024)
+  deliverables?: string[]; // activity only: its associated deliverables (ADR-0024)
+  whyImportant?: string; // deliverable only: why it matters (ADR-0024)
+}
+
+/** A hat's full detail, from duties.json, for classification and resume prep (ADR-0024). */
+export interface DutyDetail {
+  slug: string;
+  name: string;
+  description: string;
+  whyImportant: string;
+  skillsRequired: string[];
+  foundationalSkills: string[];
+  activities: string[];
+  deliverables: string[];
+  tools: string[];
+}
+
+/** A skill's name and type (Technical or Interpersonal), from skills.json (ADR-0024). */
+export interface SkillInfo {
+  slug: string;
+  name: string;
+  type: string;
 }
 
 /** titles.json: normalized real-world title to job function slug, plus the function list. */

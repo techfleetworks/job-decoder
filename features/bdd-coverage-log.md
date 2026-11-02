@@ -70,3 +70,21 @@ history is the receipt.
 - Gate result: `test:bdd` ran 19 scenarios and 59 steps green; `check-gherkin-valid`,
   `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The screens
   also carry Vitest component and jest-axe accessibility tests (9 cases).
+
+## 2026-11-02 — T16 resume and application prep (logic and data)
+
+- Change: `feat/resume-prep`. Adds the skills entity to the data tier and enriches the
+  snapshot (per-hat skills, activities, deliverables, tools; a skills index with Skill Type;
+  activity and deliverable detail), plus the pure `buildPrepGuide` the decode route returns.
+  The prep screen is a follow-up PR.
+- Scenarios added. Feature "Prepare your application from the hats" (`@audience:job-seeker`):
+  - `prep-skills` (happy, functional, high)
+  - `prep-outcomes` (happy, functional, medium)
+  - `prep-ats-dedup` (boundary, functional, medium)
+  - `prep-empty-set` (empty-overflow, functional, medium)
+  - `prep-not-covered` (negative, functional, high)
+  - `prep-traceable` (happy, functional, high)
+- Gate result: `test:bdd` ran 25 scenarios green; `buildPrepGuide` has 9 Vitest unit tests;
+  the integrity gate gained R4 (every referenced skill resolves and has a Skill Type) with a
+  discriminating test; `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`,
+  `check-bdd-executed`, and `check:snapshot-integrity` all PASS.
