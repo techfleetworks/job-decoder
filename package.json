@@ -28,7 +28,8 @@
     "sync:framework": "node pipeline/sync-framework.mjs",
     "build:snapshot": "node pipeline/build-snapshot.mjs --source=supabase",
     "build:snapshot:local": "node pipeline/build-snapshot.mjs --source=local",
-    "check:snapshot-integrity": "node pipeline/build-snapshot.mjs --source=local --out=.snapshot-check"
+    "check:snapshot-integrity": "node pipeline/build-snapshot.mjs --source=local --out=.snapshot-check",
+    "check:dependencies": "node scripts/check-dependencies.mjs"
   },
   "dependencies": {
     "@emotion/cache": "^11.13.1",
