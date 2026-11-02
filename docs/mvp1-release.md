@@ -4,7 +4,7 @@ This is the living release tracker for MVP 1 of Hat Check (the Job Decoder). It 
 updated on every push, so the status here always reflects what is merged and what is in
 flight. Status values are Done, In progress, and To do.
 
-Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode reads the snapshot, matches, rolls up to hats, scores the verdict; T11 live; T10 closed).
+Last updated: 2026-11-02 (result screens in review: paste a posting, step through verdict and hat sets with the receipt, how-it-works panel, session-only, WCAG AA; stacked on the decode PR).
 
 ## Release items
 
@@ -23,11 +23,11 @@ Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode read
 | T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | 🟢 In review (decode PR) |
 | T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do (next decode PR) |
 | T09 | Scoring + verdict bands | Decode engine | 🟢 In review (decode PR) |
-| T01 | Input screen (title + posting) | Screens | ⬜ To do |
-| T02 | Title resolution (covered / not-covered / ambiguous) | Screens | ⬜ To do |
-| T06 | Results stepper (covered / missed / added hats) | Screens | ⬜ To do |
-| T07 | Receipt + evidence per hat | Screens | ⬜ To do |
-| T08 | How-it-works (the 17 steps) | Screens | ⬜ To do |
+| T01 | Input screen (title + posting) | Screens | 🟢 In review (screens PR) |
+| T02 | Title resolution (covered / not-covered) | Screens | 🟢 In review (screens PR) |
+| T06 | Results stepper (covered / missed / added hats) | Screens | 🟢 In review (screens PR) |
+| T07 | Receipt + evidence per hat | Screens | 🟢 In review (screens PR) |
+| T08 | How-it-works (the 16 steps) | Screens | 🟢 In review (screens PR) |
 | T16 | Resume & application prep | Screens | ⬜ To do |
 | T12 | Eval accuracy gate (threshold + labels still open) | Quality gates | ⬜ To do |
 | T13 | Dependency-scan gate | Quality gates | ⬜ To do |
@@ -35,7 +35,7 @@ Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode read
 | T15 | WCAG axe gate + licensing gate | Quality gates | ⬜ To do |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 10 done, 3 in review (decode engine keyword path), 10 to do.
+Tally: 10 done, 8 in review (decode engine + result screens), 6 to do.
 
 ## T11 sub-progress
 

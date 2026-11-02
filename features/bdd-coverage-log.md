@@ -57,3 +57,16 @@ history is the receipt.
 - Gate result: `test:bdd` ran 16 scenarios and 49 steps green; `check-gherkin-valid`,
   `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The route
   and domain also carry Vitest tests (13 cases).
+
+## 2026-11-02 — T01, T02, T06 to T08 result screens (keyword flow)
+
+- Change: `feat/screens` (stacked on the decode PR). The input screen, the result stepper,
+  the receipt per hat, the how-it-works panel, and the session-only store, calling
+  /api/decode through the client wrapper.
+- Scenarios added. Feature "The result screen speaks plainly" (`@audience:job-seeker`):
+  - `screen-strong-headline` (happy, functional, medium)
+  - `screen-basic-read` (boundary, functional, medium)
+  - `screen-not-covered` (negative, functional, high)
+- Gate result: `test:bdd` ran 19 scenarios and 59 steps green; `check-gherkin-valid`,
+  `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The screens
+  also carry Vitest component and jest-axe accessibility tests (9 cases).
