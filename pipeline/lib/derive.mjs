@@ -80,6 +80,16 @@ export function deriveSnapshot(release, aliases = {}) {
     };
   }
 
+  // duties.json: every hat's slug, name, and description, so a non-standard hat (one no
+  // function slice lists) can still be named in a result. "everyone" is not a hat.
+  const duties = (e["duty"] ?? [])
+    .filter((d) => d.slug !== "everyone")
+    .map((d) => ({
+      slug: d.slug,
+      name: rm.dutyName.get(d.slug) ?? d.slug,
+      description: val(d, /^duty description$/i) ?? "",
+    }));
+
   const manifest = {
     version: MANIFEST_VERSION,
     upstreamSha: release.upstreamSha,
@@ -89,11 +99,12 @@ export function deriveSnapshot(release, aliases = {}) {
       functions: functions.length,
       items: items.length,
       titles: Object.keys(titles).length,
+      duties: duties.length,
     },
-    files: ["titles.json", "items.json", ...functions.map((f) => `functions/${f.slug}.json`)],
+    files: ["titles.json", "items.json", "duties.json", ...functions.map((f) => `functions/${f.slug}.json`)],
   };
 
-  return { manifest, titles: { titles, functions }, items, functionSlices };
+  return { manifest, titles: { titles, functions }, items, duties, functionSlices };
 }
 
 // Exposed so a caller can normalize a lookup the same way the title index was built.
