@@ -15,6 +15,7 @@ import type { DecodeResult, Hat, Match } from "@/domain/decode/types";
 interface Props {
   result: DecodeResult;
   onStartOver: () => void;
+  onPrepare?: () => void;
 }
 
 function evidenceFor(result: DecodeResult, hatSlug: string): Match[] {
@@ -54,7 +55,7 @@ function HatList({ hats, result, emptyNote }: { hats: Hat[]; result: DecodeResul
   );
 }
 
-export default function Results({ result, onStartOver }: Props) {
+export default function Results({ result, onStartOver, onPrepare }: Props) {
   const notCovered = result.verdict === "not-covered";
   const verdictRef = useRef<HTMLHeadingElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -195,7 +196,12 @@ export default function Results({ result, onStartOver }: Props) {
 
       <Divider sx={{ my: 3 }} />
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2, alignItems: "flex-start" }}>
-        <Button variant="contained" onClick={onStartOver}>
+        {onPrepare ? (
+          <Button variant="contained" onClick={onPrepare}>
+            Prepare your application
+          </Button>
+        ) : null}
+        <Button variant={onPrepare ? "outlined" : "contained"} onClick={onStartOver}>
           Decode another posting
         </Button>
         <HowItWorks />

@@ -16,7 +16,14 @@ export * from "./types";
 export { BANDS } from "./classify";
 export { keywordMatch, unionMatches } from "./match";
 export { buildPrepGuide } from "./prep";
-export type { PrepGuide } from "./prep";
+export type {
+  HighlightItem,
+  KeywordGroup,
+  OutcomeTemplate,
+  PrepGuide,
+  PrepPoint,
+  SkillPrepItem,
+} from "./prep";
 
 /** Resolve a real-world title to a job function slug, or null when not covered. */
 export function resolveTitle(titles: SnapshotTitles, title: string): string | null {
@@ -25,9 +32,29 @@ export function resolveTitle(titles: SnapshotTitles, title: string): string | nu
 
 const VERDICTS = new Set(["strong", "partial", "mismatch", "not-covered"]);
 
+// A prep guide is either absent/null (no guide for this result) or carries every list the
+// prep screen reads. A stale-shape guide left in storage is rejected with the whole scan,
+// so the prep screen never dereferences a missing list.
+function isPrepGuideShape(value: unknown): boolean {
+  if (value === null || value === undefined) return true;
+  if (typeof value !== "object") return false;
+  const g = value as Record<string, unknown>;
+  return (
+    Array.isArray(g.technicalSkills) &&
+    Array.isArray(g.interpersonalSkills) &&
+    Array.isArray(g.activities) &&
+    Array.isArray(g.deliverables) &&
+    Array.isArray(g.outcomeTemplates) &&
+    Array.isArray(g.atsKeywords) &&
+    Array.isArray(g.coverLetterPoints) &&
+    Array.isArray(g.interviewPoints)
+  );
+}
+
 // A minimal shape check for a value read back from storage. A scan saved before a shape
 // change (for example a tab left open across a deploy) is rejected rather than cast blind
-// and crashing the render.
+// and crashing the render. The prep guide, when present, is checked too (ADR-0024 added it
+// to the stored result after this guard already existed).
 export function isDecodeResult(value: unknown): value is DecodeResult {
   if (!value || typeof value !== "object") return false;
   const r = value as Record<string, unknown>;
@@ -39,7 +66,8 @@ export function isDecodeResult(value: unknown): value is DecodeResult {
     Array.isArray(r.nonStandard) &&
     Array.isArray(r.matched) &&
     Array.isArray(r.coverage) &&
-    typeof r.pctWhole === "number"
+    typeof r.pctWhole === "number" &&
+    isPrepGuideShape(r.prepGuide)
   );
 }
 
