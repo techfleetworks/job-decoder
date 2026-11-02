@@ -20,5 +20,8 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | decode | Decode a job posting into the hats it expects | An unknown title is reported as not covered, never guessed | job-seeker | decode-not-covered | negative | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | Every posting line is accounted for | job-seeker | decode-line-audit | happy | reliability | medium | covered |
 | decode | Decode a job posting into the hats it expects | Work the title does not normally cover is shown as non-standard | job-seeker | decode-non-standard | adverse | functional | medium | covered |
+| screens | The result screen speaks plainly | A keyword-only result is labeled a basic read | job-seeker | screen-basic-read | boundary | functional | medium | covered |
+| screens | The result screen speaks plainly | A strong fit says so in plain words | job-seeker | screen-strong-headline | happy | functional | medium | covered |
+| screens | The result screen speaks plainly | An uncovered title is reported honestly with no percentage | job-seeker | screen-not-covered | negative | functional | high | covered |
 
-Total: 16 scenario(s).
+Total: 19 scenario(s).

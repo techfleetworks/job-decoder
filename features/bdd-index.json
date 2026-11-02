@@ -351,6 +351,72 @@
         "medium"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/screens/screens.feature",
+      "feature": "The result screen speaks plainly",
+      "scenario": "A keyword-only result is labeled a basic read",
+      "domain": "screens",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "screen-basic-read"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/screens/screens.feature",
+      "feature": "The result screen speaks plainly",
+      "scenario": "A strong fit says so in plain words",
+      "domain": "screens",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "screen-strong-headline"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/screens/screens.feature",
+      "feature": "The result screen speaks plainly",
+      "scenario": "An uncovered title is reported honestly with no percentage",
+      "domain": "screens",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "screen-not-covered"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
     }
   ]
 }
