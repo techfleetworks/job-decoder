@@ -9,7 +9,7 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { FunctionSlice, SnapshotItem, SnapshotTitles } from "@/domain/decode/types";
+import type { DutyDetail, FunctionSlice, SkillInfo, SnapshotItem, SnapshotTitles } from "@/domain/decode/types";
 
 const DIR = join(process.cwd(), "public", "snapshot");
 
@@ -39,11 +39,20 @@ export function loadItems(): SnapshotItem[] {
   return (itemsCache ??= readJson<SnapshotItem[]>("items.json"));
 }
 
+let dutiesCache: DutyDetail[] | undefined;
+export function loadDuties(): DutyDetail[] {
+  return (dutiesCache ??= readJson<DutyDetail[]>("duties.json"));
+}
+
+let skillsCache: SkillInfo[] | undefined;
+export function loadSkills(): SkillInfo[] {
+  return (skillsCache ??= readJson<SkillInfo[]>("skills.json"));
+}
+
 let dutyNamesCache: Record<string, string> | undefined;
 export function loadDutyNames(): Record<string, string> {
   if (!dutyNamesCache) {
-    const duties = readJson<{ slug: string; name: string }[]>("duties.json");
-    dutyNamesCache = Object.fromEntries(duties.map((d) => [d.slug, d.name]));
+    dutyNamesCache = Object.fromEntries(loadDuties().map((d) => [d.slug, d.name]));
   }
   return dutyNamesCache;
 }

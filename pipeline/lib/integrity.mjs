@@ -123,6 +123,27 @@ export function checkIntegrity(entities) {
     }
   }
 
+  // R4: every skill a duty or activity references must resolve to a skill record and have
+  // a Skill Type, so resume prep can split technical from interpersonal (ADR-0024). A
+  // missing skill or a skill with no type fails the build.
+  const skillBySlug = new Map((entities["skill"] ?? []).map((s) => [s.slug, s]));
+  const skillRefs = new Set();
+  for (const d of entities["duty"] ?? []) {
+    for (const s of rel(d, /^skills required for the duty$/i)) skillRefs.add(s);
+    for (const s of rel(d, /^foundational skills$/i)) skillRefs.add(s);
+  }
+  for (const a of entities["activity"] ?? []) {
+    for (const s of rel(a, /^required hard skills$/i)) skillRefs.add(s);
+  }
+  for (const slug of skillRefs) {
+    const skill = skillBySlug.get(slug);
+    if (!skill) {
+      violations.push({ rule: "R4", detail: `a duty or activity references skill "${slug}", which does not exist` });
+    } else if (!val(skill, /^skill type$/i)) {
+      violations.push({ rule: "R4", detail: `skill "${slug}" has no Skill Type` });
+    }
+  }
+
   return {
     ok: violations.length === 0,
     violations,

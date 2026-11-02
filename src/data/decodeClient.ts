@@ -3,9 +3,13 @@
 // request into a typed, plain-language message instead of throwing into the UI.
 
 import type { DecodeResult } from "@/domain/decode/types";
+import type { PrepGuide } from "@/domain/decode";
+
+/** The decode response includes the prep guide (null when the title is not covered). */
+export type DecodeResultWithPrep = DecodeResult & { prepGuide: PrepGuide | null };
 
 export type DecodeResponse =
-  | { ok: true; result: DecodeResult }
+  | { ok: true; result: DecodeResultWithPrep }
   | { ok: false; error: string };
 
 export async function decodePosting(title: string, posting: string): Promise<DecodeResponse> {
@@ -22,7 +26,7 @@ export async function decodePosting(title: string, posting: string): Promise<Dec
         error: body.error ?? "The decode did not work. Please try again.",
       };
     }
-    return { ok: true, result: (await res.json()) as DecodeResult };
+    return { ok: true, result: (await res.json()) as DecodeResultWithPrep };
   } catch {
     return {
       ok: false,

@@ -40,6 +40,7 @@ function cleanFixture() {
       { id: 1, slug: "mockup", "Deliverable Name": "Mockup", "Duty Who Owns the Deliverable": [{ slug: "design", label: "Design" }] },
     ],
     "tools.json": [{ id: 1, slug: "figma", "Tool Name": "Figma" }],
+    "skills.json": [],
   };
 }
 

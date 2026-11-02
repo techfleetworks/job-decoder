@@ -15,6 +15,8 @@ import type { DecodeResult, FunctionSlice, Match, SnapshotItem, SnapshotTitles }
 export * from "./types";
 export { BANDS } from "./classify";
 export { keywordMatch, unionMatches } from "./match";
+export { buildPrepGuide } from "./prep";
+export type { PrepGuide } from "./prep";
 
 /** Resolve a real-world title to a job function slug, or null when not covered. */
 export function resolveTitle(titles: SnapshotTitles, title: string): string | null {

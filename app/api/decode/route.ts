@@ -8,10 +8,12 @@
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { decode, resolveTitle } from "@/domain/decode";
+import { buildPrepGuide, decode, resolveTitle } from "@/domain/decode";
 import {
+  loadDuties,
   loadDutyNames,
   loadItems,
+  loadSkills,
   loadSlice,
   loadTitles,
   SnapshotMissingError,
@@ -49,13 +51,10 @@ export async function POST(request: NextRequest) {
   try {
     const fnSlug = resolveTitle(loadTitles(), title);
     const slice = fnSlug ? loadSlice(fnSlug) : null;
-    const result = decode({
-      posting: cleanPosting,
-      items: loadItems(),
-      slice,
-      dutyNames: loadDutyNames(),
-    });
-    return NextResponse.json(result);
+    const items = loadItems();
+    const result = decode({ posting: cleanPosting, items, slice, dutyNames: loadDutyNames() });
+    const prepGuide = buildPrepGuide(result, { duties: loadDuties(), skills: loadSkills(), items });
+    return NextResponse.json({ ...result, prepGuide });
   } catch (err) {
     // The snapshot not being present is the one expected operational failure, so report
     // it as unavailable. Anything else is logged on the server and returned as a generic

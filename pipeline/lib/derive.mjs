@@ -20,7 +20,7 @@
 // each function slice. One owner per fact: a slice says which hats are standard, the
 // item index says which items belong to which hat, and neither repeats the other.
 
-import { buildReadModel, val } from "./relations.mjs";
+import { buildReadModel, rel, val } from "./relations.mjs";
 import { itemDuties } from "./relations.mjs";
 import { normalize } from "./text.mjs";
 import { MANIFEST_VERSION } from "./manifest.mjs";
@@ -39,6 +39,8 @@ export function deriveSnapshot(release, aliases = {}) {
 
   const dutyBySlug = new Map((e["duty"] ?? []).map((d) => [d.slug, d]));
   const fnBySlug = new Map((e["job-function"] ?? []).map((f) => [f.slug, f]));
+  const activityBySlug = new Map((e["activity"] ?? []).map((a) => [a.slug, a]));
+  const deliverableBySlug = new Map((e["deliverable"] ?? []).map((d) => [d.slug, d]));
 
   // titles.json
   const titles = {};
@@ -48,14 +50,27 @@ export function deriveSnapshot(release, aliases = {}) {
     name: rm.functionName.get(f.slug) ?? f.slug,
   }));
 
-  // items.json: every leaf item, its aliases, and the duties it rolls up to.
-  const items = rm.items.map((item) => ({
-    slug: item.slug,
-    type: item.type,
-    label: item.label,
-    aliases: aliases[`${item.type}:${item.slug}`] ?? [],
-    duties: [...itemDuties(rm, item)],
-  }));
+  // items.json: every leaf item, its aliases, the duties it rolls up to, and the extra
+  // detail resume prep needs (ADR-0024): an activity's skills and associated deliverables,
+  // and a deliverable's "why it matters".
+  const items = rm.items.map((item) => {
+    const base = {
+      slug: item.slug,
+      type: item.type,
+      label: item.label,
+      aliases: aliases[`${item.type}:${item.slug}`] ?? [],
+      duties: [...itemDuties(rm, item)],
+    };
+    if (item.type === "activity") {
+      const a = activityBySlug.get(item.slug);
+      base.skills = a ? rel(a, /^required hard skills$/i) : [];
+      base.deliverables = a ? rel(a, /^associated deliverables$/i) : [];
+    } else if (item.type === "deliverable") {
+      const d = deliverableBySlug.get(item.slug);
+      base.whyImportant = d ? val(d, /^why is this deliverable important/i) ?? "" : "";
+    }
+    return base;
+  });
 
   // functions/<slug>.json: the standard hats for the function.
   const functionSlices = {};
@@ -80,15 +95,30 @@ export function deriveSnapshot(release, aliases = {}) {
     };
   }
 
-  // duties.json: every hat's slug, name, and description, so a non-standard hat (one no
-  // function slice lists) can still be named in a result. "everyone" is not a hat.
+  // duties.json: full per-hat detail, so a hat in any of the three sets (including a
+  // non-standard one, which no function slice lists) can be named and prepared for
+  // (ADR-0024). "everyone" is not a hat.
   const duties = (e["duty"] ?? [])
     .filter((d) => d.slug !== "everyone")
     .map((d) => ({
       slug: d.slug,
       name: rm.dutyName.get(d.slug) ?? d.slug,
       description: val(d, /^duty description$/i) ?? "",
+      whyImportant: val(d, /^why is this duty important/i) ?? "",
+      skillsRequired: rel(d, /^skills required for the duty$/i),
+      foundationalSkills: rel(d, /^foundational skills$/i),
+      activities: rel(d, /^activities$/i),
+      deliverables: rel(d, /^responsible deliverables$/i),
+      tools: rel(d, /^unique required tools$/i),
     }));
+
+  // skills.json: every skill's name and type (Technical or Interpersonal), so resume prep
+  // can split and rank skills without a database call (ADR-0022 amendment, ADR-0024).
+  const skills = (e["skill"] ?? []).map((s) => ({
+    slug: s.slug,
+    name: val(s, /^skill name$/i) ?? s.slug,
+    type: val(s, /^skill type$/i) ?? "",
+  }));
 
   const manifest = {
     version: MANIFEST_VERSION,
@@ -100,11 +130,18 @@ export function deriveSnapshot(release, aliases = {}) {
       items: items.length,
       titles: Object.keys(titles).length,
       duties: duties.length,
+      skills: skills.length,
     },
-    files: ["titles.json", "items.json", "duties.json", ...functions.map((f) => `functions/${f.slug}.json`)],
+    files: [
+      "titles.json",
+      "items.json",
+      "duties.json",
+      "skills.json",
+      ...functions.map((f) => `functions/${f.slug}.json`),
+    ],
   };
 
-  return { manifest, titles: { titles, functions }, items, duties, functionSlices };
+  return { manifest, titles: { titles, functions }, items, duties, skills, functionSlices };
 }
 
 // Exposed so a caller can normalize a lookup the same way the title index was built.

@@ -1,7 +1,9 @@
 # ADR-0024: Resume and application prep, built from the hats
 
 - Status: Accepted (2026-11-01) for the feature, its scope, and its method. The
-  "key" ranking rules in the Decision are **Proposed** until Morgan approves them.
+  "key" ranking rules in the Decision were **approved by Morgan on 2026-11-02**, and the
+  skills-data prerequisite is resolved: the snapshot now carries the skills entity (name and
+  Skill Type) and each hat's skills, activities, deliverables, and tools.
 - Deciders: Morgan (mdenner@techfleet.org)
 - Builds on: ADR-0005 (MVP scope, amended), ADR-0010 (framework is the source of
   truth), ADR-0013 (UI rules), ADR-0017 (skills route to activities), ADR-0020
