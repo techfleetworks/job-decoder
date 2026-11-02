@@ -21,6 +21,26 @@ export function resolveTitle(titles: SnapshotTitles, title: string): string | nu
   return titles.titles[normalize(title)] ?? null;
 }
 
+const VERDICTS = new Set(["strong", "partial", "mismatch", "not-covered"]);
+
+// A minimal shape check for a value read back from storage. A scan saved before a shape
+// change (for example a tab left open across a deploy) is rejected rather than cast blind
+// and crashing the render.
+export function isDecodeResult(value: unknown): value is DecodeResult {
+  if (!value || typeof value !== "object") return false;
+  const r = value as Record<string, unknown>;
+  return (
+    typeof r.verdict === "string" &&
+    VERDICTS.has(r.verdict) &&
+    Array.isArray(r.covered) &&
+    Array.isArray(r.missing) &&
+    Array.isArray(r.nonStandard) &&
+    Array.isArray(r.matched) &&
+    Array.isArray(r.coverage) &&
+    typeof r.pctWhole === "number"
+  );
+}
+
 export interface DecodeInput {
   posting: string;
   items: SnapshotItem[];

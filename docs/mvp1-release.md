@@ -4,7 +4,7 @@ This is the living release tracker for MVP 1 of Hat Check (the Job Decoder). It 
 updated on every push, so the status here always reflects what is merged and what is in
 flight. Status values are Done, In progress, and To do.
 
-Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode reads the snapshot, matches, rolls up to hats, scores the verdict; T11 live; T10 closed).
+Last updated: 2026-11-02 (decode engine merged to main via PR #9; result screens up for main in PR #11; T10 and T11 done).
 
 ## Release items
 
@@ -19,15 +19,15 @@ Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode read
 | — | Vercel deploy — production live | Infra | ✅ Done |
 | — | PR stack merged, `main` on Next.js | Infra | ✅ Done |
 | T11 | Supabase data tier + snapshot pipeline | Data | ✅ Done (merged PR #7) |
-| T03 | Text extraction (port eval `text`) | Decode engine | 🟢 In review (decode PR) |
-| T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | 🟢 In review (decode PR) |
-| T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do (next decode PR) |
-| T09 | Scoring + verdict bands | Decode engine | 🟢 In review (decode PR) |
-| T01 | Input screen (title + posting) | Screens | ⬜ To do |
-| T02 | Title resolution (covered / not-covered / ambiguous) | Screens | ⬜ To do |
-| T06 | Results stepper (covered / missed / added hats) | Screens | ⬜ To do |
-| T07 | Receipt + evidence per hat | Screens | ⬜ To do |
-| T08 | How-it-works (the 17 steps) | Screens | ⬜ To do |
+| T03 | Text extraction (port eval `text`) | Decode engine | ✅ Done (merged PR #9) |
+| T04 | Keyword matcher (line-scoped, alias tiers) | Decode engine | ✅ Done (merged PR #9) |
+| T05 | Grounded LLM recognizer (OpenRouter, quotes) | Decode engine | ⬜ To do (needs OpenRouter key) |
+| T09 | Scoring + verdict bands | Decode engine | ✅ Done (merged PR #9) |
+| T01 | Input screen (title + posting) | Screens | 🟢 In review (PR #11 → main) |
+| T02 | Title resolution (covered / not-covered) | Screens | 🟢 In review (PR #11 → main) |
+| T06 | Results stepper (covered / missed / added hats) | Screens | 🟢 In review (PR #11 → main) |
+| T07 | Receipt + evidence per hat | Screens | 🟢 In review (PR #11 → main) |
+| T08 | How-it-works (the 16 steps) | Screens | 🟢 In review (PR #11 → main) |
 | T16 | Resume & application prep | Screens | ⬜ To do |
 | T12 | Eval accuracy gate (threshold + labels still open) | Quality gates | ⬜ To do |
 | T13 | Dependency-scan gate | Quality gates | ⬜ To do |
@@ -35,7 +35,7 @@ Last updated: 2026-11-02 (decode engine keyword path in review: /api/decode read
 | T15 | WCAG axe gate + licensing gate | Quality gates | ⬜ To do |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 10 done, 3 in review (decode engine keyword path), 10 to do.
+Tally: 13 done, 5 in review (result screens, PR #11), 6 to do.
 
 ## T11 sub-progress
 
