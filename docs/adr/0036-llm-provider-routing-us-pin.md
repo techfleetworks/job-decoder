@@ -12,9 +12,10 @@ OpenRouter. The on-device keyword path keeps the posting on the client; the LLM 
 not, so where the posting is processed, and whether a provider may retain or train on it,
 is a real governance question for an app whose identity is privacy.
 
-Morgan chose to start with a DeepSeek open-weight chat model (it is strong and cheap) but
-requires a US provider. DeepSeek the company is based in China; its models are open-weight
-and are also hosted by US-based inference companies. OpenRouter's provider routing can
+Morgan chose to start with a DeepSeek model (DeepSeek V4.1 Flash, strong and cheap) but
+requires a US provider. DeepSeek the company is based in China; on OpenRouter this model is
+served by many inference providers, including US-based ones (DeepInfra, Fireworks, Together,
+verified on the model's OpenRouter page 2026-11-02). OpenRouter's provider routing can
 restrict which provider serves a request.
 
 What OpenRouter's provider routing can enforce, confirmed from its docs (retrieved
@@ -34,7 +35,7 @@ Route the OpenRouter request with a `provider` object:
   keyword-only "basic read"). It never silently routes elsewhere.
 
 The model and the allow-list are configured by environment variable (`OPENROUTER_MODEL`,
-`OPENROUTER_PROVIDERS`), defaulting to `deepseek/deepseek-chat-v3.1` and `deepinfra`.
+`OPENROUTER_PROVIDERS`), defaulting to `deepseek/deepseek-v4.1-flash-1017` and `deepinfra`.
 `deepinfra` is a US company and a confirmed OpenRouter slug; other US providers (Together,
 Fireworks) can be added once their exact slug is confirmed on the model's OpenRouter page.
 The endpoint stays fixed (no user-controlled URL, no SSRF) and the key is read from the

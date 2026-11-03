@@ -659,6 +659,116 @@
         "medium"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/security/decode-recognizer.feature",
+      "feature": "The LLM recognizer cannot change the decode result (T03)",
+      "scenario": "A posting that tries to inject an item it does not describe is ignored",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "recognizer-injected-slug"
+      ],
+      "categories": [
+        "adverse"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "critical"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-recognizer.feature",
+      "feature": "The LLM recognizer cannot change the decode result (T03)",
+      "scenario": "A real slug returned under the wrong entity type is dropped",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "recognizer-wrong-type"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-recognizer.feature",
+      "feature": "The LLM recognizer cannot change the decode result (T03)",
+      "scenario": "A recognition whose quote is not in the posting is dropped",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "recognizer-fabricated-quote"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-recognizer.feature",
+      "feature": "The LLM recognizer cannot change the decode result (T03)",
+      "scenario": "Extra fields the model returns on an item cannot bind",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "recognizer-extra-fields"
+      ],
+      "categories": [
+        "adverse"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-recognizer.feature",
+      "feature": "The LLM recognizer cannot change the decode result (T03)",
+      "scenario": "Garbled model output yields no matches instead of an error",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "recognizer-garbled-output"
+      ],
+      "categories": [
+        "error"
+      ],
+      "qualities": [
+        "reliability"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
     }
   ]
 }

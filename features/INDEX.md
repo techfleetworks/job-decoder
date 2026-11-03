@@ -34,5 +34,10 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | security | The decode endpoint validates untrusted input before any work (T13) | A non-text posting is rejected | job-seeker | decode-input-wrong-type | negative | security | high | covered |
 | security | The decode endpoint validates untrusted input before any work (T13) | An oversized posting is rejected before any decoding runs | job-seeker | decode-input-oversized | boundary | security | high | covered |
 | security | The decode endpoint validates untrusted input before any work (T13) | Extra fields on the request are ignored, not bound | job-seeker | decode-input-extra-fields | adverse | security | medium | covered |
+| security | The LLM recognizer cannot change the decode result (T03) | A posting that tries to inject an item it does not describe is ignored | job-seeker | recognizer-injected-slug | adverse | security | critical | covered |
+| security | The LLM recognizer cannot change the decode result (T03) | A real slug returned under the wrong entity type is dropped | job-seeker | recognizer-wrong-type | negative | security | high | covered |
+| security | The LLM recognizer cannot change the decode result (T03) | A recognition whose quote is not in the posting is dropped | job-seeker | recognizer-fabricated-quote | negative | security | high | covered |
+| security | The LLM recognizer cannot change the decode result (T03) | Extra fields the model returns on an item cannot bind | job-seeker | recognizer-extra-fields | adverse | security | medium | covered |
+| security | The LLM recognizer cannot change the decode result (T03) | Garbled model output yields no matches instead of an error | job-seeker | recognizer-garbled-output | error | reliability | medium | covered |
 
-Total: 30 scenario(s).
+Total: 35 scenario(s).

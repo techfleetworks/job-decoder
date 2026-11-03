@@ -15,10 +15,10 @@ node eval/run.mjs --no-llm
 
 # keyword + LLM (reads the key from the environment)
 export OPENROUTER_API_KEY=...        # never pass the key on the command line
-node eval/run.mjs                    # default model deepseek/deepseek-chat-v3.1, pinned to US providers
+node eval/run.mjs                    # default model deepseek/deepseek-v4.1-flash-1017, pinned to US providers
 
 # pick a model and the US-based provider allow-list (pinned, no fallback, data collection denied)
-node eval/run.mjs --model deepseek/deepseek-chat-v3.1 --providers deepinfra
+node eval/run.mjs --model deepseek/deepseek-v4.1-flash-1017 --providers deepinfra
 
 # compare models on the same fixtures
 node eval/run.mjs --model anthropic/claude-3.5-haiku

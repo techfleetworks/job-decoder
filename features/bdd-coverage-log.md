@@ -106,3 +106,31 @@ history is the receipt.
 - Gate result: `test:bdd` ran all scenarios green; `validateDecodeInput` has a discriminating
   Vitest suite (8 cases); `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS.
+
+## 2026-11-03 — T03 live LLM recognizer in /api/decode
+
+- Change: `feat/t03-live-recognizer` (T03, ADR-0037). Runs the grounded LLM recognizer live on
+  the request path: a pure parser/validator in the decode domain
+  (`src/domain/decode/recognize.ts`), a server gateway that makes the call and holds the key
+  (`src/data/server/openrouter.ts`), and the route wiring that unions the validated matches
+  into `decode`. The model recognizes wording only; every slug is validated against the
+  framework and every quote against the posting, so a hallucinated or injected item is dropped.
+  OWASP threat model: LLM prompt injection (critical), fabricated evidence / input validation
+  (high), mass assignment on model output (medium), error handling / DoS via timeout (medium);
+  SSRF and secret handling held structurally (fixed endpoint, server-only key). No new runtime
+  dependency.
+- Scenarios added. Feature "The LLM recognizer cannot change the decode result"
+  (`@audience:job-seeker`):
+  - `recognizer-injected-slug` (adverse, security, critical)
+  - `recognizer-fabricated-quote` (negative, security, high)
+  - `recognizer-wrong-type` (negative, security, high)
+  - `recognizer-extra-fields` (adverse, security, medium)
+  - `recognizer-garbled-output` (error, reliability, medium)
+- judge-arch (fresh context) found a slug-alone resolution that `decisions.md`/ADR-0008 forbid
+  (slugs collide across entities); fixed to resolve by (type, slug) only, with the
+  `recognizer-wrong-type` scenario and the flipped unit case proving a wrong-type slug is now
+  dropped.
+- Gate result: `test:bdd` ran all scenarios green; `parseRecognitions` has a discriminating
+  Vitest suite (11 cases) and the gateway `recognizeMatches` has one (7 cases, fetch mocked);
+  `check:architecture`, `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
+  `check-bdd-executed` all PASS.
