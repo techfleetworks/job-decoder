@@ -134,6 +134,28 @@ function printMetrics(agg, n) {
   }
 }
 
+// Every expected slug must be a real framework leaf item of the declared type, or the
+// scores are silently wrong. A typo in a hand label would otherwise just depress recall
+// with no warning, so fail loud instead of fail open (ADR-0008). Returns the bad labels.
+function validateExpected(fw, fixtures) {
+  const have = new Set(fw.items.map((i) => i.type + ':' + i.slug));
+  const fields = [
+    ['activity', 'activities'],
+    ['deliverable', 'deliverables'],
+    ['tool', 'tools'],
+  ];
+  const bad = [];
+  for (const fx of fixtures) {
+    if (!fx.expected) continue;
+    for (const [type, key] of fields) {
+      for (const slug of fx.expected[key] || []) {
+        if (!have.has(type + ':' + slug)) bad.push(`${fx.name || fx.title}: ${type}:${slug}`);
+      }
+    }
+  }
+  return bad;
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
@@ -151,7 +173,20 @@ async function main() {
 
   const fw = loadFramework();
   const aliasMap = args.aliases ? loadAliases() : {};
-  const fixtures = JSON.parse(readFileSync(args.fixtures, 'utf8').replace(/^﻿/, ''));
+  const raw = JSON.parse(readFileSync(args.fixtures, 'utf8').replace(/^﻿/, ''));
+  // Entries without a title are file metadata (a header note), not postings; skip them
+  // so they are not decoded as an empty fixture.
+  const fixtures = raw.filter((fx) => fx && typeof fx.title === 'string');
+  const skipped = raw.length - fixtures.length;
+  const badSlugs = validateExpected(fw, fixtures);
+  if (badSlugs.length) {
+    console.error(
+      'Fixture label error: these expected slugs are not framework leaf items of the ' +
+        'declared type. Fix each label (check the slug and its entity type):',
+    );
+    for (const b of badSlugs) console.error('  ' + b);
+    process.exit(2);
+  }
 
   console.log(
     `Framework: ${fw.items.length} leaf items ` +
@@ -164,7 +199,10 @@ async function main() {
     );
   }
   console.log(`Aliases: ${args.aliases ? Object.keys(aliasMap).length + ' leaf items (translator table)' : 'off (--no-aliases)'}`);
-  console.log(`Fixtures: ${fixtures.length} from ${args.fixtures}`);
+  console.log(
+    `Fixtures: ${fixtures.length} from ${args.fixtures}` +
+      (skipped ? ` (skipped ${skipped} metadata entr${skipped === 1 ? 'y' : 'ies'})` : ''),
+  );
 
   const perList = [];
   let llmDown = 0;

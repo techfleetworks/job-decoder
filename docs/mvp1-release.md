@@ -8,8 +8,9 @@ The ticket numbers below match the Notion backlog (Backlog — Hat Check). An ea
 version of this board used a different shorthand; it has been realigned.
 
 Last updated: 2026-11-03 (T12 hand-labeled eval fixtures on `feat/t12-labeled-fixtures`
-(PR #21): `eval/fixtures.labeled.json`, one strong-match posting per covered job function
-plus a title-fit mismatch and a not-covered title, labeled by hand from the framework.
+(PR #21): `eval/fixtures.labeled.json`, a strong-match posting for eight of the eleven
+covered job functions (ui-designer, ux-writer, agile-coach not yet covered) plus a
+title-fit mismatch and a not-covered title, labeled by hand from the framework.
 Keyword-only baseline observed at overall P 97% / R 37% (the low recall is the point: the
 postings paraphrase the work the LLM step exists to catch). The LLM accuracy and the
 selection threshold are still open, pending the key and Morgan's decision. Merged since the

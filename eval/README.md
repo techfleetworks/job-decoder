@@ -122,9 +122,13 @@ exact labels. The `expected` set is what a human reader says the posting describ
 an **activity** when the posting describes doing the work, a **deliverable** when it
 names the artifact produced, a **tool** when it is named. Labels are a human judgment
 and reasonable readers can differ at the margin; they are ground truth pending review,
-not an oracle. The set covers one strong-match posting per covered job function plus a
+not an oracle. The set covers a strong-match posting for eight of the eleven covered
+job functions (ui-designer, ux-writer, and agile-coach are not yet covered) plus a
 title-fit mismatch and a not-covered title (both unscored); expand it with more
-postings per function before trusting the aggregate.
+postings, and the missing functions, before trusting the aggregate. The harness
+validates every expected slug against the framework at load and aborts if one is not a
+leaf item of the declared type, so a mistyped label fails loud instead of silently
+lowering the score.
 
 ## Security
 

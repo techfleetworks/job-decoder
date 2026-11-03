@@ -1,7 +1,7 @@
 [
   {
     "_about": "LABELED STARTER SET for T12 (model selection). Each posting is written in natural hiring language (original text, not a verbatim real posting, to avoid reproducing copyrighted material). 'expected' is the set of framework leaf items a human reader says the posting describes, by slug, independent of what the matcher predicts. Labels are best-judgment ground truth pending Morgan's review. Labeling convention: an activity is labeled when the posting describes DOING the work; a deliverable when it names the ARTIFACT produced; a tool when it is named. Paraphrase is deliberate, so the keyword baseline will miss items the LLM step should catch. See README 'Fixtures'.",
-    "_scope": "Starter set: one strong-match posting per covered job function, plus a title-fit mismatch and a not-covered title (both unscored). Expand with more postings per function before trusting the aggregate numbers."
+    "_scope": "Starter set: a strong-match posting for eight of the eleven covered job functions (ui-designer, ux-writer, and agile-coach are not yet covered), plus a title-fit mismatch and a not-covered title (both unscored). Expand with more postings, and the missing functions, before trusting the aggregate numbers."
   },
   {
     "name": "UX Designer (strong match)",
