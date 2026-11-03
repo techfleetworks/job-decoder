@@ -7,14 +7,17 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-02 (T16 resume prep in flight: part 1 logic in PR #13, part 2 screen in PR #14; both open for review).
+Last updated: 2026-11-02 (a11y + licensing gap-fill on `feat/a11y-licensing-gaps`:
+inline CC BY credit added to the Prep screen, axe coverage added for HowItWorks and
+DecodeFlow. Status audit corrected a mis-attribution: PR #12 shipped the T13
+dependency-scan gate, not T14/T15 — those two are corrected below.).
 
 ## Release items
 
 | Ticket | Work | Area | Status |
 |---|---|---|---|
 | — | Decisions of record: ADRs 0001–0029 | Foundation | ✅ Done |
-| — | Eval harness (matching validated, model selection) | Foundation | ✅ Done |
+| — | Eval harness (matching validated) | Foundation | ✅ Done |
 | T10 | Three-tier app shell + architecture gate | Platform | ✅ Done |
 | — | Architecture gate (mechanical + `judge-arch`) | Platform | ✅ Done |
 | — | BDD harness + gates wired into CI | Quality | ✅ Done |
@@ -31,14 +34,17 @@ Last updated: 2026-11-02 (T16 resume prep in flight: part 1 logic in PR #13, par
 | T07 | Receipt + unplaced lines per hat | Screens | ✅ Done (PR #11) |
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
-| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Deferred (you chose to defer) |
-| T13 | Security / OWASP scenarios + gate | Quality gates | ⬜ To do |
-| T14 | Accessibility (WCAG / axe gate) | Quality gates | ✅ Done (PR #12) |
-| T15 | Licensing (attribution + license gate) | Quality gates | ✅ Done (PR #12) |
-| T16 | Resume & application prep | Screens | 🟢 In review — logic in PR #13, screen in PR #14 |
+| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; model selection needs the OpenRouter key + labeled fixtures (not yet run) |
+| T13 | Security / OWASP scenarios + gate | Quality gates | 🟡 Partial — dependency-scan gate done (PR #12, ADR-0030); OWASP `/api/decode` input-validation gate remains |
+| T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
+| T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
+| T16 | Resume & application prep | Screens | ✅ Done (PR #13 + PR #14 merged) |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 16 done, 2 in flight (T16 parts, PRs #13 + #14), 1 in progress (T03 AI half), 1 to do (T13), 1 deferred (T12).
+Tally: 11 tickets done (T01, T02, T04–T11, T16) plus the foundation/infra rows; 3 in
+progress (T03 AI half, T14 manual WCAG pass, T15 credit fix pending merge); 1 partial
+(T13 dependency-scan done, OWASP gate remains); 1 blocked (T12 model selection needs the
+OpenRouter key + labeled fixtures). The only fully-unstarted work is the T13 OWASP gate.
 
 ## T16 sub-progress (resume & application prep)
 
@@ -50,12 +56,12 @@ Tally: 16 done, 2 in flight (T16 parts, PRs #13 + #14), 1 in progress (T03 AI ha
 | `buildPrepGuide` pure domain logic (ADR-0024) | ✅ Done |
 | Decode route returns the prep guide | ✅ Done |
 | `judge-arch` review of the logic (2 findings, both fixed) | ✅ Done |
-| Part 1 up for review (PR #13) | 🟢 In review |
+| Part 1 up for review (PR #13) | ✅ Merged |
 | `PrepView` five-step screen + copy buttons | ✅ Done |
 | `Results` "Prepare your application" button + `DecodeFlow` toggle | ✅ Done |
 | Component + `jest-axe` tests (zero violations) | ✅ Done |
 | `judge-arch` review of the screen (3 findings, 2 fixed, 1 no-change) | ✅ Done |
-| Part 2 up for review (PR #14, stacked on #13) | 🟢 In review |
+| Part 2 up for review (PR #14, stacked on #13) | ✅ Merged |
 | Supabase re-sync (skills changed the content hash) | ⬜ Owed (not blocking; app builds from local pinned data) |
 
 ## Sequencing notes
@@ -71,9 +77,11 @@ Tally: 16 done, 2 in flight (T16 parts, PRs #13 + #14), 1 in progress (T03 AI ha
 
 ## Still open for MVP 1
 
-- **T13 — Security / OWASP gate:** `@security` BDD for the `/api/decode` input validation,
+- **T13 — OWASP `/api/decode` gate (remaining half):** the dependency-scan gate is merged
+  (PR #12, ADR-0030). What remains is the `@security` BDD for `/api/decode` input validation,
   with the validation extracted to a pure domain check. The route already validates input
   (length caps, typed errors); this ticket makes that a tested, gated contract.
 - **T03 AI half — grounded LLM recognizer:** needs an OpenRouter key in `.env`. Until then
   the app runs the keyword matcher and labels results a "basic read."
-- **T12 — Eval accuracy gate:** deferred by your decision.
+- **T12 — Eval accuracy gate:** the harness is merged, but model selection (running candidate
+  models to pick one) needs the OpenRouter key and labeled fixtures, so that half has not run.
