@@ -549,6 +549,116 @@
         "high"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/security/decode-input.feature",
+      "feature": "The decode endpoint validates untrusted input before any work (T13)",
+      "scenario": "A blank posting is rejected",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-input-empty"
+      ],
+      "categories": [
+        "empty-overflow"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-input.feature",
+      "feature": "The decode endpoint validates untrusted input before any work (T13)",
+      "scenario": "A body that is not a JSON object is rejected",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-input-not-object"
+      ],
+      "categories": [
+        "adverse"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-input.feature",
+      "feature": "The decode endpoint validates untrusted input before any work (T13)",
+      "scenario": "A non-text posting is rejected",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-input-wrong-type"
+      ],
+      "categories": [
+        "negative"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-input.feature",
+      "feature": "The decode endpoint validates untrusted input before any work (T13)",
+      "scenario": "An oversized posting is rejected before any decoding runs",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-input-oversized"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/security/decode-input.feature",
+      "feature": "The decode endpoint validates untrusted input before any work (T13)",
+      "scenario": "Extra fields on the request are ignored, not bound",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-input-extra-fields"
+      ],
+      "categories": [
+        "adverse"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
     }
   ]
 }

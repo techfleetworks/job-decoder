@@ -7,10 +7,11 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-02 (a11y + licensing gap-fill on `feat/a11y-licensing-gaps`:
-inline CC BY credit added to the Prep screen, axe coverage added for HowItWorks and
-DecodeFlow. Status audit corrected a mis-attribution: PR #12 shipped the T13
-dependency-scan gate, not T14/T15 — those two are corrected below.).
+Last updated: 2026-11-02 (T13 OWASP input-validation gate on `feat/t13-owasp-gate`:
+`/api/decode` request rules extracted to a pure `validateDecodeInput` domain check with 5
+`@security` scenarios and a discriminating unit suite (ADR-0035). Earlier this day: a11y +
+licensing gap-fill merged (PR #16); a status audit corrected PR #12's mis-attribution (it
+shipped the T13 dependency-scan gate, not T14/T15).
 
 ## Release items
 
@@ -35,7 +36,7 @@ dependency-scan gate, not T14/T15 — those two are corrected below.).
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
 | T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; model selection needs the OpenRouter key + labeled fixtures (not yet run) |
-| T13 | Security / OWASP scenarios + gate | Quality gates | 🟡 Partial — dependency-scan gate done (PR #12, ADR-0030); OWASP `/api/decode` input-validation gate remains |
+| T13 | Security / OWASP scenarios + gate | Quality gates | 🟢 In progress — dependency-scan gate done (PR #12, ADR-0030); `/api/decode` input-validation gate built on `feat/t13-owasp-gate` (ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios), closes on merge; per-IP rate limiting is a noted follow-up |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
 | T16 | Resume & application prep | Screens | ✅ Done (PR #13 + PR #14 merged) |
@@ -77,10 +78,11 @@ OpenRouter key + labeled fixtures). The only fully-unstarted work is the T13 OWA
 
 ## Still open for MVP 1
 
-- **T13 — OWASP `/api/decode` gate (remaining half):** the dependency-scan gate is merged
-  (PR #12, ADR-0030). What remains is the `@security` BDD for `/api/decode` input validation,
-  with the validation extracted to a pure domain check. The route already validates input
-  (length caps, typed errors); this ticket makes that a tested, gated contract.
+- **T13 — OWASP `/api/decode` gate:** the dependency-scan gate is merged (PR #12, ADR-0030).
+  The input-validation gate is built on `feat/t13-owasp-gate` (ADR-0035): the request rules
+  are a pure `validateDecodeInput` domain check with 5 `@security` scenarios and a
+  discriminating unit suite. It closes on merge. Per-IP rate limiting (a flood, not a single
+  oversized request) is a noted follow-up, not in MVP1.
 - **T03 AI half — grounded LLM recognizer:** needs an OpenRouter key in `.env`. Until then
   the app runs the keyword matcher and labels results a "basic read."
 - **T12 — Eval accuracy gate:** the harness is merged, but model selection (running candidate

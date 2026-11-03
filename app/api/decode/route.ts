@@ -3,12 +3,13 @@
 // its own (those live in src/domain/decode) and no secrets. It reads the framework only
 // through the snapshot reader, never the database (ADR-0006).
 //
-// The posting is untrusted input, so the route validates its type and bounds its length
-// before doing any work (owasp). On failure it reports; it never returns a half result.
+// The body is untrusted input. The route parses it, then hands it to the domain's
+// validateDecodeInput for the server-side rules (type, bounds, non-empty) before doing any
+// work (owasp Input Validation). On failure it reports; it never returns a half result.
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { buildPrepGuide, decode, resolveTitle } from "@/domain/decode";
+import { buildPrepGuide, decode, resolveTitle, validateDecodeInput } from "@/domain/decode";
 import {
   loadDuties,
   loadDutyNames,
@@ -18,9 +19,6 @@ import {
   loadTitles,
   SnapshotMissingError,
 } from "@/data/server/snapshot";
-
-const MAX_TITLE = 200;
-const MAX_POSTING = 50_000;
 
 export async function POST(request: NextRequest) {
   let body: unknown;
@@ -33,26 +31,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { title, posting } = (body ?? {}) as { title?: unknown; posting?: unknown };
-  if (typeof title !== "string" || typeof posting !== "string") {
-    return NextResponse.json(
-      { error: "Both title and posting are required, and both must be text." },
-      { status: 400 },
-    );
+  // Validate the untrusted body against the server-side rules before any work runs. The
+  // rules live in the decode domain (validateDecodeInput), so they are tested on their own
+  // and enforced in one place (ADR-0035, owasp Input Validation).
+  const check = validateDecodeInput(body);
+  if (!check.ok) {
+    return NextResponse.json({ error: check.error }, { status: check.status });
   }
-  if (title.length > MAX_TITLE || posting.length > MAX_POSTING) {
-    return NextResponse.json({ error: "The title or posting is too long." }, { status: 413 });
-  }
-  const cleanPosting = posting.trim();
-  if (!cleanPosting) {
-    return NextResponse.json({ error: "The posting is empty." }, { status: 400 });
-  }
+  const { title, posting } = check.value;
 
   try {
     const fnSlug = resolveTitle(loadTitles(), title);
     const slice = fnSlug ? loadSlice(fnSlug) : null;
     const items = loadItems();
-    const result = decode({ posting: cleanPosting, items, slice, dutyNames: loadDutyNames() });
+    const result = decode({ posting, items, slice, dutyNames: loadDutyNames() });
     const prepGuide = buildPrepGuide(result, { duties: loadDuties(), skills: loadSkills(), items });
     return NextResponse.json({ ...result, prepGuide });
   } catch (err) {

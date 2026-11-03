@@ -29,5 +29,10 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | screens | The result screen speaks plainly | A keyword-only result is labeled a basic read | job-seeker | screen-basic-read | boundary | functional | medium | covered |
 | screens | The result screen speaks plainly | A strong fit says so in plain words | job-seeker | screen-strong-headline | happy | functional | medium | covered |
 | screens | The result screen speaks plainly | An uncovered title is reported honestly with no percentage | job-seeker | screen-not-covered | negative | functional | high | covered |
+| security | The decode endpoint validates untrusted input before any work (T13) | A blank posting is rejected | job-seeker | decode-input-empty | empty-overflow | security | medium | covered |
+| security | The decode endpoint validates untrusted input before any work (T13) | A body that is not a JSON object is rejected | job-seeker | decode-input-not-object | adverse | security | medium | covered |
+| security | The decode endpoint validates untrusted input before any work (T13) | A non-text posting is rejected | job-seeker | decode-input-wrong-type | negative | security | high | covered |
+| security | The decode endpoint validates untrusted input before any work (T13) | An oversized posting is rejected before any decoding runs | job-seeker | decode-input-oversized | boundary | security | high | covered |
+| security | The decode endpoint validates untrusted input before any work (T13) | Extra fields on the request are ignored, not bound | job-seeker | decode-input-extra-fields | adverse | security | medium | covered |
 
-Total: 25 scenario(s).
+Total: 30 scenario(s).
