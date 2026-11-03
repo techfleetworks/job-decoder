@@ -1,6 +1,6 @@
 {
-  "version": "1.3.1",
-  "generatedFrom": "techfleetworks/enterprise-software-AI-skills@1.3.1",
+  "version": "1.3.2",
+  "generatedFrom": "techfleetworks/enterprise-software-AI-skills@1.3.2",
   "gates": [
     {
       "id": "skill-gate-parity",
@@ -8,6 +8,7 @@
       "skill": "judge-arch",
       "script": "scripts/ci/check-skill-gate-parity.mjs",
       "sha256": "0384ac941158376f8e9b326418103634d0393baa244430fd68b49a82f16385a0",
+      "testSha256": "9039fedf694a736b7a9b375a7b374d184537222c83fb1800dde478c85a2762c5",
       "test": "test/skill-gate-parity.test.mjs",
       "lane": "required",
       "couples": [
@@ -21,6 +22,7 @@
       "skill": "judge-arch",
       "script": "scripts/ci/check-manifest-provenance.mjs",
       "sha256": "1816e07c4705c8ec8838cb84f882c75be9c79fd2202c16d524cacd8381672e25",
+      "testSha256": "4f7c381a2149d04a410944db90f8162552b888686d9dd2eda872e2ab5deceec6",
       "test": "test/manifest-provenance.test.mjs",
       "lane": "required",
       "couples": [
@@ -33,6 +35,7 @@
       "skill": "judge-arch",
       "script": "scripts/ci/check-bootstrap-presence.mjs",
       "sha256": "c441580c78177721f367ca3dc639d4d62a32445dcf748a36c22929a5621625aa",
+      "testSha256": "fab0e9b8e2e39ff0776a862aaaea4faf98b07bed2c88b033bc684ec57ef04f16",
       "test": "test/bootstrap-presence.test.mjs",
       "lane": "required",
       "couples": [
@@ -46,6 +49,7 @@
       "skill": "judge-arch",
       "script": "scripts/ci/check-reference-links.mjs",
       "sha256": "9eeb04ab6b27df6c7326fdb9206005ac6b1bfabfa7c8b45d43f8a78da01d1568",
+      "testSha256": "498932b9a5b7cb680ffe233177248acc31d3627c9226b613ce9045633a041e4c",
       "test": "test/reference-links.test.mjs",
       "lane": "required",
       "invoke": [
@@ -61,6 +65,7 @@
       "skill": "universal-browser-device-support",
       "script": "scripts/ci/check-no-ua-sniffing.mjs",
       "sha256": "29bb3eae7b18ac71cf0a94c86e20cff5ad008209d76483b2159269eaf6501ee6",
+      "testSha256": "956d6a38c304db75505d2c81ae1b862e0c4c81434ee2a6850b97d61d569187ec",
       "test": "test/no-ua-sniffing.test.mjs",
       "lane": "required",
       "invoke": [
@@ -80,6 +85,7 @@
       "skill": "owasp-secure-coding-bdd",
       "script": "scripts/ci/check-owasp-lints.mjs",
       "sha256": "cffc31a43c1cc4e486eed427e476d286c8c7451553e37855aa7a876e219b2186",
+      "testSha256": "056ac7a673d36033ed8202a6b59d40cf1980fe3d48b1b6bff43a78f9a2259520",
       "test": "test/owasp-lints.test.mjs",
       "lane": "required",
       "invoke": [
@@ -99,6 +105,7 @@
       "skill": "release-deployment-safety",
       "script": "scripts/ci/check-migration-safety.mjs",
       "sha256": "0c2b11bdf1e457f0df638f55f0a9eebc6df1ca212fba0174ba307b3c94c91507",
+      "testSha256": "03c0ab2a7dd8a59664cde45253562ce35395338ed03d1e59dc79e0d3baaa6c82",
       "test": "test/migration-safety.test.mjs",
       "lane": "required",
       "invoke": [
@@ -116,6 +123,7 @@
       "skill": "sre-operational-readiness",
       "script": "scripts/ci/check-alert-hygiene.mjs",
       "sha256": "913c51381fc99830da9bd595f962b6c914b19647768722693a86862fb5e8fb75",
+      "testSha256": "9dbfc46be12e62a869dc25029a6e3b7c2c2cef45e06b8761b26b7a68437b7648",
       "test": "test/alert-hygiene.test.mjs",
       "lane": "required",
       "invoke": [
@@ -133,6 +141,7 @@
       "skill": "judge-arch",
       "script": "scripts/ci/arch-gate.mjs",
       "sha256": "8385faf6534ae8c1fcdeb57c9c57acd0017265001dccbe6ce6f19a11ce1fd320",
+      "testSha256": "a46849de0e25353de6d19dd314bdfb9f9f4b8b267fed4d70ba14631331c37525",
       "test": "test/arch-gate.test.mjs",
       "lane": "required",
       "invoke": [
@@ -150,6 +159,7 @@
       "skill": "compliance-data-lifecycle",
       "script": "scripts/ci/check-untagged-pii.mjs",
       "sha256": "9de05deca43cadf4eeeaa3f460b2da9df7de38c0aa9df038056b4b1e0297a336",
+      "testSha256": "93a4247eee993ba2b5cb7e81963319b3bde67c66a9ad1d19686203b122f64a35",
       "test": "test/untagged-pii.test.mjs",
       "lane": "required",
       "invoke": [
@@ -169,6 +179,7 @@
       "skill": "compliance-data-lifecycle",
       "script": "scripts/ci/check-retention-basis.mjs",
       "sha256": "f41ef64dc0381c88fbbd8c9ec9b14d2d159e266130886478552a3a6559766e3f",
+      "testSha256": "1f362c3463015631647dfc0399e952a8d8bfc4bf2e77cac13954a6bd4231f9bd",
       "test": "test/retention-basis.test.mjs",
       "lane": "required",
       "invoke": [
