@@ -6,29 +6,40 @@
 
 const KEY = "jobdecoder:v1:scan";
 
+// In-memory fallback for when sessionStorage is unavailable (private mode, quota, blocked).
+// It keeps the current scan alive for the life of the tab so the app still works; it is
+// never persisted to the device, which is the intended session-only behavior (ADR-0011).
+// sessionStorage stays canonical when it works; this holds the scan only when it does not.
+let memoryScan: string | null = null;
+
 export function saveScan(scan: unknown): void {
+  const raw = JSON.stringify(scan);
   try {
-    sessionStorage.setItem(KEY, JSON.stringify(scan));
+    sessionStorage.setItem(KEY, raw);
+    memoryScan = null; // persisted: the store is canonical, so drop any stale memory copy
   } catch {
-    // Storage blocked or full (private mode, quota): recover by keeping the scan in
-    // memory only. The app still works for this tab; nothing is persisted, which is the
-    // intended session-only behavior anyway.
+    memoryScan = raw; // recover: storage blocked or full, so hold the scan in memory
   }
 }
 
 export function loadScan<T>(): T | null {
   try {
-    const raw = sessionStorage.getItem(KEY);
+    // Prefer the in-memory copy: it is set only when a write did not reach storage, so
+    // when present it is the freshest value (storage may still hold a stale one). When it
+    // is null the last write persisted, so storage is canonical.
+    const raw = memoryScan ?? sessionStorage.getItem(KEY);
     return raw ? (JSON.parse(raw) as T) : null;
   } catch {
-    return null; // absent or unreadable store reads as "no scan yet"
+    // Store unreadable: recover from the in-memory copy instead of losing the scan.
+    return memoryScan ? (JSON.parse(memoryScan) as T) : null;
   }
 }
 
 export function clearScan(): void {
   try {
     sessionStorage.removeItem(KEY);
+    memoryScan = null;
   } catch {
-    // Nothing to recover: if the store cannot be cleared, it is already unreachable.
+    memoryScan = null; // recover: store unreachable, so at least drop the in-memory copy
   }
 }

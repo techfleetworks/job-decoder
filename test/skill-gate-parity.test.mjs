@@ -1,0 +1,217 @@
+// Proves check-skill-gate-parity (PARITY-001, bootstrap-v2 PR 1) actually detects: it builds throwaway
+// fixture repos (a gate-manifest.json plus gate scripts) and runs the real gate against them via its
+// env seams, asserting exit codes - in-parity → 0, each drift/missing/unsanctioned class → 1, and
+// malformed/missing manifest → 2. Hashes are computed with node:crypto exactly as the gate does, so a
+// "matching" fixture genuinely matches and a "drifted" one genuinely differs. The test FAILS if the
+// gate stops detecting (discrimination), so a broken gate cannot pass.
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { resolve, join } from "node:path";
+import { tmpdir } from "node:os";
+
+// Locate the gate in EITHER layout: the upstream repo (.claude/skills/<skill>/scripts) or a consumer that
+// esk-genesis bootstrapped (scripts/ci). This test file is copied verbatim into a consumer, so it must find
+// the gate wherever it lives; a hardcoded upstream path makes every copied gate test fail in a consumer.
+const UPSTREAM = resolve(process.cwd(), ".claude/skills/judge-arch/scripts/check-skill-gate-parity.mjs");
+// Resolve the gate to the copy CI actually runs, not a vendored .claude/skills copy (issue #112). A consumer
+// keeps the gate at scripts/ci/check-skill-gate-parity.mjs (its GATE_DIR path, which the workflow sets); vendoring the skills also
+// drops a copy under .claude/skills that must NOT be the one tested. Prefer the GATE_DIR copy; fall back to the
+// upstream skill copy (this repo has no scripts/ci).
+const CI_DIR = process.env.GATE_DIR || resolve(process.cwd(), "scripts/ci");
+const CONSUMER = resolve(CI_DIR, "check-skill-gate-parity.mjs");
+const GUARD = [CONSUMER, UPSTREAM].find((p) => existsSync(p)) ?? UPSTREAM;
+test("gate resolution: tests the scripts/ci (GATE_DIR) copy CI runs, not a vendored .claude/skills copy (issue #112)", () => {
+  // In a consumer that vendors the skills both copies exist; the discrimination test must exercise the
+  // scripts/ci copy the aggregator runs. Upstream has no scripts/ci, so this is a no-op pass there.
+  if (existsSync(CONSUMER)) assert.equal(GUARD, CONSUMER, "must test the scripts/ci (GATE_DIR) gate, not the .claude/skills copy");
+});
+const created = [];
+const sha = (s) => createHash("sha256").update(s).digest("hex");
+
+/**
+ * Build a fixture repo. `gates` = [{id, script, content, hash?, test?, writeScript?, writeTest?}].
+ * `machinery` = [{id, content, hash?, writeScript?}] writes scripts/ci/run-<id>.mjs and lists it under
+ * the manifest's machinery array.
+ */
+function fixture({ gates = [], machinery = [], extraScripts = [], omitManifest = false, rawManifest } = {}) {
+  const root = mkdtempSync(join(tmpdir(), "parity-"));
+  created.push(root);
+  mkdirSync(join(root, "scripts", "ci"), { recursive: true });
+  mkdirSync(join(root, "test"), { recursive: true });
+  const manifestGates = [];
+  for (const g of gates) {
+    const rel = g.script ?? `scripts/ci/check-${g.id}.mjs`;
+    const testRel = g.test ?? `test/${g.id}.test.mjs`;
+    if (g.writeScript !== false) writeFileSync(join(root, rel), g.content ?? "// gate\n");
+    if (g.writeTest !== false) writeFileSync(join(root, testRel), g.testContent ?? "// test\n");
+    const entry = {
+      id: g.id,
+      script: rel,
+      sha256: g.hash ?? sha(g.content ?? "// gate\n"),
+      test: testRel,
+      lane: g.lane ?? "required",
+    };
+    if (g.testSha256 !== undefined) entry.testSha256 = g.testSha256; // #123: pin the test's content
+    if (g.omitTestField) delete entry.test;
+    manifestGates.push(entry);
+  }
+  const manifestMachinery = [];
+  for (const m of machinery) {
+    const rel = m.script ?? `scripts/ci/run-${m.id}.mjs`;
+    if (m.writeScript !== false) writeFileSync(join(root, rel), m.content ?? "// machinery\n");
+    manifestMachinery.push({ id: m.id, skill: "judge-arch", script: rel, sha256: m.hash ?? sha(m.content ?? "// machinery\n"), test: `test/${m.id}.test.mjs` });
+  }
+  for (const name of extraScripts) writeFileSync(join(root, "scripts", "ci", name), "// extra\n");
+  if (!omitManifest) {
+    const built = { version: "1.0.0", gates: manifestGates, aggregator: { requiredCheck: "gate" } };
+    if (manifestMachinery.length) built.machinery = manifestMachinery;
+    writeFileSync(join(root, "gate-manifest.json"), rawManifest ?? JSON.stringify(built));
+  }
+  return root;
+}
+
+function run(root) {
+  try {
+    execFileSync("node", [GUARD], {
+      stdio: "pipe",
+      env: { ...process.env, GATE_MANIFEST_FILE: join(root, "gate-manifest.json"), GATE_DIR: join(root, "scripts", "ci") },
+    });
+    return 0;
+  } catch (e) {
+    return e.status ?? 1;
+  }
+}
+
+test("PARITY: passes (0) when committed gates match the manifest", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha gate\n" }, { id: "beta", content: "// beta gate\n" }] });
+  assert.equal(run(root), 0);
+});
+
+test("PARITY: FLAGS (1) a drifted gate (sha256 mismatch)", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha gate\n", hash: sha("DIFFERENT") }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: FLAGS (1) a manifest gate whose script is missing", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n", writeScript: false }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: FLAGS (1) a manifest gate whose discrimination test is missing", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n", writeTest: false }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY ISSUE-123: passes (0) when a gate's test matches its testSha256", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n", testContent: "// real test\n", testSha256: sha("// real test\n") }] });
+  assert.equal(run(root), 0);
+});
+
+test("PARITY ISSUE-123: FLAGS (1) a hollowed discrimination test (content drifts from testSha256)", () => {
+  // The committed test was replaced with an always-pass one, but testSha256 still pins the real test's hash.
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n", testContent: "test('ok',()=>{});\n", testSha256: sha("// the real discriminating test\n") }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: a gate without testSha256 still verifies test existence only (back-compat)", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }] }); // no testSha256 pinned
+  assert.equal(run(root), 0);
+});
+
+test("PARITY: FLAGS (1) an unsanctioned committed gate not in the manifest (allow-list)", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], extraScripts: ["check-evil.mjs"] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: FLAGS (1) an unsanctioned .cjs gate (widened extension allow-list)", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], extraScripts: ["check-evil.cjs"] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: does NOT flag a non-gate helper file in the gate dir (no false positive)", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], extraScripts: ["_guard-lib.mjs"] });
+  assert.equal(run(root), 0);
+});
+
+test("PARITY: FLAGS (1) a manifest gate that names NO discrimination test", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n", omitTestField: true }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: fails CLOSED (2) on a malformed gate entry (script not a string)", () => {
+  const root = fixture({
+    rawManifest: JSON.stringify({ version: "1.0.0", gates: [{ id: "x", lane: "required" }], aggregator: { requiredCheck: "gate" } }),
+  });
+  assert.equal(run(root), 2);
+});
+
+test("PARITY: FLAGS (1) a gate whose script path escapes the repo (path traversal)", () => {
+  const root = fixture({ gates: [{ id: "alpha", script: "../../escape.mjs", writeScript: false, writeTest: false }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: passes (0) when a machinery script matches its manifest sha256", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], machinery: [{ id: "runner", content: "// runner\n" }] });
+  assert.equal(run(root), 0);
+});
+
+test("PARITY: FLAGS (1) a machinery script whose sha256 drifts from the manifest", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], machinery: [{ id: "runner", content: "// runner\n", hash: sha("DIFFERENT") }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: FLAGS (1) a machinery script that is missing", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], machinery: [{ id: "runner", content: "// runner\n", writeScript: false }] });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: fails CLOSED (2) on a malformed machinery entry (sha256 missing)", () => {
+  const root = fixture({ rawManifest: JSON.stringify({ version: "1.0.0", gates: [], machinery: [{ id: "runner", skill: "judge-arch", script: "scripts/ci/run-manifest-gates.mjs" }], aggregator: { requiredCheck: "gate" } }) });
+  assert.equal(run(root), 2);
+});
+
+test("PARITY: FLAGS (1) a machinery script path that escapes the repo (traversal)", () => {
+  const root = fixture({ rawManifest: JSON.stringify({ version: "1.0.0", gates: [], machinery: [{ id: "runner", skill: "judge-arch", script: "../evil.mjs", sha256: "a".repeat(64), test: "t" }], aggregator: { requiredCheck: "gate" } }) });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: FLAGS (1) a machinery script that uses the gate check- prefix (gate masquerading as machinery)", () => {
+  const root = fixture({ rawManifest: JSON.stringify({ version: "1.0.0", gates: [], machinery: [{ id: "evil", skill: "judge-arch", script: "scripts/ci/check-evil.mjs", sha256: "a".repeat(64), test: "t" }], aggregator: { requiredCheck: "gate" } }) });
+  assert.equal(run(root), 1);
+});
+
+test("PARITY: fails CLOSED (2) when the manifest is missing", () => {
+  const root = fixture({ gates: [{ id: "alpha", content: "// alpha\n" }], omitManifest: true });
+  assert.equal(run(root), 2);
+});
+
+test("PARITY: fails CLOSED (2) when the manifest is not a manifest (no gates array)", () => {
+  const root = fixture({ rawManifest: JSON.stringify({ version: "1.0.0" }) });
+  assert.equal(run(root), 2);
+});
+
+test("PARITY: hashes line-ending-stably — a CRLF script verifies against the LF-normalized manifest sha (ADR-0058, discriminating)", () => {
+  // The manifest sha must match a script whether it is checked out CRLF (Windows) or LF (Linux/CI). The
+  // manifest records the LF-normalized hash; parity normalizes before hashing, so both line-ending forms of
+  // the SAME content verify against it. Before the fix, parity hashed raw bytes, so a CRLF checkout produced
+  // a different hash than the LF-based manifest and failed (the bug that broke every gate on CI).
+  const body = "// gate\r\nexport const value = 1;\r\n"; // CRLF content
+  const normHash = createHash("sha256").update(body.replace(/\r\n/g, "\n")).digest("hex"); // LF-normalized sha
+  // CRLF working tree (Windows): must PASS against the normalized manifest sha. Reverting the fix fails here.
+  assert.equal(run(fixture({ gates: [{ id: "crlf", content: body, hash: normHash }] })), 0, "a CRLF script must verify against the LF-normalized manifest hash");
+  // LF working tree (Linux/CI): the SAME manifest sha must also pass.
+  assert.equal(run(fixture({ gates: [{ id: "lf", content: body.replace(/\r\n/g, "\n"), hash: normHash }] })), 0, "an LF script must verify against the same normalized hash");
+});
+
+process.on("exit", () => {
+  for (const d of created) {
+    try {
+      rmSync(d, { recursive: true, force: true });
+    } catch {
+      /* best-effort */
+    }
+  }
+});

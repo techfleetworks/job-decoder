@@ -1,0 +1,16 @@
+-- Migration 0002: drop the redundant spf_record index (ADR-0033, ADR-0031).
+--
+-- spf_record_entity_idx on (release_id, entity) is fully covered by the table's
+-- primary-key index on (release_id, entity, slug): every query the secondary index
+-- could serve (by release_id, or by release_id + entity) is already served by the
+-- primary key's left-prefix. The read path filters by release_id alone
+-- (pipeline/lib/release-source.mjs), which the primary key serves directly. Keeping
+-- both indexes only adds write amplification and storage on every insert, and that
+-- cost grows with the records synced per release, which is exactly what we do not
+-- want as the data scales (ADR-0033).
+--
+-- A plain DROP INDEX is safe here: spf_record is written only by the low-concurrency
+-- sync step, never by user request traffic (CQRS, ADR-0022), so the brief lock does
+-- not touch the hot path. For an index on a table under live write traffic, use
+-- DROP INDEX CONCURRENTLY instead, run outside a transaction (ADR-0031).
+drop index if exists public.spf_record_entity_idx;
