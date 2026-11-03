@@ -7,12 +7,15 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-02 (OpenRouter plumbing on `feat/openrouter-plumbing` (PR #18): the
-LLM step is pinned to US-based providers with data collection denied (ADR-0036), model and
-provider list are env-configured, and the eval harness honors the pin. This unblocks T03's
-AI half and a T12 model run once the key is set. Already merged today: T13 input-validation
-gate (PR #17, ADR-0035) and the a11y + licensing gap-fill (PR #16). T03 live recognizer is
-the next PR.)
+Last updated: 2026-11-03 (T03 live recognizer on `feat/t03-live-recognizer` (PR #19,
+ADR-0037): the grounded LLM recognizer now runs in `/api/decode`, a pure validator in the
+decode domain plus a server gateway, with the validated matches unioned into the keyword
+result and a keyword-only degrade when the key is absent. Five `@security` scenarios,
+discriminating unit suites, and a fresh-context `judge-arch` review (one real finding, a
+slug-alone resolution, fixed). This PR also re-applies the DeepSeek V4.1 Flash default that
+was lost from the PR #18 merge, so code, docs, and eval agree. Merged earlier: OpenRouter
+plumbing + US-provider pin (PR #18, ADR-0036). T12 still needs labeled fixtures; T14 manual
+WCAG pass is the last MVP item.)
 
 ## Release items
 
@@ -29,14 +32,14 @@ the next PR.)
 | T11 | Supabase data tier + snapshot pipeline | Data | ✅ Done (PR #7) |
 | T01 | Input screen (title + posting) | Screens | ✅ Done (PR #11) |
 | T02 | Title resolution (covered / not-covered) | Screens | ✅ Done (PR #11) |
-| T03 | Match wording (keyword + AI recognizer) | Decode engine | 🟢 In progress — keyword matcher done (PR #9); OpenRouter plumbing + US-provider pin ready on `feat/openrouter-plumbing` (ADR-0036, DeepSeek pinned to US hosts, data collection denied); live recognizer is the next PR |
+| T03 | Match wording (keyword + AI recognizer) | Decode engine | 🟢 In progress — keyword matcher done (PR #9); OpenRouter plumbing + US pin merged (PR #18, ADR-0036); live recognizer in `/api/decode` up for review (PR #19, ADR-0037), keyword + validated-LLM union with a keyword-only degrade; merges once reviewed and the key is set |
 | T04 | Responsible roll-up | Decode engine | ✅ Done (PR #9) |
 | T05 | Classify + verdict bands | Decode engine | ✅ Done (PR #9) |
 | T06 | Results stepper (covered / missed / added hats) | Screens | ✅ Done (PR #11) |
 | T07 | Receipt + unplaced lines per hat | Screens | ✅ Done (PR #11) |
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
-| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; OpenRouter plumbing + US-provider pin ready (ADR-0036), so a model run is unblocked once the key is set; a validated threshold still needs labeled fixtures |
+| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; OpenRouter plumbing + US pin merged (PR #18) and the live recognizer is up (PR #19), so a model run is unblocked once the key is set; a validated threshold still needs labeled fixtures |
 | T13 | Security / OWASP scenarios + gate | Quality gates | ✅ Done — dependency-scan gate (PR #12, ADR-0030) and `/api/decode` input-validation gate (PR #17, ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios) both merged; per-IP rate limiting is a noted follow-up |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
@@ -44,10 +47,10 @@ the next PR.)
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
 Tally: 13 tickets done (T01, T02, T04–T11, T13, T15, T16) plus the foundation/infra rows;
-2 in progress (T03 AI half, with the OpenRouter plumbing + US pin now ready; T14 manual
-WCAG pass, sequenced last); 1 blocked (T12 model selection, unblocked once the key is set
-but a validated threshold still needs labeled fixtures). T15 lands when PR #16 merged (it
-has); T14's manual WCAG 2.2 AA pass is the last MVP item.
+2 in progress (T03 AI half, live recognizer up for review in PR #19; T14 manual WCAG pass,
+sequenced last); 1 blocked (T12 model selection, unblocked once the key is set but a
+validated threshold still needs labeled fixtures). T14's manual WCAG 2.2 AA pass is the last
+MVP item.
 
 ## T16 sub-progress (resume & application prep)
 
