@@ -28,6 +28,8 @@ describe("PrepView", () => {
     const { container } = renderWithTheme(<PrepView prepGuide={guide} basicRead={false} onBack={() => {}} />);
     expect(screen.getByRole("heading", { level: 1, name: /prepare your application/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(/skills for your resume/i);
+    // The prep screen shows framework-derived data, so it must carry the CC BY credit line too (T15).
+    expect(screen.getByRole("link", { name: /licensed under cc by/i })).toBeInTheDocument();
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
   });

@@ -7,8 +7,10 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import MobileStepper from "@mui/material/MobileStepper";
 import Typography from "@mui/material/Typography";
+import FrameworkCredit from "@/components/FrameworkCredit";
 import type { HighlightItem, PrepGuide, PrepPoint, SkillPrepItem } from "@/domain/decode";
 
 interface Props {
@@ -238,6 +240,13 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
           Back to the results
         </Button>
       </Box>
+
+      {/* This screen shows framework-derived data (skills, activities, deliverables), so it
+          carries the attribution line here too, not only on the results screen (ADR-0009
+          NFR-9: the CC BY credit appears on every screen that shows framework data). The
+          divider matches the results screen's footer separation. */}
+      <Divider sx={{ my: 3 }} />
+      <FrameworkCredit />
     </Box>
   );
 }
