@@ -38,7 +38,7 @@ the next PR.)
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
 | T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; OpenRouter plumbing + US-provider pin ready (ADR-0036), so a model run is unblocked once the key is set; a validated threshold still needs labeled fixtures |
 | T13 | Security / OWASP scenarios + gate | Quality gates | ✅ Done — dependency-scan gate (PR #12, ADR-0030) and `/api/decode` input-validation gate (PR #17, ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios) both merged; per-IP rate limiting is a noted follow-up |
-| T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
+| T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components merged (PR #16); manual WCAG 2.2 AA pass done (PR #20, ADR-0038): keyboard + a11y-tree audit on the live site, conformance record committed, 4 focus/announcement findings fixed; one audio screen-reader pass is the remaining human step |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
 | T16 | Resume & application prep | Screens | ✅ Done (PR #13 + PR #14 merged) |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |

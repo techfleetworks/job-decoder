@@ -22,6 +22,7 @@ export default function HowItWorks() {
         open={open}
         onClose={() => setOpen(false)}
         aria-labelledby="how-it-works-title"
+        aria-modal
         scroll="paper"
         maxWidth="sm"
       >

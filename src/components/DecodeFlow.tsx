@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
@@ -22,6 +22,9 @@ export default function DecodeFlow() {
   const [view, setView] = useState<"results" | "prep">("results");
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // True once a decode has shown a result, so returning to the form moves focus to its
+  // heading. It stays false on first load, where focus should start at the top of the page.
+  const decodedOnce = useRef(false);
 
   useEffect(() => {
     // Restore the current scan for this tab, but only if it still matches the result
@@ -37,6 +40,7 @@ export default function DecodeFlow() {
     const res = await decodePosting(title, posting);
     setWorking(false);
     if (res.ok) {
+      decodedOnce.current = true;
       setResult(res.result);
       setView("results");
       saveScan(res.result);
@@ -56,7 +60,12 @@ export default function DecodeFlow() {
     <Container component="main" maxWidth="sm">
       <Box sx={{ py: 6 }}>
         {!result ? (
-          <InputForm onSubmit={handleSubmit} working={working} error={error} />
+          <InputForm
+            onSubmit={handleSubmit}
+            working={working}
+            error={error}
+            autoFocusHeading={decodedOnce.current}
+          />
         ) : view === "prep" && result.prepGuide ? (
           <PrepView prepGuide={result.prepGuide} basicRead={isBasicRead(result)} onBack={() => setView("results")} />
         ) : (

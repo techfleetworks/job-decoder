@@ -36,4 +36,14 @@ describe("InputForm", () => {
     await userEvent.click(screen.getByRole("button", { name: /decode this posting/i }));
     expect(onSubmit).not.toHaveBeenCalled();
   });
+
+  it("does not steal focus on first load", () => {
+    renderWithTheme(<InputForm onSubmit={() => {}} working={false} />);
+    expect(screen.getByRole("heading", { level: 1, name: "Hat Check" })).not.toHaveFocus();
+  });
+
+  it("moves focus to the heading when returning to a fresh form (WCAG 2.4.3)", () => {
+    renderWithTheme(<InputForm onSubmit={() => {}} working={false} autoFocusHeading />);
+    expect(screen.getByRole("heading", { level: 1, name: "Hat Check" })).toHaveFocus();
+  });
 });

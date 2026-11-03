@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
@@ -12,13 +12,21 @@ interface Props {
   onSubmit: (title: string, posting: string) => void;
   working: boolean;
   error?: string | null;
+  /** Move focus to the heading on mount, used when returning to a fresh form from a result,
+   *  so focus is not left on the body. Off on first load, where focus starts at the top. */
+  autoFocusHeading?: boolean;
 }
 
 // The input screen: one job title, one pasted posting, one primary action (ADR-0013).
-export default function InputForm({ onSubmit, working, error }: Props) {
+export default function InputForm({ onSubmit, working, error, autoFocusHeading }: Props) {
   const [title, setTitle] = useState("");
   const [posting, setPosting] = useState("");
   const [touched, setTouched] = useState(false);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (autoFocusHeading) headingRef.current?.focus();
+  }, [autoFocusHeading]);
 
   const titleEmpty = title.trim().length === 0;
   const postingEmpty = posting.trim().length === 0;
@@ -32,7 +40,7 @@ export default function InputForm({ onSubmit, working, error }: Props) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate>
-      <Typography variant="h1" gutterBottom>
+      <Typography variant="h1" gutterBottom tabIndex={-1} ref={headingRef}>
         Hat Check
       </Typography>
       <Typography variant="body1" sx={{ mb: 3 }}>
