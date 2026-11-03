@@ -7,10 +7,11 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-02 (a11y + licensing gap-fill on `feat/a11y-licensing-gaps`:
-inline CC BY credit added to the Prep screen, axe coverage added for HowItWorks and
-DecodeFlow. Status audit corrected a mis-attribution: PR #12 shipped the T13
-dependency-scan gate, not T14/T15 — those two are corrected below.).
+Last updated: 2026-11-02 (OpenRouter plumbing on `feat/openrouter-plumbing`: the LLM step
+is pinned to US-based providers with data collection denied (ADR-0036), model and provider
+list are env-configured, and the eval harness honors the pin. This unblocks T03's AI half
+and a T12 model run once the key is set. Separately in flight: T13 input-validation gate
+(PR #17); T03 live recognizer is the next PR.).
 
 ## Release items
 
@@ -27,14 +28,14 @@ dependency-scan gate, not T14/T15 — those two are corrected below.).
 | T11 | Supabase data tier + snapshot pipeline | Data | ✅ Done (PR #7) |
 | T01 | Input screen (title + posting) | Screens | ✅ Done (PR #11) |
 | T02 | Title resolution (covered / not-covered) | Screens | ✅ Done (PR #11) |
-| T03 | Match wording (keyword + AI recognizer) | Decode engine | 🟢 In progress — keyword matcher done (PR #9); AI half deferred (needs OpenRouter key) |
+| T03 | Match wording (keyword + AI recognizer) | Decode engine | 🟢 In progress — keyword matcher done (PR #9); OpenRouter plumbing + US-provider pin ready on `feat/openrouter-plumbing` (ADR-0036, DeepSeek pinned to US hosts, data collection denied); live recognizer is the next PR |
 | T04 | Responsible roll-up | Decode engine | ✅ Done (PR #9) |
 | T05 | Classify + verdict bands | Decode engine | ✅ Done (PR #9) |
 | T06 | Results stepper (covered / missed / added hats) | Screens | ✅ Done (PR #11) |
 | T07 | Receipt + unplaced lines per hat | Screens | ✅ Done (PR #11) |
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
-| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; model selection needs the OpenRouter key + labeled fixtures (not yet run) |
+| T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; OpenRouter plumbing + US-provider pin ready (ADR-0036), so a model run is unblocked once the key is set; a validated threshold still needs labeled fixtures |
 | T13 | Security / OWASP scenarios + gate | Quality gates | 🟡 Partial — dependency-scan gate done (PR #12, ADR-0030); OWASP `/api/decode` input-validation gate remains |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |

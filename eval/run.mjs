@@ -21,10 +21,20 @@ import { scoreFixture, aggregate } from './lib/score.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
+function splitList(s) {
+  return String(s)
+    .split(',')
+    .map((x) => x.trim())
+    .filter(Boolean);
+}
+
 function parseArgs(argv) {
   const args = {
     llm: true,
-    model: 'openai/gpt-4o-mini',
+    // Model and the US-based provider allow-list default from the environment, so the same
+    // choice drives the harness and (later) the app. See .env.example and ADR-0036.
+    model: process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat-v3.1',
+    providers: splitList(process.env.OPENROUTER_PROVIDERS || 'deepinfra'),
     fixtures: join(HERE, 'fixtures.example.json'),
     detail: false,
     aliases: true,
@@ -35,6 +45,7 @@ function parseArgs(argv) {
     if (a === '--no-llm') args.llm = false;
     else if (a === '--no-aliases') args.aliases = false;
     else if (a === '--model') args.model = argv[++i];
+    else if (a === '--providers') args.providers = splitList(argv[++i]);
     else if (a === '--fixtures') args.fixtures = resolve(argv[++i]);
     else if (a === '--detail') args.detail = true;
     else if (a === '--help' || a === '-h') args.help = true;
@@ -55,12 +66,15 @@ function printHelp() {
       '',
       'Options:',
       '  --no-llm            keyword-only baseline, makes no network call',
-      '  --model <id>        OpenRouter model id to test (default openai/gpt-4o-mini)',
+      '  --model <id>        OpenRouter model id (default $OPENROUTER_MODEL or deepseek/deepseek-chat-v3.1)',
+      '  --providers <list>  comma-separated US-based provider allow-list, pinned with no',
+      '                      fallback (default $OPENROUTER_PROVIDERS or deepinfra)',
       '  --fixtures <path>   JSON array of labeled postings (default fixtures.example.json)',
       '  --detail            list each matched item',
       '  --help              show this help',
       '',
-      'Set OPENROUTER_API_KEY in the environment for the LLM step.',
+      'Set OPENROUTER_API_KEY in the environment for the LLM step. The request pins to the',
+      'provider allow-list with data collection denied (ADR-0036).',
     ].join('\n'),
   );
 }
@@ -144,6 +158,11 @@ async function main() {
       `(${fw.activities.length} activities, ${fw.deliverables.length} deliverables, ${fw.tools.length} tools)`,
   );
   console.log(`Mode: ${args.llm ? 'keyword + LLM (' + args.model + ')' : 'keyword only (--no-llm)'}`);
+  if (args.llm) {
+    console.log(
+      `Providers: ${args.providers.length ? args.providers.join(', ') + ' only, no fallback' : 'any'}, data_collection denied`,
+    );
+  }
   console.log(`Aliases: ${args.aliases ? Object.keys(aliasMap).length + ' leaf items (translator table)' : 'off (--no-aliases)'}`);
   console.log(`Fixtures: ${fixtures.length} from ${args.fixtures}`);
 
@@ -153,7 +172,7 @@ async function main() {
     let llm = [];
     if (args.llm) {
       try {
-        const r = await recognize(fw, fx.posting, { model: args.model, apiKey });
+        const r = await recognize(fw, fx.posting, { model: args.model, apiKey, providers: args.providers });
         llm = r.matches;
       } catch (e) {
         llmDown++;
