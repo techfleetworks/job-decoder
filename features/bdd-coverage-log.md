@@ -88,3 +88,21 @@ history is the receipt.
   the integrity gate gained R4 (every referenced skill resolves and has a Skill Type) with a
   discriminating test; `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`,
   `check-bdd-executed`, and `check:snapshot-integrity` all PASS.
+
+## 2026-11-02 — T13 decode input validation (OWASP security gate)
+
+- Change: `feat/t13-owasp-gate` (T13). Extracts the `/api/decode` request rules into a pure
+  domain check (`src/domain/decode/validate.ts`, `validateDecodeInput`) and has the route call
+  it, so the server-side allow-list is tested on its own and enforced in one place (ADR-0035).
+  OWASP threat model: Input Validation (high), Denial of Service via oversized input (high),
+  Mass Assignment (medium). No new runtime dependency.
+- Scenarios added. Feature "The decode endpoint validates untrusted input before any work"
+  (`@audience:job-seeker`):
+  - `decode-input-oversized` (boundary, security, high)
+  - `decode-input-wrong-type` (negative, security, high)
+  - `decode-input-not-object` (adverse, security, medium)
+  - `decode-input-empty` (empty-overflow, security, medium)
+  - `decode-input-extra-fields` (adverse, security, medium)
+- Gate result: `test:bdd` ran all scenarios green; `validateDecodeInput` has a discriminating
+  Vitest suite (8 cases); `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
+  `check-bdd-executed` all PASS.

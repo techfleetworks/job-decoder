@@ -7,11 +7,12 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-02 (OpenRouter plumbing on `feat/openrouter-plumbing`: the LLM step
-is pinned to US-based providers with data collection denied (ADR-0036), model and provider
-list are env-configured, and the eval harness honors the pin. This unblocks T03's AI half
-and a T12 model run once the key is set. Separately in flight: T13 input-validation gate
-(PR #17); T03 live recognizer is the next PR.).
+Last updated: 2026-11-02 (OpenRouter plumbing on `feat/openrouter-plumbing` (PR #18): the
+LLM step is pinned to US-based providers with data collection denied (ADR-0036), model and
+provider list are env-configured, and the eval harness honors the pin. This unblocks T03's
+AI half and a T12 model run once the key is set. Already merged today: T13 input-validation
+gate (PR #17, ADR-0035) and the a11y + licensing gap-fill (PR #16). T03 live recognizer is
+the next PR.)
 
 ## Release items
 
@@ -36,16 +37,17 @@ and a T12 model run once the key is set. Separately in flight: T13 input-validat
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
 | T12 | Eval accuracy gate (threshold + labels) | Quality gates | ⏸️ Blocked — harness merged; OpenRouter plumbing + US-provider pin ready (ADR-0036), so a model run is unblocked once the key is set; a validated threshold still needs labeled fixtures |
-| T13 | Security / OWASP scenarios + gate | Quality gates | 🟡 Partial — dependency-scan gate done (PR #12, ADR-0030); OWASP `/api/decode` input-validation gate remains |
+| T13 | Security / OWASP scenarios + gate | Quality gates | ✅ Done — dependency-scan gate (PR #12, ADR-0030) and `/api/decode` input-validation gate (PR #17, ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios) both merged; per-IP rate limiting is a noted follow-up |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | 🟢 In progress — axe coverage for all components (HowItWorks + DecodeFlow added on `feat/a11y-licensing-gaps`); manual WCAG 2.2 AA pass is the last MVP item |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
 | T16 | Resume & application prep | Screens | ✅ Done (PR #13 + PR #14 merged) |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 11 tickets done (T01, T02, T04–T11, T16) plus the foundation/infra rows; 3 in
-progress (T03 AI half, T14 manual WCAG pass, T15 credit fix pending merge); 1 partial
-(T13 dependency-scan done, OWASP gate remains); 1 blocked (T12 model selection needs the
-OpenRouter key + labeled fixtures). The only fully-unstarted work is the T13 OWASP gate.
+Tally: 13 tickets done (T01, T02, T04–T11, T13, T15, T16) plus the foundation/infra rows;
+2 in progress (T03 AI half, with the OpenRouter plumbing + US pin now ready; T14 manual
+WCAG pass, sequenced last); 1 blocked (T12 model selection, unblocked once the key is set
+but a validated threshold still needs labeled fixtures). T15 lands when PR #16 merged (it
+has); T14's manual WCAG 2.2 AA pass is the last MVP item.
 
 ## T16 sub-progress (resume & application prep)
 
@@ -78,11 +80,17 @@ OpenRouter key + labeled fixtures). The only fully-unstarted work is the T13 OWA
 
 ## Still open for MVP 1
 
-- **T13 — OWASP `/api/decode` gate (remaining half):** the dependency-scan gate is merged
-  (PR #12, ADR-0030). What remains is the `@security` BDD for `/api/decode` input validation,
-  with the validation extracted to a pure domain check. The route already validates input
-  (length caps, typed errors); this ticket makes that a tested, gated contract.
-- **T03 AI half — grounded LLM recognizer:** needs an OpenRouter key in `.env`. Until then
-  the app runs the keyword matcher and labels results a "basic read."
-- **T12 — Eval accuracy gate:** the harness is merged, but model selection (running candidate
-  models to pick one) needs the OpenRouter key and labeled fixtures, so that half has not run.
+- **T03 AI half — grounded LLM recognizer:** the OpenRouter plumbing and US-provider pin are
+  ready (PR #18, ADR-0036). What remains is the live recognizer in `/api/decode` (the next
+  PR) and the key in `.env` / Vercel. Until the key is set the app runs the keyword matcher
+  and labels results a "basic read."
+- **T12 — Eval accuracy gate:** the harness is merged and the OpenRouter pin is ready, so a
+  model run is unblocked once the key is set; a validated threshold still needs hand-labeled
+  fixtures.
+- **T14 — manual WCAG 2.2 AA pass:** the last MVP item, by decision. Keyboard, screen reader,
+  contrast, and the 2.2-specific criteria on the live site; axe coverage is already in CI.
+
+Resolved since the last board: **T13** (both the dependency-scan gate, PR #12, and the
+`/api/decode` input-validation gate, PR #17, are merged; per-IP rate limiting is a noted
+follow-up). Per-IP rate limiting is a flood defense, not a single-request one, and is out of
+MVP1 scope.
