@@ -54,4 +54,18 @@ describe("PrepView", () => {
     await userEvent.click(screen.getByRole("button", { name: /back to the results/i }));
     expect(onBack).toHaveBeenCalled();
   });
+
+  it("moves focus to the heading on entry, so the new screen is announced (WCAG 2.4.3)", () => {
+    renderWithTheme(<PrepView prepGuide={guide} basicRead={false} onBack={() => {}} />);
+    expect(screen.getByRole("heading", { level: 1, name: /prepare your application/i })).toHaveFocus();
+  });
+
+  it("announces the result of a copy in a live region (WCAG 4.1.3)", async () => {
+    const user = userEvent.setup();
+    renderWithTheme(<PrepView prepGuide={guide} basicRead={false} onBack={() => {}} />);
+    await user.click(screen.getByRole("button", { name: /next/i })); // activities
+    await user.click(screen.getByRole("button", { name: /next/i })); // ATS keywords
+    await user.click(screen.getByRole("button", { name: /copy all keywords/i }));
+    expect(await screen.findByText(/copied to your clipboard/i)).toBeInTheDocument();
+  });
 });

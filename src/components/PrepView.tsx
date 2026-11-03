@@ -23,13 +23,16 @@ function hatNames(hats: { name: string }[]): string {
   return hats.map((h) => h.name).join(", ");
 }
 
-async function copy(text: string): Promise<void> {
+async function copy(text: string): Promise<boolean> {
   try {
     await navigator.clipboard.writeText(text);
+    return true;
   } catch (err) {
     // The clipboard can be blocked (permissions, insecure context). There is nothing to
-    // recover (the text stays on screen to select by hand), so report it and move on.
+    // recover (the text stays on screen to select by hand), so report it to the caller, which
+    // tells the user, and log for diagnosis.
     console.warn("Clipboard copy failed; the text can be selected manually.", err);
+    return false;
   }
 }
 
@@ -107,13 +110,23 @@ function PointList({ points }: { points: PrepPoint[] }) {
 }
 
 export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const mounted = useRef(false);
   const [active, setActive] = useState(0);
+  const [copyStatus, setCopyStatus] = useState("");
 
   const allKeywords = prepGuide.atsKeywords.flatMap((g) => g.keywords);
   const coverText = prepGuide.coverLetterPoints.map((p) => `${p.hatName}: ${p.text}`).join("\n");
   const interviewText = prepGuide.interviewPoints.map((p) => `${p.hatName}: ${p.text}`).join("\n");
+
+  // Copy, then tell the user what happened in a live region, so a screen-reader user hears
+  // the result (the clipboard gives no visible change). A blocked clipboard reports the
+  // fallback instead of failing silently.
+  async function handleCopy(text: string) {
+    const ok = await copy(text);
+    setCopyStatus(ok ? "Copied to your clipboard." : "Copy failed. Select the text to copy it by hand.");
+  }
 
   const steps = [
     {
@@ -153,7 +166,7 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
       title: "ATS keywords",
       content: (
         <>
-          <Button variant="outlined" onClick={() => void copy(allKeywords.join(", "))} sx={{ mb: 2 }}>
+          <Button variant="outlined" onClick={() => void handleCopy(allKeywords.join(", "))} sx={{ mb: 2 }}>
             Copy all keywords
           </Button>
           {prepGuide.atsKeywords.map((g) => (
@@ -170,7 +183,7 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
       content: (
         <>
           {prepGuide.coverLetterPoints.length > 0 ? (
-            <Button variant="outlined" onClick={() => void copy(coverText)} sx={{ mb: 2 }}>
+            <Button variant="outlined" onClick={() => void handleCopy(coverText)} sx={{ mb: 2 }}>
               Copy cover letter points
             </Button>
           ) : null}
@@ -183,7 +196,7 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
       content: (
         <>
           {prepGuide.interviewPoints.length > 0 ? (
-            <Button variant="outlined" onClick={() => void copy(interviewText)} sx={{ mb: 2 }}>
+            <Button variant="outlined" onClick={() => void handleCopy(interviewText)} sx={{ mb: 2 }}>
               Copy interview points
             </Button>
           ) : null}
@@ -193,6 +206,13 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
     },
   ];
 
+  // On entry, move focus to the screen's heading so a screen-reader user hears that the prep
+  // view opened, instead of focus falling to the body (as Results does on its mount).
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+  // On a later step change, move focus to that step's heading so it is announced. Skip the
+  // first run so the screen heading stays the first thing read.
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
@@ -203,7 +223,7 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
 
   return (
     <Box>
-      <Typography variant="h1" gutterBottom>
+      <Typography variant="h1" gutterBottom tabIndex={-1} ref={headingRef}>
         Prepare your application
       </Typography>
       {basicRead ? (
@@ -247,6 +267,26 @@ export default function PrepView({ prepGuide, basicRead, onBack }: Props) {
           divider matches the results screen's footer separation. */}
       <Divider sx={{ my: 3 }} />
       <FrameworkCredit />
+
+      {/* A visually hidden live region, so a screen-reader user hears whether a copy worked;
+          the clipboard itself gives no visible change. */}
+      <Box
+        role="status"
+        aria-live="polite"
+        sx={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          p: 0,
+          m: "-1px",
+          overflow: "hidden",
+          clip: "rect(0 0 0 0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        {copyStatus}
+      </Box>
     </Box>
   );
 }
