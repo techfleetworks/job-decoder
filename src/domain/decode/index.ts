@@ -16,6 +16,8 @@ export * from "./types";
 export { BANDS } from "./classify";
 export { keywordMatch, unionMatches } from "./match";
 export { buildPrepGuide } from "./prep";
+export { MAX_POSTING, MAX_TITLE, validateDecodeInput } from "./validate";
+export type { DecodeInputCheck, DecodeInputReason } from "./validate";
 export type {
   HighlightItem,
   KeywordGroup,
