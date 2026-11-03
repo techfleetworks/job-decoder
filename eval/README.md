@@ -15,7 +15,10 @@ node eval/run.mjs --no-llm
 
 # keyword + LLM (reads the key from the environment)
 export OPENROUTER_API_KEY=...        # never pass the key on the command line
-node eval/run.mjs --model openai/gpt-4o-mini
+node eval/run.mjs                    # default model deepseek/deepseek-chat-v3.1, pinned to US providers
+
+# pick a model and the US-based provider allow-list (pinned, no fallback, data collection denied)
+node eval/run.mjs --model deepseek/deepseek-chat-v3.1 --providers deepinfra
 
 # compare models on the same fixtures
 node eval/run.mjs --model anthropic/claude-3.5-haiku
@@ -107,6 +110,12 @@ illustrative only; replace it with real postings labeled by hand.
   against the framework and the posting, a prompt-injected instruction cannot add a
   fake item or change the result.
 - The endpoint is fixed, so there is no user-controlled URL (no SSRF).
+- The request is pinned to a US-based provider allow-list (`--providers` or
+  `OPENROUTER_PROVIDERS`, default `deepinfra`) with no fallback, and data collection is
+  always denied, so the posting only reaches a US-based provider that will not retain or
+  train on it, or the call fails closed to keyword-only. Honest limit: OpenRouter does not
+  expose a provider's datacenter country, so this pins to US-based provider companies, not a
+  guaranteed US datacenter (ADR-0036).
 - The LLM call has a timeout; a failure degrades to the keyword-only result rather
   than blocking.
 

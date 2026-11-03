@@ -9,6 +9,13 @@
 //
 // The key is read by the caller from the environment and passed in. It is never
 // logged. The endpoint is fixed, so there is no user-controlled URL (no SSRF).
+//
+// Provider routing (ADR-0036): the posting is sent to a third party, so we pin the
+// request to a caller-supplied allow-list of US-based inference providers, forbid
+// fallbacks (so it never silently routes elsewhere), and set data_collection "deny" so
+// the provider will not retain or train on the posting. With no allow-list we still deny
+// data collection. Honest limit: OpenRouter does not expose a provider's datacenter
+// country, so this pins to US-based provider companies, not a guaranteed US datacenter.
 
 import { normalize, includesPhrase } from './text.mjs';
 
@@ -42,13 +49,22 @@ export function buildPrompt(fw, posting) {
 }
 
 export async function recognize(fw, posting, opts = {}) {
-  const { model, apiKey, timeoutMs = 30000 } = opts;
+  const { model, apiKey, timeoutMs = 30000, providers = [] } = opts;
   if (!apiKey) throw new OpenRouterError('OPENROUTER_API_KEY is not set');
   if (!model) throw new OpenRouterError('no model specified');
 
   const { system, user } = buildPrompt(fw, posting);
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+
+  // Always refuse providers that collect the data. When an allow-list is given, restrict
+  // to it and forbid fallbacks, so the request only ever reaches a US-based provider or
+  // fails (never a provider outside the list).
+  const provider = { data_collection: 'deny' };
+  if (providers.length > 0) {
+    provider.only = providers;
+    provider.allow_fallbacks = false;
+  }
 
   let res;
   try {
@@ -66,6 +82,7 @@ export async function recognize(fw, posting, opts = {}) {
         ],
         temperature: 0,
         response_format: { type: 'json_object' },
+        provider,
       }),
       signal: ctrl.signal,
     });
