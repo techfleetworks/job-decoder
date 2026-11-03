@@ -98,8 +98,33 @@ A fixture is a posting with the items a human says it describes:
 ```
 
 `expected` uses framework **slugs**, not labels. A fixture with no `expected` set
-is still decoded and printed, but not scored. `fixtures.example.json` is
-illustrative only; replace it with real postings labeled by hand.
+is still decoded and printed, but not scored.
+
+Two fixture files ship:
+
+- `fixtures.example.json` is illustrative only (two postings). It is the default so
+  `node eval/run.mjs` runs with no setup.
+- `fixtures.labeled.json` is the hand-labeled starter set used for model selection
+  (T12). Run it with `--fixtures eval/fixtures.labeled.json`.
+
+```bash
+# keyword-only baseline on the labeled set (no key, no network)
+node eval/run.mjs --no-llm --fixtures eval/fixtures.labeled.json
+
+# compare a model against the same labels
+node eval/run.mjs --fixtures eval/fixtures.labeled.json --model deepseek/deepseek-v4.1-flash-1017
+```
+
+**Labeling convention** (so the labels are repeatable, not a vibe): the postings are
+original text written in natural hiring language, not verbatim real postings, so no
+copyrighted posting is reproduced and the wording deliberately avoids the framework's
+exact labels. The `expected` set is what a human reader says the posting describes:
+an **activity** when the posting describes doing the work, a **deliverable** when it
+names the artifact produced, a **tool** when it is named. Labels are a human judgment
+and reasonable readers can differ at the margin; they are ground truth pending review,
+not an oracle. The set covers one strong-match posting per covered job function plus a
+title-fit mismatch and a not-covered title (both unscored); expand it with more
+postings per function before trusting the aggregate.
 
 ## Security
 
@@ -124,9 +149,13 @@ production `/api/decode` route are tracked under backlog ticket T13.
 
 ## Honest limits
 
-- The example fixtures are illustrative. Precision and recall are only meaningful
-  once real postings are labeled by a human, so today the accuracy numbers are
-  `not-assessed`, and what is `observed` is that the harness runs and computes.
+- The hand-labeled starter set (`fixtures.labeled.json`) gives a measured keyword
+  baseline (`observed`): high precision, low recall, because the postings paraphrase
+  the work rather than naming framework items, which is the gap the LLM step exists to
+  close. The LLM precision and recall are still `not-assessed` until the model is run
+  against the same labels (needs `OPENROUTER_API_KEY`). The **accuracy threshold** that
+  gates model selection is a decision for Morgan, not set here. The labels themselves
+  are human judgment, so the aggregate is only as good as the label set and its size.
 - The keyword matcher is lexical (exact and similar token matching, scoped to a
   line). It does not stem or understand paraphrase, which is exactly the gap the LLM
   step is meant to close and the reason this harness exists: to measure whether it
