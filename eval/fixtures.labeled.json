@@ -1,0 +1,176 @@
+[
+  {
+    "_about": "LABELED STARTER SET for T12 (model selection). Each posting is written in natural hiring language (original text, not a verbatim real posting, to avoid reproducing copyrighted material). 'expected' is the set of framework leaf items a human reader says the posting describes, by slug, independent of what the matcher predicts. Labels are best-judgment ground truth pending Morgan's review. Labeling convention: an activity is labeled when the posting describes DOING the work; a deliverable when it names the ARTIFACT produced; a tool when it is named. Paraphrase is deliberate, so the keyword baseline will miss items the LLM step should catch. See README 'Fixtures'.",
+    "_scope": "Starter set: one strong-match posting per covered job function, plus a title-fit mismatch and a not-covered title (both unscored). Expand with more postings per function before trusting the aggregate numbers."
+  },
+  {
+    "name": "UX Designer (strong match)",
+    "title": "UX Designer",
+    "posting": "We are hiring a UX Designer to craft intuitive product experiences. You will sketch early concepts, then turn them into low and high fidelity mockups and clickable flows we can put in front of users. You will map out how the screens connect, run usability sessions with real customers, synthesize what you learn, and hand clean, annotated designs to engineering. Day to day you work in Figma and we collaborate in FigJam.",
+    "expected": {
+      "activities": [
+        "clickable-prototype-creation",
+        "developing-information-architecture",
+        "usability-testing",
+        "analyzing-research-findings",
+        "creating-annotations"
+      ],
+      "deliverables": [
+        "sketches",
+        "low-fidelity-prototypes",
+        "high-fidelity-prototypes"
+      ],
+      "tools": ["figma", "figjam"]
+    }
+  },
+  {
+    "name": "UX Researcher (strong match)",
+    "title": "UX Researcher",
+    "posting": "As a UX Researcher you will plan and run studies from start to finish. You decide which methods fit the question, write up a clear research plan, recruit and interview participants, moderate the sessions, and run surveys and card sorts. Afterward you dig through the findings, surface the patterns, and present what it all means to stakeholders. We keep our notes in Dovetail and run card sorts in Optimal Workshop.",
+    "expected": {
+      "activities": [
+        "choosing-research-methods",
+        "creating-research-plans",
+        "interviewing",
+        "moderating-ux-research",
+        "surveys",
+        "card-sorting",
+        "analyzing-research-findings",
+        "identifying-research-patterns",
+        "presenting-research-results"
+      ],
+      "deliverables": ["research-plan"],
+      "tools": ["dovetail", "optimal-workshop"]
+    }
+  },
+  {
+    "name": "Product Manager (strong match)",
+    "title": "Product Manager",
+    "posting": "We need a Product Manager to own strategy and growth for our platform. You will study the market and keep tabs on competitors, decide how we position the product, break our customers into clear segments, shape the go to market approach, and keep the roadmap current. You will set the scope and the vision for each release and test what the market will pay before we commit.",
+    "expected": {
+      "activities": [
+        "market-research",
+        "investigating-competitors",
+        "product-positioning",
+        "customer-segmentation",
+        "developing-go-to-market-strategy",
+        "product-roadmap-maintenance",
+        "release-scope-definition",
+        "release-vision-definition",
+        "price-testing"
+      ],
+      "deliverables": ["roadmap"],
+      "tools": []
+    }
+  },
+  {
+    "name": "Product Owner (strong match, with a non-standard hat)",
+    "title": "Product Owner",
+    "posting": "We are seeking a Product Owner to be the voice of the customer for our scrum team. You will groom and prioritize the backlog, define the scope and vision for each feature, write the acceptance criteria, plan the sprints, and track how our epics are progressing. You keep an eye on what competitors are shipping. We run the team out of Trello and document in Notion.",
+    "expected": {
+      "activities": [
+        "product-backlog-maintenance",
+        "identifying-priorities",
+        "feature-scope-definition",
+        "feature-vision-definition",
+        "creating-acceptance-criteria",
+        "sprint-planning",
+        "tracking-epic-progress",
+        "investigating-competitors"
+      ],
+      "deliverables": ["acceptance-criteria", "prioritized-backlog-tasks"],
+      "tools": ["trello", "notion"]
+    }
+  },
+  {
+    "name": "Project Manager (strong match)",
+    "title": "Project Manager",
+    "posting": "Our Project Manager keeps delivery on track. You will facilitate the agile ceremonies, lead sprint planning and retrospectives, demo the finished work, estimate the level of effort, and keep an eye on both sprint and milestone progress. You will build the schedule, call out risks early, and set up the meetings that keep everyone aligned. We work in Trello, meet over Zoom, and write things up in Notion.",
+    "expected": {
+      "activities": [
+        "facilitating-agile-workshops",
+        "sprint-planning",
+        "sprint-retrospective-facilitation",
+        "sprint-demo-facilitation",
+        "level-of-effort-estimation",
+        "tracking-sprint-progress",
+        "tracking-milestone-progress",
+        "analyzing-project-risk",
+        "scheduling-meetings"
+      ],
+      "deliverables": ["risk-analysis", "gantt-chart"],
+      "tools": ["trello", "zoom", "notion"]
+    }
+  },
+  {
+    "name": "Business Analyst (strong match)",
+    "title": "Business Analyst",
+    "posting": "The Business Analyst is the bridge between the business and engineering. You will run intake with stakeholders, gather and refine the requirements, and write them up so nothing is ambiguous. You will frame the problem clearly, author the user stories and the acceptance criteria, and define the scope of each feature. Strong documentation habits in Notion are a must.",
+    "expected": {
+      "activities": [
+        "kickoff-intake",
+        "requirements-gathering",
+        "requirements-refinement",
+        "writing-requirements",
+        "generating-problem-statements",
+        "user-story-generation",
+        "creating-acceptance-criteria",
+        "feature-scope-definition"
+      ],
+      "deliverables": [
+        "problem-statements",
+        "user-story-statements",
+        "acceptance-criteria"
+      ],
+      "tools": ["notion"]
+    }
+  },
+  {
+    "name": "Developer (strong match)",
+    "title": "Developer",
+    "posting": "We are looking for a full stack Developer to build and ship real features. You will write both the front end and the server side, design and stand up REST APIs, model and create the databases behind them, document what you build, and deploy to production. You will also write the automated tests and run QA on your own work. Everything we do lives in GitHub.",
+    "expected": {
+      "activities": [
+        "front-end-coding",
+        "server-side-coding",
+        "creating-rest-apis",
+        "database-creation",
+        "documenting-code",
+        "deploying-code",
+        "autotest-creation",
+        "qa-testing"
+      ],
+      "deliverables": ["code", "coding-documentation"],
+      "tools": ["github"]
+    }
+  },
+  {
+    "name": "Product Designer (strong match)",
+    "title": "Product Designer",
+    "posting": "Product Designer wanted to take features from idea to launch. You will map customer journeys, wireframe and prototype the solutions, and build and maintain the design system the rest of the team relies on. You will run usability tests, work out the information architecture, and partner with product managers to shape the vision for each feature. Figma and FigJam are our daily tools.",
+    "expected": {
+      "activities": [
+        "customer-experience-mapping",
+        "wireframing",
+        "prototype-creation",
+        "usability-testing",
+        "developing-information-architecture",
+        "feature-vision-definition"
+      ],
+      "deliverables": ["user-journey-map", "design-system"],
+      "tools": ["figma", "figjam"]
+    }
+  },
+  {
+    "name": "UX Designer title on an engineering posting (title-fit mismatch, unscored)",
+    "_note": "No 'expected' set, so it is not scored. It checks that a title whose posting describes none of its hats reads as a mismatch.",
+    "title": "UX Designer",
+    "posting": "We need someone to build and ship backend services, write unit tests, run the deployment pipeline, and ship with Docker and Kubernetes. Strong SQL and API design skills required."
+  },
+  {
+    "name": "Data Scientist (not a covered title, unscored)",
+    "_note": "No 'expected' set. The title is outside the framework, so the decode should leave it unresolved and never guess a function (ADR-0008, 0012).",
+    "title": "Data Scientist",
+    "posting": "Join us as a Data Scientist to build machine learning models, train and tune neural networks, run large scale experiments, and productionize models with Python, PyTorch, and Spark."
+  }
+]
