@@ -119,16 +119,25 @@ export function parseRecognitions(
 // object, so the caller degrades to keyword-only rather than throwing.
 function extractJson(content: string): Record<string, unknown> | null {
   const text = String(content ?? "");
-  const parse = (s: string): Record<string, unknown> | null => {
-    try {
-      const v = JSON.parse(s);
-      return v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : null;
-    } catch {
-      return null;
-    }
-  };
-  const whole = parse(text);
-  if (whole) return whole;
   const m = text.match(/\{[\s\S]*\}/);
-  return m ? parse(m[0]) : null;
+  for (const candidate of m ? [text, m[0]] : [text]) {
+    const parsed = parseObject(candidate);
+    if (parsed) return parsed;
+  }
+  return null;
+}
+
+// Parse one string into a plain object, or null when it is not valid JSON or not an object.
+// A parse failure is expected (the model may return prose), so the catch records it as "no
+// object" by leaving value null; the caller reports that upstream as a no-json drop.
+function parseObject(s: string): Record<string, unknown> | null {
+  let value: unknown = null;
+  try {
+    value = JSON.parse(s);
+  } catch {
+    value = null; // not valid JSON; fall through and report no object
+  }
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : null;
 }
