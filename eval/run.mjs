@@ -33,7 +33,7 @@ function parseArgs(argv) {
     llm: true,
     // Model and the US-based provider allow-list default from the environment, so the same
     // choice drives the harness and (later) the app. See .env.example and ADR-0036.
-    model: process.env.OPENROUTER_MODEL || 'deepseek/deepseek-chat-v3.1',
+    model: process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v4.1-flash-1017',
     providers: splitList(process.env.OPENROUTER_PROVIDERS || 'deepinfra'),
     fixtures: join(HERE, 'fixtures.example.json'),
     detail: false,
@@ -66,7 +66,7 @@ function printHelp() {
       '',
       'Options:',
       '  --no-llm            keyword-only baseline, makes no network call',
-      '  --model <id>        OpenRouter model id (default $OPENROUTER_MODEL or deepseek/deepseek-chat-v3.1)',
+      '  --model <id>        OpenRouter model id (default $OPENROUTER_MODEL or deepseek/deepseek-v4.1-flash-1017)',
       '  --providers <list>  comma-separated US-based provider allow-list, pinned with no',
       '                      fallback (default $OPENROUTER_PROVIDERS or deepinfra)',
       '  --fixtures <path>   JSON array of labeled postings (default fixtures.example.json)',
