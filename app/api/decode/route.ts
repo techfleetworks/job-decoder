@@ -6,10 +6,16 @@
 // The body is untrusted input. The route parses it, then hands it to the domain's
 // validateDecodeInput for the server-side rules (type, bounds, non-empty) before doing any
 // work (owasp Input Validation). On failure it reports; it never returns a half result.
+//
+// The LLM recognizer runs server-side through the openrouter gateway and only ever sharpens
+// the keyword result: its matches are validated against the framework and unioned in by the
+// pure decode domain (ADR-0007, ADR-0037). When it is off or unavailable the gateway returns
+// no matches, so the decode is still the keyword-only "basic read".
 
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { buildPrepGuide, decode, resolveTitle, validateDecodeInput } from "@/domain/decode";
+import { recognizeMatches } from "@/data/server/openrouter";
 import {
   loadDuties,
   loadDutyNames,
@@ -44,7 +50,8 @@ export async function POST(request: NextRequest) {
     const fnSlug = resolveTitle(loadTitles(), title);
     const slice = fnSlug ? loadSlice(fnSlug) : null;
     const items = loadItems();
-    const result = decode({ posting, items, slice, dutyNames: loadDutyNames() });
+    const llmMatches = await recognizeMatches(items, posting);
+    const result = decode({ posting, items, slice, dutyNames: loadDutyNames(), llmMatches });
     const prepGuide = buildPrepGuide(result, { duties: loadDuties(), skills: loadSkills(), items });
     return NextResponse.json({ ...result, prepGuide });
   } catch (err) {
