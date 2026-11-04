@@ -65,6 +65,14 @@ describe("decode", () => {
     expect(r.verdict).toBe("strong");
   });
 
+  it("carries each standard hat's framework detail for the what-it-takes view (ADR-0040)", () => {
+    const r = decode({ posting: "You will do Wireframing and User Research.", items, slice, dutyNames });
+    const uxDesign = [...r.covered, ...r.missing].find((h) => h.slug === "ux-design");
+    expect(uxDesign?.detail?.activities).toEqual(["Wireframing", "Prototype Creation"]);
+    expect(uxDesign?.detail?.deliverables).toEqual([]);
+    expect(uxDesign?.detail?.tools).toEqual([]);
+  });
+
   it("reports a missing hat and a partial verdict", () => {
     const r = decode({ posting: "You will do Wireframing.", items, slice, dutyNames });
     expect(r.covered.map((h) => h.slug)).toEqual(["ux-design"]);

@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 import InputForm from "@/components/InputForm";
 import PrepView from "@/components/PrepView";
@@ -62,8 +65,18 @@ export default function DecodeFlow() {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
-      <Box sx={{ py: 6 }}>
+    <>
+      {/* A persistent app bar on every screen (the prototype's header). The brand is a
+          non-heading span so the per-screen <h1> stays the page's first heading. */}
+      <AppBar position="static" color="primary" elevation={0}>
+        <Toolbar>
+          <Typography variant="h3" component="span" sx={{ color: "primary.contrastText" }}>
+            Hat Check
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container component="main" maxWidth="sm">
+        <Box sx={{ py: 6 }}>
         {!result ? (
           errorReason === "rate-limited" ? (
             <TooManyDecodes message={error ?? ""} onBack={startOver} />
@@ -90,6 +103,7 @@ export default function DecodeFlow() {
           License and attribution
         </Link>
       </Box>
-    </Container>
+      </Container>
+    </>
   );
 }

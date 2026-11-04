@@ -86,11 +86,21 @@ export interface NonStandardHat {
 /** A hat's proportional match level (ADR-0039). */
 export type MatchLevel = "full" | "partial" | "none";
 
+/** A hat's framework work, for the "what it takes" view (ADR-0040). Display-ready labels,
+ *  aggregated from the items that roll up to the hat. Display-only: not part of scoring, so
+ *  the two decode twins (ADR-0028) still agree on score and level without it. */
+export interface HatDetail {
+  activities: string[];
+  deliverables: string[];
+  tools: string[];
+}
+
 /** A hat with its proportional score and match level (ADR-0039). */
 export interface ScoredHat extends Hat {
   score: number; // matched share of the hat's activities + deliverables, 0..1
   scoreWhole: number; // whole-number percent of score
   level: MatchLevel;
+  detail?: HatDetail; // the hat's activities/deliverables/tools, for "what it takes" (ADR-0040)
 }
 
 /** A non-standard hat with its score and level (never "none": it was matched to appear). */

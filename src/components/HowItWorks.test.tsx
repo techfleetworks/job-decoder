@@ -24,6 +24,8 @@ describe("HowItWorks", () => {
     await userEvent.click(screen.getByRole("button", { name: /how it works/i }));
     const dialog = screen.getByRole("dialog", { name: /how hat check reads a posting/i });
     expect(within(dialog).getByRole("list")).toBeInTheDocument();
+    // The verdict bands are shown too (E3), sourced from BANDS.
+    expect(within(dialog).getByText(/Strong at 60%/)).toBeInTheDocument();
     const results = await axe(dialog);
     expect(results.violations).toHaveLength(0);
     await userEvent.click(screen.getByRole("button", { name: /close/i }));
