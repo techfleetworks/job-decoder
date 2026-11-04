@@ -15,6 +15,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { buildPrepGuide, decode, resolveTitle, validateDecodeInput } from "@/domain/decode";
+import { decideRateLimit, DECODE_RATE_LIMIT } from "@/domain/rateLimit";
+import { clientIp, clientKey, rateLimitStore } from "@/data/server/rateLimitStore";
 import { recognizeMatches } from "@/data/server/openrouter";
 import {
   loadDuties,
@@ -27,6 +29,30 @@ import {
 } from "@/data/server/snapshot";
 
 export async function POST(request: NextRequest) {
+  // Rate-limit per client before any work, in front of the expensive decode + LLM call
+  // (owasp Denial of Service, ADR-0043). The IP is the platform-trusted client address (not
+  // the client-controlled left-most x-forwarded-for token) and is hashed before use, so the
+  // raw address is never stored.
+  const ip = clientIp((name) => request.headers.get(name));
+  let count = 1;
+  let rateCheckRan = true;
+  try {
+    count = await rateLimitStore.hit(clientKey(ip), DECODE_RATE_LIMIT.windowSeconds);
+  } catch (err) {
+    // If the rate check cannot run, do NOT silently serve the full paid decode: the standing
+    // rule (decisions.md, ADR-0009) is to deny the LLM call and serve the keyword result. So
+    // allow the request (availability) but skip the LLM below; log for diagnosis.
+    rateCheckRan = false;
+    console.error(`rate-limit store error: ${err instanceof Error ? err.message : "unknown"}`);
+  }
+  const limit = decideRateLimit(count, DECODE_RATE_LIMIT);
+  if (!limit.allowed) {
+    return NextResponse.json(
+      { error: "You have run too many decodes. Please wait a little and try again." },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
@@ -50,7 +76,9 @@ export async function POST(request: NextRequest) {
     const fnSlug = resolveTitle(loadTitles(), title);
     const slice = fnSlug ? loadSlice(fnSlug) : null;
     const items = loadItems();
-    const llmMatches = await recognizeMatches(items, posting);
+    // When the rate check could not run, deny the LLM call and serve the keyword-only result
+    // (decisions.md / ADR-0009: fail closed on the paid call when the cap cannot be enforced).
+    const llmMatches = rateCheckRan ? await recognizeMatches(items, posting) : [];
     const result = decode({ posting, items, slice, dutyNames: loadDutyNames(), llmMatches });
     const prepGuide = buildPrepGuide(result, { duties: loadDuties(), skills: loadSkills(), items });
     return NextResponse.json({ ...result, prepGuide });
