@@ -9,7 +9,7 @@ import MobileStepper from "@mui/material/MobileStepper";
 import Typography from "@mui/material/Typography";
 import FrameworkCredit from "@/components/FrameworkCredit";
 import HowItWorks from "@/components/HowItWorks";
-import { isBasicRead, matchSummary, tierWording, verdictHeadline } from "@/components/resultSummary";
+import { GROUP_HEADINGS, isBasicRead, matchSummary, tierWording, verdictCounts, verdictHeadline } from "@/components/resultSummary";
 import type { DecodeResult, Match, ScoredHat } from "@/domain/decode/types";
 
 interface Props {
@@ -67,7 +67,27 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
     : [
         {
           title: "Title fit",
-          content: <Typography variant="body1">{matchSummary(result)}</Typography>,
+          content: (
+            <>
+              <Typography variant="body1">{matchSummary(result)}</Typography>
+              <Box
+                component="ul"
+                aria-label="Hat counts"
+                sx={{ listStyle: "none", pl: 0, mt: 2, mb: 0, display: "flex", flexWrap: "wrap", gap: 3 }}
+              >
+                {verdictCounts(result).map((c) => (
+                  <Box component="li" key={c.label}>
+                    <Typography variant="h3" component="span">
+                      {c.count}
+                    </Typography>{" "}
+                    <Typography variant="body2" component="span">
+                      {c.label}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            </>
+          ),
         },
         {
           title: `Hats this posting covers (${result.covered.length})`,
@@ -81,7 +101,7 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
                 {result.covered.some((h) => h.level === "full") ? (
                   <>
                     <Typography variant="body2" sx={{ mb: 1 }}>
-                      Fully covered (the posting names 25% or more of the hat&rsquo;s work):
+                      {GROUP_HEADINGS.full}
                     </Typography>
                     <HatList hats={result.covered.filter((h) => h.level === "full")} result={result} />
                   </>
@@ -89,7 +109,7 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
                 {result.covered.some((h) => h.level === "partial") ? (
                   <>
                     <Typography variant="body2" sx={{ mt: 2, mb: 1 }}>
-                      Partly covered (named, but under 25% of the hat&rsquo;s work):
+                      {GROUP_HEADINGS.partial}
                     </Typography>
                     <HatList hats={result.covered.filter((h) => h.level === "partial")} result={result} />
                   </>

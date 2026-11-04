@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isBasicRead, matchSummary, tierWording, verdictHeadline } from "@/components/resultSummary";
+import { GROUP_HEADINGS, isBasicRead, matchSummary, tierWording, verdictCounts, verdictHeadline } from "@/components/resultSummary";
 import type { DecodeResult, Match } from "@/domain/decode/types";
 
 const base: DecodeResult = {
@@ -41,5 +41,29 @@ describe("resultSummary", () => {
     expect(tierWording("exact")).toBe("exact wording");
     expect(tierWording("alias")).toBe("a known phrasing");
     expect(tierWording("similar")).toBe("close wording");
+  });
+
+  it("verdict counts label the covered, hidden, and extra hats (match-level wording, ADR-0039)", () => {
+    const result: DecodeResult = {
+      ...base,
+      covered: [
+        { slug: "a", name: "A", description: "", score: 1, scoreWhole: 100, level: "full" },
+        { slug: "b", name: "B", description: "", score: 0.1, scoreWhole: 10, level: "partial" },
+      ],
+      missing: [{ slug: "c", name: "C", description: "", score: 0, scoreWhole: 0, level: "none" }],
+      nonStandard: [{ slug: "d", name: "D", score: 1, scoreWhole: 100, level: "full" }],
+    };
+    expect(verdictCounts(result)).toEqual([
+      { label: "Hats covered", count: 2 },
+      { label: "Hidden hats", count: 1 },
+      { label: "Extra hats", count: 1 },
+    ]);
+  });
+
+  it("group headings state the match-level cutoffs (ADR-0039)", () => {
+    expect(GROUP_HEADINGS.full).toMatch(/fully covered/i);
+    expect(GROUP_HEADINGS.full).toMatch(/25% or more/);
+    expect(GROUP_HEADINGS.partial).toMatch(/partly covered/i);
+    expect(GROUP_HEADINGS.partial).toMatch(/under 25%/);
   });
 });
