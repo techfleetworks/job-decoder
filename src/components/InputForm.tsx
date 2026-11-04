@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import FrameworkCredit from "@/components/FrameworkCredit";
+import { MAX_POSTING, MAX_TITLE } from "@/domain/decode";
 
 interface Props {
   onSubmit: (title: string, posting: string) => void;
@@ -32,6 +33,15 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
 
   const titleEmpty = title.trim().length === 0;
   const postingEmpty = posting.trim().length === 0;
+
+  // The fields that still need attention, shown as a summary at the top of the form and as a
+  // message under each field (WCAG 3.3.1 error identification), once the person has tried to
+  // submit. The summary uses role="alert" so it is announced when it appears.
+  const fieldErrors = [
+    titleEmpty ? "Enter the job title." : null,
+    postingEmpty ? "Paste the job posting." : null,
+  ].filter((m): m is string => m !== null);
+  const showSummary = touched && fieldErrors.length > 0;
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -57,6 +67,19 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
         </Alert>
       ) : null}
 
+      {showSummary ? (
+        <Alert severity="error" role="alert" sx={{ mb: 3 }}>
+          Fix these before decoding:
+          <Box component="ul" sx={{ pl: 3, m: 0, mt: 0.5 }}>
+            {fieldErrors.map((msg) => (
+              <Typography component="li" variant="body2" key={msg}>
+                {msg}
+              </Typography>
+            ))}
+          </Box>
+        </Alert>
+      ) : null}
+
       <TextField
         label="Job title"
         value={title}
@@ -64,7 +87,7 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
         fullWidth
         required
         disabled={working}
-        inputProps={{ maxLength: 200 }}
+        inputProps={{ maxLength: MAX_TITLE }}
         error={touched && titleEmpty}
         helperText={
           touched && titleEmpty ? "Enter the job title." : "For example, UX Designer or Product Manager."
@@ -81,10 +104,12 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
         multiline
         minRows={8}
         disabled={working}
-        inputProps={{ maxLength: 50000 }}
+        inputProps={{ maxLength: MAX_POSTING }}
         error={touched && postingEmpty}
         helperText={
-          touched && postingEmpty ? "Paste the job posting." : "Paste the full job posting text."
+          touched && postingEmpty
+            ? "Paste the job posting."
+            : `${posting.length.toLocaleString()} / ${MAX_POSTING.toLocaleString()} characters`
         }
         sx={{ mb: 3 }}
       />

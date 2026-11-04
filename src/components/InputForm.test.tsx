@@ -47,4 +47,20 @@ describe("InputForm", () => {
     renderWithTheme(<InputForm onSubmit={() => {}} working={false} autoFocusHeading />);
     expect(screen.getByRole("heading", { level: 1, name: "Hat Check" })).toHaveFocus();
   });
+
+  it("counts the posting characters against the limit as you type (B1)", async () => {
+    renderWithTheme(<InputForm onSubmit={() => {}} working={false} />);
+    expect(screen.getByText("0 / 20,000 characters")).toBeInTheDocument();
+    await userEvent.type(screen.getByLabelText(/job posting/i), "abcde");
+    expect(screen.getByText("5 / 20,000 characters")).toBeInTheDocument();
+  });
+
+  it("shows a top error summary when submitting an empty form (B2)", async () => {
+    renderWithTheme(<InputForm onSubmit={() => {}} working={false} />);
+    await userEvent.click(screen.getByRole("button", { name: /decode this posting/i }));
+    const summary = screen.getByRole("alert");
+    expect(summary).toHaveTextContent(/fix these before decoding/i);
+    expect(summary).toHaveTextContent("Enter the job title.");
+    expect(summary).toHaveTextContent("Paste the job posting.");
+  });
 });

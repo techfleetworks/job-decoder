@@ -14,7 +14,10 @@
 // re-processed again (owasp: decode once, then validate the exact value you will use).
 
 export const MAX_TITLE = 200;
-export const MAX_POSTING = 50_000;
+// The posting cap is 20,000 characters: the product limit shown in the prototype (T17 /
+// ADR-0041), which the input screen counts down against. It is also the server-side DoS cap,
+// so the one constant is the single source of truth for both the field and the validator.
+export const MAX_POSTING = 20_000;
 
 /** Why a decode request was rejected. Lets callers and tests assert the exact rule. */
 export type DecodeInputReason = "not-object" | "wrong-type" | "too-long" | "empty-posting";
