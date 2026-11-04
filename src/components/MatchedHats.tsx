@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -30,7 +31,39 @@ function evidenceFor(matched: Match[], hatSlug: string): Match[] {
   return matched.filter((m) => m.duties.includes(hatSlug));
 }
 
+function DetailList({ label, items }: { label: string; items: string[] }) {
+  if (items.length === 0) return null;
+  return (
+    <Box sx={{ mb: 1 }}>
+      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        {label}
+      </Typography>
+      <Box component="ul" sx={{ pl: 3, m: 0 }}>
+        {items.map((t) => (
+          <Typography component="li" variant="body2" key={t}>
+            {t}
+          </Typography>
+        ))}
+      </Box>
+    </Box>
+  );
+}
+
+function Panel({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <Accordion disableGutters elevation={0} sx={{ "&:before": { display: "none" } }}>
+      <AccordionSummary expandIcon={<span aria-hidden>▾</span>}>
+        <Typography variant="body2">{title}</Typography>
+      </AccordionSummary>
+      <AccordionDetails>{children}</AccordionDetails>
+    </Accordion>
+  );
+}
+
 function HatCard({ hat, evidence }: { hat: ScoredHat; evidence: Match[] }) {
+  const detail = hat.detail;
+  const hasWhatItTakes =
+    !!detail && detail.activities.length + detail.deliverables.length + detail.tools.length > 0;
   return (
     <Card variant="outlined" sx={{ mb: 2 }}>
       <CardContent>
@@ -40,34 +73,36 @@ function HatCard({ hat, evidence }: { hat: ScoredHat; evidence: Match[] }) {
           label={hat.level === "full" ? "Full" : "Partial"}
           sx={{ mb: 1 }}
         />
-        <Typography variant="h3" component="h3">
+        <Typography variant="h3" component="h3" sx={{ mb: 1 }}>
           {`${hat.name} — ${hat.scoreWhole}% of its work named`}
         </Typography>
+        <Panel title={`Evidence (${evidence.length})`}>
+          {evidence.length > 0 ? (
+            <Box component="ul" sx={{ pl: 3, m: 0 }}>
+              {evidence.map((m) => (
+                <Typography component="li" variant="body2" key={`${m.type}:${m.slug}`}>
+                  &ldquo;{m.term}&rdquo; names {m.label} ({m.type}, {tierWording(m.tier)})
+                </Typography>
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              No matching quotes for this filter.
+            </Typography>
+          )}
+        </Panel>
         {hat.description ? (
-          <Typography variant="body2" sx={{ mb: 1 }}>
-            {hat.description}
-          </Typography>
+          <Panel title="Why it matters">
+            <Typography variant="body2">{hat.description}</Typography>
+          </Panel>
         ) : null}
-        {evidence.length > 0 ? (
-          <Accordion disableGutters elevation={0} sx={{ "&:before": { display: "none" } }}>
-            <AccordionSummary expandIcon={<span aria-hidden>▾</span>}>
-              <Typography variant="body2">Evidence ({evidence.length})</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box component="ul" sx={{ pl: 3, m: 0 }}>
-                {evidence.map((m) => (
-                  <Typography component="li" variant="body2" key={`${m.type}:${m.slug}`}>
-                    &ldquo;{m.term}&rdquo; names {m.label} ({m.type}, {tierWording(m.tier)})
-                  </Typography>
-                ))}
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-        ) : (
-          <Typography variant="body2" color="text.secondary">
-            No matching quotes for this filter.
-          </Typography>
-        )}
+        {hasWhatItTakes ? (
+          <Panel title="What it takes">
+            <DetailList label="Activities" items={detail!.activities} />
+            <DetailList label="Deliverables" items={detail!.deliverables} />
+            <DetailList label="Tools" items={detail!.tools} />
+          </Panel>
+        ) : null}
       </CardContent>
     </Card>
   );
