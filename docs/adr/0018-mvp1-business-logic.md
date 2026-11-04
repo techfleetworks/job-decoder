@@ -2,6 +2,7 @@
 
 - Status: Accepted (2026-10-31). Consolidates the decode logic from ADR-0005, 0007, 0008, 0010, 0012, 0014, 0015, 0016, and 0017.
 - Deciders: Morgan (mdenner@techfleet.org)
+- Amended by [ADR-0039](0039-proportional-hat-scoring.md): steps 8 to 11 change — tools no longer roll up to a hat, the per-duty counts become a proportional per-hat score, classification is full / partial / none at the 25% line, and the title-fit percentage uses Formula D (full x 1 + partial x 0.5, over the standard hats).
 
 ## Context
 

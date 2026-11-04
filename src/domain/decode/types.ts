@@ -83,18 +83,35 @@ export interface NonStandardHat {
   name: string;
 }
 
+/** A hat's proportional match level (ADR-0039). */
+export type MatchLevel = "full" | "partial" | "none";
+
+/** A hat with its proportional score and match level (ADR-0039). */
+export interface ScoredHat extends Hat {
+  score: number; // matched share of the hat's activities + deliverables, 0..1
+  scoreWhole: number; // whole-number percent of score
+  level: MatchLevel;
+}
+
+/** A non-standard hat with its score and level (never "none": it was matched to appear). */
+export interface ScoredNonStandardHat extends NonStandardHat {
+  score: number;
+  scoreWhole: number;
+  level: MatchLevel;
+}
+
 export type Verdict = "strong" | "partial" | "mismatch" | "not-covered";
 
 /** The full decode result the route returns. */
 export interface DecodeResult {
   functionSlug: string | null;
   functionName: string | null;
-  covered: Hat[];
-  missing: Hat[];
-  nonStandard: NonStandardHat[];
+  covered: ScoredHat[]; // standard hats at full or partial, each with its score (ADR-0039)
+  missing: ScoredHat[]; // standard hats at none (expected but not named)
+  nonStandard: ScoredNonStandardHat[];
   matched: Match[];
-  pct: number; // covered / standard, 0..1
-  pctWhole: number; // whole-number percent, covered / standard
+  pct: number; // title-fit, Formula D: (full + partial*0.5) / standard, 0..1 (ADR-0039)
+  pctWhole: number; // whole-number percent of pct
   verdict: Verdict;
   standardCount: number;
   coverage: CoverageUnit[];

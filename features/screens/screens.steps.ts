@@ -24,7 +24,7 @@ function result(over: Partial<DecodeResult>): DecodeResult {
 }
 
 Given("a strong-fit result", function () {
-  this.result = result({ verdict: "strong", pctWhole: 80, covered: [{ slug: "a", name: "A", description: "" }], standardCount: 1 });
+  this.result = result({ verdict: "strong", pctWhole: 80, covered: [{ slug: "a", name: "A", description: "", score: 1, scoreWhole: 100, level: "full" }], standardCount: 1 });
 });
 
 Given("a keyword-only result with no AI step", function () {

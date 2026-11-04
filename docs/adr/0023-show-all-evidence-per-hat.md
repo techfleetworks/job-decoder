@@ -7,6 +7,8 @@
   lines), ADR-0021 (Responsible roll-up).
 - Refines: ADR-0013 (UI rules): accordions may expand a hat's full evidence within a
   results step; the MobileStepper stays the results nav.
+- Amended by [ADR-0039](0039-proportional-hat-scoring.md): hats are grouped by match level
+  (full / partial / none); the all-evidence-per-hat display rule itself is unchanged.
 
 Note: ADRs 0005 through 0018 live on branch `docs/adr-0005-mvp1-scope`, not yet
 merged, so they are referenced here by number.
