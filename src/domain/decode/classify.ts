@@ -12,6 +12,7 @@
 
 import type {
   FunctionSlice,
+  HatDetail,
   MatchLevel,
   Match,
   ScoredHat,
@@ -19,6 +20,22 @@ import type {
   SnapshotItem,
   Verdict,
 } from "./types";
+
+// The framework work that rolls up to a hat, as display-ready labels, for the "what it
+// takes" view (ADR-0040). Aggregated from the shared item index; display-only, so it does
+// not touch scoring and the two decode twins still agree on score and level without it.
+function detailOf(items: SnapshotItem[], slug: string): HatDetail {
+  const activities: string[] = [];
+  const deliverables: string[] = [];
+  const tools: string[] = [];
+  for (const it of items) {
+    if (!it.duties.includes(slug)) continue;
+    if (it.type === "activity") activities.push(it.label);
+    else if (it.type === "deliverable") deliverables.push(it.label);
+    else if (it.type === "tool") tools.push(it.label);
+  }
+  return { activities, deliverables, tools };
+}
 
 // Title-fit verdict bands (ADR-0018, unchanged by ADR-0039): strong at 60% or more,
 // partial from 25% up to 60%, mismatch below 25%.
@@ -89,7 +106,11 @@ export function classify(
   const standard = slice.standardHats;
   const standardSlugs = new Set(standard.map((h) => h.slug));
 
-  const scoredStandard: ScoredHat[] = standard.map((h) => ({ ...h, ...scoreOf(h.slug) }));
+  const scoredStandard: ScoredHat[] = standard.map((h) => ({
+    ...h,
+    ...scoreOf(h.slug),
+    detail: detailOf(items, h.slug),
+  }));
   const covered = scoredStandard.filter((h) => h.level !== "none");
   const missing = scoredStandard.filter((h) => h.level === "none");
 
