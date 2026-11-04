@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import FrameworkCredit from "@/components/FrameworkCredit";
 import HowItWorks from "@/components/HowItWorks";
 import { isBasicRead, matchSummary, tierWording, verdictHeadline } from "@/components/resultSummary";
-import type { DecodeResult, Hat, Match } from "@/domain/decode/types";
+import type { DecodeResult, Match, ScoredHat } from "@/domain/decode/types";
 
 interface Props {
   result: DecodeResult;
@@ -23,8 +23,8 @@ function evidenceFor(result: DecodeResult, hatSlug: string): Match[] {
 }
 
 // One hat with the posting phrases that rolled up to it: the receipt, per hat (ADR-0023).
-function HatList({ hats, result, emptyNote }: { hats: Hat[]; result: DecodeResult; emptyNote: string }) {
-  if (hats.length === 0) return <Typography variant="body1">{emptyNote}</Typography>;
+function HatList({ hats, result, emptyNote }: { hats: ScoredHat[]; result: DecodeResult; emptyNote?: string }) {
+  if (hats.length === 0) return emptyNote ? <Typography variant="body1">{emptyNote}</Typography> : null;
   return (
     <Box component="ul" sx={{ listStyle: "none", pl: 0, m: 0 }}>
       {hats.map((hat) => {
@@ -32,7 +32,7 @@ function HatList({ hats, result, emptyNote }: { hats: Hat[]; result: DecodeResul
         return (
           <Box component="li" key={hat.slug} sx={{ mb: 3 }}>
             <Typography variant="h3" component="h3">
-              {hat.name}
+              {hat.level !== "none" ? `${hat.name} — ${hat.scoreWhole}% of its work named` : hat.name}
             </Typography>
             {hat.description ? (
               <Typography variant="body2" sx={{ mb: 1 }}>
@@ -71,13 +71,31 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
         },
         {
           title: `Hats this posting covers (${result.covered.length})`,
-          content: (
-            <HatList
-              hats={result.covered}
-              result={result}
-              emptyNote="The posting did not clearly name any of this title's standard hats."
-            />
-          ),
+          content:
+            result.covered.length === 0 ? (
+              <Typography variant="body1">
+                The posting did not clearly name any of this title&rsquo;s standard hats.
+              </Typography>
+            ) : (
+              <>
+                {result.covered.some((h) => h.level === "full") ? (
+                  <>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                      Fully covered (the posting names 25% or more of the hat&rsquo;s work):
+                    </Typography>
+                    <HatList hats={result.covered.filter((h) => h.level === "full")} result={result} />
+                  </>
+                ) : null}
+                {result.covered.some((h) => h.level === "partial") ? (
+                  <>
+                    <Typography variant="body2" sx={{ mt: 2, mb: 1 }}>
+                      Partly covered (named, but under 25% of the hat&rsquo;s work):
+                    </Typography>
+                    <HatList hats={result.covered.filter((h) => h.level === "partial")} result={result} />
+                  </>
+                ) : null}
+              </>
+            ),
         },
         {
           title: `Hidden hats (${result.missing.length})`,
@@ -109,7 +127,7 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
                 <Box component="ul" sx={{ pl: 3, m: 0 }}>
                   {result.nonStandard.map((h) => (
                     <Typography component="li" variant="body1" key={h.slug}>
-                      {h.name}
+                      {h.name} — {h.scoreWhole}% of its work named
                     </Typography>
                   ))}
                 </Box>

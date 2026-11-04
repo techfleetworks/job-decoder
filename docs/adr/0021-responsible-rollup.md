@@ -6,6 +6,7 @@
 - Builds on: ADR-0015 (entity model), ADR-0016 (item-to-duty roll-up via RACI),
   ADR-0018 (business logic).
 - Supersedes: the Responsible/Accountable/Consulted roll-up in ADR-0016.
+- Amended by [ADR-0039](0039-proportional-hat-scoring.md): tools no longer roll up to a hat at all (the tool clause below is superseded); activities and deliverables still roll up to the Responsible duty.
 
 Note: ADRs 0005 through 0018 live on branch `docs/adr-0005-mvp1-scope`, not yet
 merged, so they are referenced here by number.

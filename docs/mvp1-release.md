@@ -7,9 +7,16 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-03 (T12 hand-labeled eval fixtures on `feat/t12-labeled-fixtures`
-(PR #21): `eval/fixtures.labeled.json`, one strong-match posting per covered job function
-plus a title-fit mismatch and a not-covered title, labeled by hand from the framework.
+Last updated: 2026-11-04 — added the ADR-0039 proportional-scoring refactor as owed work
+(T-prop-1 to T-prop-4), reopened T05 and T06 (the refactor changes how hats are classified
+and shown), settled T15 to In progress, and updated the decisions row to ADR-0039. The refactor is now
+built (classify + eval twins, the result screen, and eval hat-level accuracy; typecheck,
+113 tests, and the arch gate green) and open in a PR.
+
+Previously updated: 2026-11-03 (T12 hand-labeled eval fixtures on `feat/t12-labeled-fixtures`
+(PR #21): `eval/fixtures.labeled.json`, a strong-match posting for eight of the eleven
+covered job functions (ui-designer, ux-writer, agile-coach not yet covered) plus a
+title-fit mismatch and a not-covered title, labeled by hand from the framework.
 Keyword-only baseline observed at overall P 97% / R 37% (the low recall is the point: the
 postings paraphrase the work the LLM step exists to catch). The LLM accuracy and the
 selection threshold are still open, pending the key and Morgan's decision. Merged since the
@@ -20,7 +27,7 @@ last update: T03 live recognizer (PR #19, ADR-0037) and the T14 manual WCAG 2.2 
 
 | Ticket | Work | Area | Status |
 |---|---|---|---|
-| — | Decisions of record: ADRs 0001–0029 | Foundation | ✅ Done |
+| — | Decisions of record: ADRs 0001–0039 | Foundation | ✅ Done |
 | — | Eval harness (matching validated) | Foundation | ✅ Done |
 | T10 | Three-tier app shell + architecture gate | Platform | ✅ Done |
 | — | Architecture gate (mechanical + `judge-arch`) | Platform | ✅ Done |
@@ -33,23 +40,29 @@ last update: T03 live recognizer (PR #19, ADR-0037) and the T14 manual WCAG 2.2 
 | T02 | Title resolution (covered / not-covered) | Screens | ✅ Done (PR #11) |
 | T03 | Match wording (keyword + AI recognizer) | Decode engine | ✅ Done — keyword matcher (PR #9); OpenRouter plumbing + US pin (PR #18, ADR-0036); live recognizer in `/api/decode` merged (PR #19, ADR-0037), keyword + validated-LLM union with a keyword-only degrade; runs live once the key is set |
 | T04 | Responsible roll-up | Decode engine | ✅ Done (PR #9) |
-| T05 | Classify + verdict bands | Decode engine | ✅ Done (PR #9) |
-| T06 | Results stepper (covered / missed / added hats) | Screens | ✅ Done (PR #11) |
+| T05 | Classify + verdict bands | Decode engine | ✅ Done (PR #9) · 🔁 Reopened by T-prop-1/T-prop-2 (ADR-0039): the boolean classify becomes a proportional per-hat score with full / partial / none, and the verdict moves to Formula D |
+| T06 | Results stepper (covered / missed / added hats) | Screens | ✅ Done (PR #11) · 🔁 Reopened by T-prop-3 (ADR-0039): hats group by match level (full / partial), not the three covered / missed / added sets |
 | T07 | Receipt + unplaced lines per hat | Screens | ✅ Done (PR #11) |
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
-| T12 | Eval accuracy gate (threshold + labels) | Quality gates | 🟢 In progress — harness merged; hand-labeled starter fixtures added (PR #21), keyword baseline measured (overall P 97% / R 37%); a model run against the labels is unblocked once the key is set, and the selection threshold is Morgan's decision |
+| T12 | Eval accuracy gate (threshold + labels) | Quality gates | 🟢 In progress — harness merged; hand-labeled starter fixtures added (PR #21), keyword baseline measured (overall P 97% / R 37%); a model run against the labels is unblocked once the key is set, and the selection threshold is Morgan's decision · T-prop-4 (ADR-0039) adds an expected match level per standard hat to the fixtures |
 | T13 | Security / OWASP scenarios + gate | Quality gates | ✅ Done — dependency-scan gate (PR #12, ADR-0030) and `/api/decode` input-validation gate (PR #17, ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios) both merged; per-IP rate limiting is a noted follow-up |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | ✅ Done — axe coverage for all components (PR #16); manual WCAG 2.2 AA pass merged (PR #20, ADR-0038): keyboard + a11y-tree audit on the live site, conformance record committed, 4 focus/announcement findings fixed; one audio screen-reader pass is the remaining human step |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
 | T16 | Resume & application prep | Screens | ✅ Done (PR #13 + PR #14 merged) |
+| T-prop-1 | Proportional per-hat score + full / partial / none; tools excluded; both decode twins | Decode engine | 🟢 In progress — built, in this PR |
+| T-prop-2 | Result shape carries per-hat score + match level; title-fit via Formula D | Decode engine | 🟢 In progress — built, in this PR |
+| T-prop-3 | Result screens group by match level | Screens | 🟢 In progress — built, in this PR |
+| T-prop-4 | Eval scorer reads match levels; fixtures carry an expected level | Quality gates | 🟢 In progress — built, in this PR |
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
-Tally: 15 tickets done (T01–T11, T13, T14, T15, T16) plus the foundation/infra rows;
-1 in progress (T12 model selection: labeled fixtures and the keyword baseline are in,
-PR #21; the live model run needs the key and the threshold is Morgan's decision). With T03
-and T14 merged, T12 is the only open MVP ticket, and it is unblocked for a model run once
-`OPENROUTER_API_KEY` is set.
+Tally: 14 MVP tickets done (T01–T11, T13, T14, T16) plus the foundation/infra rows;
+2 in progress (T12 model selection — labeled fixtures and the keyword baseline are in,
+PR #21, the live model run needs the key and the threshold is Morgan's decision; and T15
+licensing — the CC BY credit on the Prep screen, closing on merge);
+4 built and in review (T-prop-1 to T-prop-4, the ADR-0039 proportional-scoring refactor —
+code, tests, and the arch gate are green in the PR; the reopened T05 and T06 are addressed
+by it). T12 remains unblocked for a model run once `OPENROUTER_API_KEY` is set.
 
 ## T16 sub-progress (resume & application prep)
 
@@ -82,15 +95,20 @@ and T14 merged, T12 is the only open MVP ticket, and it is unblocked for a model
 
 ## Still open for MVP 1
 
-- **T03 AI half — grounded LLM recognizer:** the OpenRouter plumbing and US-provider pin are
-  ready (PR #18, ADR-0036). What remains is the live recognizer in `/api/decode` (the next
-  PR) and the key in `.env` / Vercel. Until the key is set the app runs the keyword matcher
-  and labels results a "basic read."
-- **T12 — Eval accuracy gate:** the harness is merged and the OpenRouter pin is ready, so a
-  model run is unblocked once the key is set; a validated threshold still needs hand-labeled
-  fixtures.
-- **T14 — manual WCAG 2.2 AA pass:** the last MVP item, by decision. Keyboard, screen reader,
-  contrast, and the 2.2-specific criteria on the live site; axe coverage is already in CI.
+- **T12 — Eval accuracy gate:** the harness and the hand-labeled starter fixtures are merged
+  (PR #21) and the keyword baseline is measured; a live model run is unblocked once
+  `OPENROUTER_API_KEY` is set, and the selection threshold is Morgan's decision. T-prop-4
+  adds an expected match level per standard hat to the fixtures.
+- **T15 — licensing gate:** the inline CC BY credit is on the Prep screen
+  (`feat/a11y-licensing-gaps`); closes on merge.
+- **T-prop-1 to T-prop-4 — proportional scoring (ADR-0039):** the per-hat score becomes a
+  share with full / partial / none match levels, tools stop conferring a hat, and the
+  title-fit moves to Formula D. Nothing is built yet; it reopens T05 (classify/verdict) and
+  T06 (results grouping). Whether tools still display as evidence is an open decision (owner
+  Morgan).
+
+Done since this section last listed them: **T03** (live grounded recognizer merged, PR #19,
+ADR-0037) and **T14** (manual WCAG 2.2 AA pass merged, PR #20, ADR-0038).
 
 Resolved since the last board: **T13** (both the dependency-scan gate, PR #12, and the
 `/api/decode` input-validation gate, PR #17, are merged; per-IP rate limiting is a noted

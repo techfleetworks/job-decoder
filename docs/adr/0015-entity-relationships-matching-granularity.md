@@ -2,6 +2,7 @@
 
 - Status: Accepted (2026-10-31). Refines [ADR-0008](0008-framework-data-model-integrity.md) (data model) and [ADR-0010](0010-framework-source-of-truth.md) / [ADR-0014](0014-receipt-visible-misses-union-matching.md) (matching).
 - Deciders: Morgan (mdenner@techfleet.org)
+- Amended by [ADR-0039](0039-proportional-hat-scoring.md): a hat is now scored by its proportional share of matched items (full / partial / none at the 25% line), not merely "referenced to the degree its items are," and tools no longer count toward a hat.
 
 ## Context
 

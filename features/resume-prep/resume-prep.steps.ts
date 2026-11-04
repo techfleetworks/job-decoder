@@ -29,9 +29,9 @@ function result(over: Partial<DecodeResult>): DecodeResult {
   return {
     functionSlug: "ux-designer",
     functionName: "UX Designer",
-    covered: [{ slug: "ux-design", name: "UX Design", description: "" }],
-    missing: [{ slug: "ux-research", name: "UX Research", description: "" }],
-    nonStandard: [{ slug: "product-mgmt", name: "Product Management" }],
+    covered: [{ slug: "ux-design", name: "UX Design", description: "", score: 1, scoreWhole: 100, level: "full" }],
+    missing: [{ slug: "ux-research", name: "UX Research", description: "", score: 0, scoreWhole: 0, level: "none" }],
+    nonStandard: [{ slug: "product-mgmt", name: "Product Management", score: 1, scoreWhole: 100, level: "full" }],
     matched: [{ slug: "wireframing", type: "activity", label: "Wireframing", tier: "exact", term: "wireframing", via: ["keyword"], duties: ["ux-design"], quote: "do wireframing" }],
     pct: 0.5, pctWhole: 50, verdict: "partial", standardCount: 2, coverage: [], linesAudited: 0, linesMatched: 0, unplaced: [],
     ...over,

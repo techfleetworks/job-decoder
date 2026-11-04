@@ -37,5 +37,7 @@ export function isBasicRead(result: DecodeResult): boolean {
 
 export function matchSummary(result: DecodeResult): string {
   if (result.verdict === "not-covered") return "This title is not in the framework yet.";
-  return `${result.pctWhole}% of the standard hats for this title are covered (${result.covered.length} of ${result.standardCount}).`;
+  const full = result.covered.filter((h) => h.level === "full").length;
+  const partial = result.covered.length - full;
+  return `Title fit ${result.pctWhole}%. This posting fully covers ${full} and partly covers ${partial} of the ${result.standardCount} standard hats for this title.`;
 }

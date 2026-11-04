@@ -4,6 +4,7 @@
 - Date: 2026-11-02
 - Deciders: Morgan (mdenner@techfleet.org)
 - Builds on: [ADR-0013](0013-ui-design-system-and-rules.md) (UI rules), [ADR-0011](0011-session-only-state.md) (session-only), [ADR-0018](0018-mvp1-business-logic.md) (business logic), [ADR-0023](0023-show-all-evidence-per-hat.md) (evidence per hat), [ADR-0028](0028-decode-engine-and-route.md) (the decode route).
+- Amended by [ADR-0039](0039-proportional-hat-scoring.md): the result groups hats by match level (full / partial / none) with each hat's share shown, in place of the three covered / missing / non-standard sets.
 
 ## Context
 

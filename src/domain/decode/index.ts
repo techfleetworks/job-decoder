@@ -13,7 +13,7 @@ import { normalize } from "./text";
 import type { DecodeResult, FunctionSlice, Match, SnapshotItem, SnapshotTitles } from "./types";
 
 export * from "./types";
-export { BANDS } from "./classify";
+export { BANDS, FULL_THRESHOLD } from "./classify";
 export { keywordMatch, unionMatches } from "./match";
 export { buildPrepGuide } from "./prep";
 export { buildRecognizerPrompt, parseRecognitions } from "./recognize";
@@ -111,5 +111,5 @@ export function decode(input: DecodeInput): DecodeResult {
 
   if (!slice) return result; // title not covered: report honestly, do not guess
 
-  return { ...result, ...classify(matched, slice, dutyNames) };
+  return { ...result, ...classify(matched, slice, dutyNames, items) };
 }

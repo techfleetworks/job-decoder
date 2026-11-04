@@ -15,7 +15,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { loadFramework, loadAliases } from './lib/framework.mjs';
-import { decodePosting } from './lib/decode.mjs';
+import { decodePosting, scoreHats } from './lib/decode.mjs';
 import { recognize } from './lib/openrouter.mjs';
 import { scoreFixture, aggregate } from './lib/score.mjs';
 
@@ -134,6 +134,51 @@ function printMetrics(agg, n) {
   }
 }
 
+// Every expected slug must be a real framework leaf item of the declared type, or the
+// scores are silently wrong. A typo in a hand label would otherwise just depress recall
+// with no warning, so fail loud instead of fail open (ADR-0008). Returns the bad labels.
+function validateExpected(fw, fixtures) {
+  const have = new Set(fw.items.map((i) => i.type + ':' + i.slug));
+  const fields = [
+    ['activity', 'activities'],
+    ['deliverable', 'deliverables'],
+    ['tool', 'tools'],
+  ];
+  const bad = [];
+  for (const fx of fixtures) {
+    if (!fx.expected) continue;
+    for (const [type, key] of fields) {
+      for (const slug of fx.expected[key] || []) {
+        if (!have.has(type + ':' + slug)) bad.push(`${fx.name || fx.title}: ${type}:${slug}`);
+      }
+    }
+  }
+  return bad;
+}
+
+// Expected per-hat match levels (ADR-0039), derived from the labeled expected items with the
+// same proportional rule the decode uses. The fixtures label expected items; the expected hat
+// level is a deterministic function of them, so no separate hat-level labeling is needed.
+function expectedRefs(exp) {
+  const refs = [];
+  for (const s of (exp && exp.activities) || []) refs.push({ slug: s, type: 'activity' });
+  for (const s of (exp && exp.deliverables) || []) refs.push({ slug: s, type: 'deliverable' });
+  return refs; // tools are excluded from hat scoring (ADR-0039)
+}
+
+function hatLevelScore(fw, res, exp) {
+  const expected = scoreHats(fw, expectedRefs(exp));
+  const rows = [];
+  let correct = 0;
+  for (const d of res.standard) {
+    const predicted = (res.hats[d] && res.hats[d].level) || 'none';
+    const want = (expected.get(d) && expected.get(d).level) || 'none';
+    if (predicted === want) correct++;
+    rows.push({ hat: d, predicted, expected: want });
+  }
+  return { correct, total: res.standard.length, rows };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
@@ -151,7 +196,20 @@ async function main() {
 
   const fw = loadFramework();
   const aliasMap = args.aliases ? loadAliases() : {};
-  const fixtures = JSON.parse(readFileSync(args.fixtures, 'utf8').replace(/^﻿/, ''));
+  const raw = JSON.parse(readFileSync(args.fixtures, 'utf8').replace(/^﻿/, ''));
+  // Entries without a title are file metadata (a header note), not postings; skip them
+  // so they are not decoded as an empty fixture.
+  const fixtures = raw.filter((fx) => fx && typeof fx.title === 'string');
+  const skipped = raw.length - fixtures.length;
+  const badSlugs = validateExpected(fw, fixtures);
+  if (badSlugs.length) {
+    console.error(
+      'Fixture label error: these expected slugs are not framework leaf items of the ' +
+        'declared type. Fix each label (check the slug and its entity type):',
+    );
+    for (const b of badSlugs) console.error('  ' + b);
+    process.exit(2);
+  }
 
   console.log(
     `Framework: ${fw.items.length} leaf items ` +
@@ -164,9 +222,14 @@ async function main() {
     );
   }
   console.log(`Aliases: ${args.aliases ? Object.keys(aliasMap).length + ' leaf items (translator table)' : 'off (--no-aliases)'}`);
-  console.log(`Fixtures: ${fixtures.length} from ${args.fixtures}`);
+  console.log(
+    `Fixtures: ${fixtures.length} from ${args.fixtures}` +
+      (skipped ? ` (skipped ${skipped} metadata entr${skipped === 1 ? 'y' : 'ies'})` : ''),
+  );
 
   const perList = [];
+  let hatCorrect = 0;
+  let hatTotal = 0;
   let llmDown = 0;
   for (const fx of fixtures) {
     let llm = [];
@@ -187,6 +250,20 @@ async function main() {
         (exp.tools && exp.tools.length));
     if (hasLabels) perList.push(scoreFixture(res.matched, exp));
     printFixture(fw, fx, res, args.detail);
+    if (hasLabels && res.fnSlug) {
+      const hl = hatLevelScore(fw, res, exp);
+      hatCorrect += hl.correct;
+      hatTotal += hl.total;
+      console.log(
+        `    hat levels (ADR-0039): ${hl.correct}/${hl.total} standard hats matched the expected level`,
+      );
+      if (args.detail) {
+        for (const r of hl.rows) {
+          const mark = r.predicted === r.expected ? 'ok  ' : 'MISS';
+          console.log(`      [${mark}] ${r.hat}: predicted ${r.predicted}, expected ${r.expected}`);
+        }
+      }
+    }
   }
 
   if (perList.length) {
@@ -194,6 +271,12 @@ async function main() {
   } else {
     console.log('\nNo fixtures carried an "expected" set, so precision/recall was not computed.');
     console.log('Add expected slugs to the fixtures to measure accuracy.');
+  }
+  if (hatTotal) {
+    console.log(
+      `\nHat-level accuracy (ADR-0039): ${hatCorrect}/${hatTotal} standard hats got the expected ` +
+        `match level (${pct(hatCorrect / hatTotal)}).`,
+    );
   }
   if (llmDown) {
     console.log(`\nNote: the LLM step was unavailable for ${llmDown} fixture(s); those used the keyword fallback.`);

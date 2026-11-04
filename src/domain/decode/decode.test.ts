@@ -88,6 +88,70 @@ describe("decode", () => {
   });
 });
 
+describe("proportional scoring (ADR-0039)", () => {
+  // business-analysis owns 4 activities, product-mgmt owns 5 deliverables, graphic-design
+  // owns only a tool, and one activity rolls up to the degenerate "everyone" duty.
+  const scoreItems: SnapshotItem[] = [
+    { slug: "ba-a1", type: "activity", label: "Requirements Gathering", aliases: [], duties: ["business-analysis"] },
+    { slug: "ba-a2", type: "activity", label: "Process Mapping", aliases: [], duties: ["business-analysis"] },
+    { slug: "ba-a3", type: "activity", label: "Stakeholder Interviews", aliases: [], duties: ["business-analysis"] },
+    { slug: "ba-a4", type: "activity", label: "Gap Analysis", aliases: [], duties: ["business-analysis"] },
+    { slug: "pm-d1", type: "deliverable", label: "Product Roadmap", aliases: [], duties: ["product-mgmt"] },
+    { slug: "pm-d2", type: "deliverable", label: "Release Plan", aliases: [], duties: ["product-mgmt"] },
+    { slug: "pm-d3", type: "deliverable", label: "Backlog Report", aliases: [], duties: ["product-mgmt"] },
+    { slug: "pm-d4", type: "deliverable", label: "Metrics Dashboard", aliases: [], duties: ["product-mgmt"] },
+    { slug: "pm-d5", type: "deliverable", label: "Launch Checklist", aliases: [], duties: ["product-mgmt"] },
+    { slug: "figma", type: "tool", label: "Figma", aliases: [], duties: ["graphic-design"] },
+    { slug: "presentations", type: "activity", label: "Creating Presentations", aliases: [], duties: ["everyone"] },
+  ];
+  const names = {
+    "business-analysis": "Business Analysis",
+    "product-mgmt": "Product Management",
+    "graphic-design": "Graphic Design",
+  };
+  const sliceOf = (hat: string, name: string): FunctionSlice => ({
+    function: { slug: "fn", name: "Fn", description: "" },
+    standardHats: [{ slug: hat, name, description: "" }],
+  });
+
+  it("is full at exactly 25% (1 of 4 items), lone full gives Formula D 100%", () => {
+    const r = decode({ posting: "We do Requirements Gathering.", items: scoreItems, slice: sliceOf("business-analysis", "Business Analysis"), dutyNames: names });
+    const ba = r.covered.find((h) => h.slug === "business-analysis");
+    expect(ba?.scoreWhole).toBe(25);
+    expect(ba?.level).toBe("full");
+    expect(r.missing).toHaveLength(0);
+    expect(r.pctWhole).toBe(100);
+    expect(r.verdict).toBe("strong");
+  });
+
+  it("is partial below 25% (1 of 5 items), a lone partial gives Formula D 50%", () => {
+    const r = decode({ posting: "You own the Product Roadmap.", items: scoreItems, slice: sliceOf("product-mgmt", "Product Management"), dutyNames: names });
+    const pm = r.covered.find((h) => h.slug === "product-mgmt");
+    expect(pm?.scoreWhole).toBe(20);
+    expect(pm?.level).toBe("partial");
+    expect(r.pctWhole).toBe(50);
+    expect(r.verdict).toBe("partial");
+  });
+
+  it("a tool alone confers no hat (none), so it never becomes covered or non-standard", () => {
+    const r = decode({ posting: "We use Figma every day.", items: scoreItems, slice: sliceOf("graphic-design", "Graphic Design"), dutyNames: names });
+    expect(r.matched.some((m) => m.slug === "figma")).toBe(true); // the tool still matches as an item
+    expect(r.covered).toHaveLength(0);
+    expect(r.missing.map((h) => h.slug)).toEqual(["graphic-design"]);
+    expect(r.missing[0]?.level).toBe("none");
+    expect(r.nonStandard).toHaveLength(0);
+    expect(r.verdict).toBe("mismatch");
+  });
+
+  it("the everyone duty never scores and never appears as a hat", () => {
+    const r = decode({ posting: "Lots of Creating Presentations here.", items: scoreItems, slice: sliceOf("business-analysis", "Business Analysis"), dutyNames: names });
+    expect(r.matched.some((m) => m.slug === "presentations")).toBe(true);
+    expect(r.nonStandard).toHaveLength(0);
+    expect([...r.covered, ...r.missing].some((h) => h.slug === "everyone")).toBe(false);
+    expect(r.nonStandard.some((h) => h.slug === "everyone")).toBe(false);
+  });
+});
+
 describe("resolveTitle", () => {
   const titles: SnapshotTitles = {
     titles: { "ux designer": "ux-designer" },

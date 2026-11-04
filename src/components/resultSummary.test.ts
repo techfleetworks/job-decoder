@@ -5,7 +5,7 @@ import type { DecodeResult, Match } from "@/domain/decode/types";
 const base: DecodeResult = {
   functionSlug: "ux-designer",
   functionName: "UX Designer",
-  covered: [{ slug: "a", name: "A", description: "" }],
+  covered: [{ slug: "a", name: "A", description: "", score: 1, scoreWhole: 100, level: "full" }],
   missing: [],
   nonStandard: [],
   matched: [],
