@@ -5,8 +5,10 @@ import type { FormEvent } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import FrameworkCredit from "@/components/FrameworkCredit";
 
 interface Props {
   onSubmit: (title: string, posting: string) => void;
@@ -110,6 +112,11 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
       >
         {working ? "Reading the posting." : ""}
       </Box>
+
+      {/* The framework credit on the input screen too, so every screen carries the
+          attribution the prototype shows in its footer (ADR-0009 NFR-9). */}
+      <Divider sx={{ my: 3 }} />
+      <FrameworkCredit />
     </Box>
   );
 }

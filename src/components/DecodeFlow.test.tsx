@@ -29,6 +29,7 @@ function renderWithTheme(ui: ReactElement) {
 describe("DecodeFlow", () => {
   it("renders the input screen with no accessibility violations", async () => {
     const { container } = renderWithTheme(<DecodeFlow />);
+    expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: /hat check/i })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /license and attribution/i })).toBeInTheDocument();
     const results = await axe(container);
