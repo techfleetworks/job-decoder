@@ -7,10 +7,9 @@
 
 ## Context
 
-The design-fidelity audit (`docs/audit/2026-11-04-design-vs-code-fidelity-audit.md`) found three
-global chrome gaps between the prototype and the app: no persistent app bar (E1), the framework
-credit missing from the input screen (E2), and the How-it-works dialog not stating the verdict
-thresholds or the framework/AI split (E3).
+The design-fidelity audit of the prototype against the app found three global chrome gaps: no
+persistent app bar (E1), the framework credit missing from the input screen (E2), and the
+How-it-works dialog not stating the verdict thresholds or the framework/AI split (E3).
 
 ## Decision
 
