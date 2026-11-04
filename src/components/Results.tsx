@@ -9,6 +9,8 @@ import MobileStepper from "@mui/material/MobileStepper";
 import Typography from "@mui/material/Typography";
 import FrameworkCredit from "@/components/FrameworkCredit";
 import HowItWorks from "@/components/HowItWorks";
+import MatchGauge from "@/components/MatchGauge";
+import StatTiles from "@/components/StatTiles";
 import { GROUP_HEADINGS, isBasicRead, matchSummary, tierWording, verdictCounts, verdictHeadline } from "@/components/resultSummary";
 import type { DecodeResult, Match, ScoredHat } from "@/domain/decode/types";
 
@@ -68,25 +70,14 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
         {
           title: "Title fit",
           content: (
-            <>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+              <MatchGauge
+                pct={result.pctWhole}
+                caption={`${result.covered.length} of ${result.standardCount} standard hats covered`}
+              />
+              <StatTiles counts={verdictCounts(result)} />
               <Typography variant="body1">{matchSummary(result)}</Typography>
-              <Box
-                component="ul"
-                aria-label="Hat counts"
-                sx={{ listStyle: "none", pl: 0, mt: 2, mb: 0, display: "flex", flexWrap: "wrap", gap: 3 }}
-              >
-                {verdictCounts(result).map((c) => (
-                  <Box component="li" key={c.label}>
-                    <Typography variant="h3" component="span">
-                      {c.count}
-                    </Typography>{" "}
-                    <Typography variant="body2" component="span">
-                      {c.label}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </>
+            </Box>
           ),
         },
         {
