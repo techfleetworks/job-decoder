@@ -17,6 +17,7 @@ describe("InputForm", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Hat Check" })).toBeInTheDocument();
     expect(screen.getByLabelText(/job title/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/job posting/i)).toBeInTheDocument();
+    expect(screen.getByText(/CC BY/i)).toBeInTheDocument();
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
   });
