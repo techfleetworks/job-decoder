@@ -52,6 +52,10 @@ describe("Results", () => {
     const { container } = renderWithTheme(<Results result={covered} onStartOver={() => {}} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/partly fits the title/i);
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(/title fit/i);
+    // Step 1 shows the match-level counts (T17 / ADR-0039), labeled in words not color.
+    expect(screen.getByText("Hats covered")).toBeInTheDocument();
+    expect(screen.getByText("Hidden hats")).toBeInTheDocument();
+    expect(screen.getByText("Extra hats")).toBeInTheDocument();
     expect(screen.getByText(/basic read/i)).toBeInTheDocument();
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
