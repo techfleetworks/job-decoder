@@ -3,7 +3,7 @@
 - Status: Accepted
 - Date: 2026-11-04
 - Deciders: Morgan (mdenner@techfleet.org)
-- Builds on: [ADR-0035](0035-decode-input-validation-gate.md) (server-side input validation, the DoS cap), [ADR-0013](0013-input-screen.md) (the input screen).
+- Builds on: [ADR-0035](0035-decode-input-validation-gate.md) (server-side input validation, the DoS cap), [ADR-0013](0013-ui-design-system-and-rules.md) (the input screen rules).
 
 ## Context
 
