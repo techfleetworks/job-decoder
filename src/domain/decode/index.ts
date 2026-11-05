@@ -16,17 +16,35 @@ export * from "./types";
 export { BANDS, FULL_THRESHOLD } from "./classify";
 export { keywordMatch, unionMatches } from "./match";
 export { buildPrepGuide } from "./prep";
+export { projectPrep, PILL_BY_SET } from "./prepByHat";
+export type {
+  Chip,
+  HatCoverCard,
+  HatHighlightCard,
+  HatInterviewCard,
+  HatRef,
+  HatSkillCard,
+  HighlightCardItem,
+  NamedSkill,
+  PillLabel,
+  PrepByHat,
+  SharedSkill,
+  SkillsStep,
+} from "./prepByHat";
 export { buildRecognizerPrompt, parseRecognitions } from "./recognize";
 export type { DropReason, DroppedRecognition, RecognizeParse, RecognizerPrompt } from "./recognize";
 export { MAX_POSTING, MAX_TITLE, validateDecodeInput } from "./validate";
 export type { DecodeInputCheck, DecodeInputReason } from "./validate";
 export type {
+  HatSet,
   HighlightItem,
   KeywordGroup,
   OutcomeTemplate,
   PrepGuide,
   PrepPoint,
+  SkillHat,
   SkillPrepItem,
+  SkillRole,
 } from "./prep";
 
 /** Resolve a real-world title to a job function slug, or null when not covered. */
