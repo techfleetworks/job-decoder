@@ -11,9 +11,10 @@ import NextLink from "next/link";
 import InputForm from "@/components/InputForm";
 import PrepView from "@/components/PrepView";
 import Results from "@/components/Results";
+import TooManyDecodes from "@/components/TooManyDecodes";
 import { isBasicRead } from "@/components/resultSummary";
 import { decodePosting } from "@/data/decodeClient";
-import type { DecodeResultWithPrep } from "@/data/decodeClient";
+import type { DecodeFailReason, DecodeResultWithPrep } from "@/data/decodeClient";
 import { clearScan, loadScan, saveScan } from "@/data/session/sessionStore";
 import { isDecodeResult } from "@/domain/decode";
 
@@ -25,6 +26,7 @@ export default function DecodeFlow() {
   const [view, setView] = useState<"results" | "prep">("results");
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorReason, setErrorReason] = useState<DecodeFailReason | null>(null);
   // True once a decode has shown a result, so returning to the form moves focus to its
   // heading. It stays false on first load, where focus should start at the top of the page.
   const decodedOnce = useRef(false);
@@ -40,6 +42,7 @@ export default function DecodeFlow() {
   async function handleSubmit(title: string, posting: string) {
     setWorking(true);
     setError(null);
+    setErrorReason(null);
     const res = await decodePosting(title, posting);
     setWorking(false);
     if (res.ok) {
@@ -49,6 +52,7 @@ export default function DecodeFlow() {
       saveScan(res.result);
     } else {
       setError(res.error);
+      setErrorReason(res.reason);
     }
   }
 
@@ -56,6 +60,7 @@ export default function DecodeFlow() {
     setResult(null);
     setView("results");
     setError(null);
+    setErrorReason(null);
     clearScan();
   }
 
@@ -73,12 +78,16 @@ export default function DecodeFlow() {
       <Container component="main" maxWidth="sm">
         <Box sx={{ py: 6 }}>
         {!result ? (
-          <InputForm
-            onSubmit={handleSubmit}
-            working={working}
-            error={error}
-            autoFocusHeading={decodedOnce.current}
-          />
+          errorReason === "rate-limited" ? (
+            <TooManyDecodes message={error ?? ""} onBack={startOver} />
+          ) : (
+            <InputForm
+              onSubmit={handleSubmit}
+              working={working}
+              error={error}
+              autoFocusHeading={decodedOnce.current}
+            />
+          )
         ) : view === "prep" && result.prepGuide ? (
           <PrepView prepGuide={result.prepGuide} basicRead={isBasicRead(result)} onBack={() => setView("results")} />
         ) : (

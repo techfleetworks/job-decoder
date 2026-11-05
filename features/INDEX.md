@@ -39,5 +39,6 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | security | The LLM recognizer cannot change the decode result (T03) | A recognition whose quote is not in the posting is dropped | job-seeker | recognizer-fabricated-quote | negative | security | high | covered |
 | security | The LLM recognizer cannot change the decode result (T03) | Extra fields the model returns on an item cannot bind | job-seeker | recognizer-extra-fields | adverse | security | medium | covered |
 | security | The LLM recognizer cannot change the decode result (T03) | Garbled model output yields no matches instead of an error | job-seeker | recognizer-garbled-output | error | reliability | medium | covered |
+| security | The decode endpoint rate-limits each client | A client past the per-window decode limit is turned away | job-seeker | decode-rate-limit | boundary | security | high | covered |
 
-Total: 35 scenario(s).
+Total: 36 scenario(s).

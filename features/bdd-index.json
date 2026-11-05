@@ -769,6 +769,28 @@
         "medium"
       ],
       "status": "covered"
+    },
+    {
+      "file": "features/security/rate-limit.feature",
+      "feature": "The decode endpoint rate-limits each client",
+      "scenario": "A client past the per-window decode limit is turned away",
+      "domain": "security",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "decode-rate-limit"
+      ],
+      "categories": [
+        "boundary"
+      ],
+      "qualities": [
+        "security"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
     }
   ]
 }
