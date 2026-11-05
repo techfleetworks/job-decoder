@@ -47,6 +47,23 @@ const notCovered: DecodeResult = {
   unplaced: [0, 1],
 };
 
+const noLines: DecodeResult = {
+  functionSlug: "ux-designer",
+  functionName: "UX Designer",
+  covered: [],
+  missing: [{ slug: "ux-design", name: "UX Design", description: "", score: 0, scoreWhole: 0, level: "none" }],
+  nonStandard: [],
+  matched: [],
+  pct: 0,
+  pctWhole: 0,
+  verdict: "mismatch",
+  standardCount: 1,
+  coverage: [],
+  linesAudited: 3,
+  linesMatched: 0,
+  unplaced: [0, 1, 2],
+};
+
 describe("Results", () => {
   it("shows the verdict, the first step, the basic-read note, and no accessibility violations", async () => {
     const { container } = renderWithTheme(<Results result={covered} onStartOver={() => {}} />);
@@ -65,5 +82,11 @@ describe("Results", () => {
     renderWithTheme(<Results result={notCovered} onStartOver={() => {}} />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/do not cover this title/i);
     expect(screen.getByText(/will not guess/i)).toBeInTheDocument();
+  });
+
+  it("shows the no-lines-matched state when a covered title places nothing (screen 21)", () => {
+    renderWithTheme(<Results result={noLines} onStartOver={() => {}} />);
+    expect(screen.getByRole("heading", { level: 2, name: /no posting lines matched/i })).toBeInTheDocument();
+    expect(screen.getByText(/another language, or is mostly benefits or legal text/i)).toBeInTheDocument();
   });
 });

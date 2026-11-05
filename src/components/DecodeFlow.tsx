@@ -12,6 +12,7 @@ import InputForm from "@/components/InputForm";
 import PrepView from "@/components/PrepView";
 import Results from "@/components/Results";
 import TooManyDecodes from "@/components/TooManyDecodes";
+import DecodeFailed from "@/components/DecodeFailed";
 import { isBasicRead } from "@/components/resultSummary";
 import { decodePosting } from "@/data/decodeClient";
 import type { DecodeFailReason, DecodeResultWithPrep } from "@/data/decodeClient";
@@ -80,11 +81,12 @@ export default function DecodeFlow() {
         {!result ? (
           errorReason === "rate-limited" ? (
             <TooManyDecodes message={error ?? ""} onBack={startOver} />
+          ) : errorReason === "error" ? (
+            <DecodeFailed message={error ?? ""} onRetry={startOver} />
           ) : (
             <InputForm
               onSubmit={handleSubmit}
               working={working}
-              error={error}
               autoFocusHeading={decodedOnce.current}
             />
           )

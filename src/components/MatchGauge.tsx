@@ -11,6 +11,11 @@ interface Props {
   caption?: string;
 }
 
+// judge-arch note (PR #24 backfill, 2026-11-04, low — a review disposition, not a human arch
+// -gate waiver): MUI CircularProgress(determinate) would avoid hand-rolling a ring, but the
+// prototype gauge needs this stroke width and rounded cap, which the bespoke SVG renders
+// directly; kept deliberately. Recorded in docs/arch-reviews/log.jsonl.
+//
 // The verdict gauge: the match percent as a ring, matching the prototype's step-1 gauge
 // (T17 / ADR-0039). Colors come from the theme only (no literals; the arch gate allows
 // color literals solely in theme.ts). The meaning is also stated in text (the percent and
