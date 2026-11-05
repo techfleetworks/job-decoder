@@ -57,6 +57,9 @@ function HatList({ hats, result, emptyNote }: { hats: ScoredHat[]; result: Decod
 
 export default function Results({ result, onStartOver, onPrepare }: Props) {
   const notCovered = result.verdict === "not-covered";
+  // Covered title, but no posting line matched any framework item (prototype screen 21): show
+  // a plain explanation with hints instead of an empty stepper. Every standard hat is hidden.
+  const noLinesMatched = !notCovered && result.linesMatched === 0;
   const verdictRef = useRef<HTMLHeadingElement>(null);
   const stepHeadingRef = useRef<HTMLHeadingElement>(null);
   const mounted = useRef(false);
@@ -170,6 +173,22 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
           Hat Check does not cover this title yet, so it will not guess. Try a title like UX
           Designer, Product Manager, or Software Engineer.
         </Typography>
+      ) : noLinesMatched ? (
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h2" component="h2" sx={{ mb: 1 }}>
+            No posting lines matched
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            None of the posting lines matched this title&rsquo;s framework work. That usually
+            means the posting is in another language, or is mostly benefits or legal text. Every
+            standard hat for this title shows as hidden below.
+          </Typography>
+          <HatList
+            hats={result.missing}
+            result={result}
+            emptyNote="There are no standard hats to show for this title."
+          />
+        </Box>
       ) : (
         <Box sx={{ mb: 2 }}>
           <Typography variant="h2" component="h2" tabIndex={-1} ref={stepHeadingRef} sx={{ mb: 2 }}>

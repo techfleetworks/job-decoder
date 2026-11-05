@@ -14,14 +14,14 @@ import { MAX_POSTING, MAX_TITLE } from "@/domain/decode";
 interface Props {
   onSubmit: (title: string, posting: string) => void;
   working: boolean;
-  error?: string | null;
   /** Move focus to the heading on mount, used when returning to a fresh form from a result,
    *  so focus is not left on the body. Off on first load, where focus starts at the top. */
   autoFocusHeading?: boolean;
 }
 
-// The input screen: one job title, one pasted posting, one primary action (ADR-0013).
-export default function InputForm({ onSubmit, working, error, autoFocusHeading }: Props) {
+// The input screen: one job title, one pasted posting, one primary action (ADR-0013). Decode
+// failures are shown on their own screens (DecodeFailed, TooManyDecodes), not inline here.
+export default function InputForm({ onSubmit, working, autoFocusHeading }: Props) {
   const [title, setTitle] = useState("");
   const [posting, setPosting] = useState("");
   const [touched, setTouched] = useState(false);
@@ -60,12 +60,6 @@ export default function InputForm({ onSubmit, working, error, autoFocusHeading }
         names, the ones it expects but leaves out, and the ones that do not usually belong.
         Every answer comes from the Tech Fleet Skills and Practices Framework.
       </Typography>
-
-      {error ? (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      ) : null}
 
       {showSummary ? (
         <Alert severity="error" role="alert" sx={{ mb: 3 }}>
