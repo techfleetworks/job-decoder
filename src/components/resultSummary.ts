@@ -4,7 +4,13 @@
 
 // Relative import (not the @/ alias) so this module also loads under the cucumber tsx
 // runner, which does not resolve tsconfig path aliases.
-import type { DecodeResult, MatchTier, Verdict } from "../domain/decode/types";
+import type { DecodeResult, Match, MatchTier, Verdict } from "../domain/decode/types";
+
+// The matched items (the receipt quotes) that roll up to one hat. One owner for both the
+// covered step and the extra-hats step, so the two cannot drift (ADR-0021 / ADR-0023).
+export function evidenceFor(matched: Match[], hatSlug: string): Match[] {
+  return matched.filter((m) => m.duties.includes(hatSlug));
+}
 
 // How each match tier reads to a person. Kept here with the other user-facing wording so a
 // copy change is caught by this module's tests, not shipped unnoticed from a component.

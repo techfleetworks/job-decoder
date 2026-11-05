@@ -9,20 +9,17 @@ import MobileStepper from "@mui/material/MobileStepper";
 import Typography from "@mui/material/Typography";
 import FrameworkCredit from "@/components/FrameworkCredit";
 import HowItWorks from "@/components/HowItWorks";
+import HatCard from "@/components/HatCard";
 import MatchGauge from "@/components/MatchGauge";
 import StatTiles from "@/components/StatTiles";
-import { isBasicRead, matchSummary, tierWording, verdictCounts, verdictHeadline } from "@/components/resultSummary";
+import { evidenceFor, isBasicRead, matchSummary, tierWording, verdictCounts, verdictHeadline } from "@/components/resultSummary";
 import MatchedHats from "@/components/MatchedHats";
-import type { DecodeResult, Match, ScoredHat } from "@/domain/decode/types";
+import type { DecodeResult, ScoredHat } from "@/domain/decode/types";
 
 interface Props {
   result: DecodeResult;
   onStartOver: () => void;
   onPrepare?: () => void;
-}
-
-function evidenceFor(result: DecodeResult, hatSlug: string): Match[] {
-  return result.matched.filter((m) => m.duties.includes(hatSlug));
 }
 
 // One hat with the posting phrases that rolled up to it: the receipt, per hat (ADR-0023).
@@ -31,7 +28,7 @@ function HatList({ hats, result, emptyNote }: { hats: ScoredHat[]; result: Decod
   return (
     <Box component="ul" sx={{ listStyle: "none", pl: 0, m: 0 }}>
       {hats.map((hat) => {
-        const evidence = evidenceFor(result, hat.slug);
+        const evidence = evidenceFor(result.matched, hat.slug);
         return (
           <Box component="li" key={hat.slug} sx={{ mb: 3 }}>
             <Typography variant="h3" component="h3">
@@ -119,13 +116,16 @@ export default function Results({ result, onStartOver, onPrepare }: Props) {
                   None. The posting stayed within this title&rsquo;s usual hats.
                 </Typography>
               ) : (
-                <Box component="ul" sx={{ pl: 3, m: 0 }}>
-                  {result.nonStandard.map((h) => (
-                    <Typography component="li" variant="body1" key={h.slug}>
-                      {h.name} — {h.scoreWhole}% of its work named
-                    </Typography>
-                  ))}
-                </Box>
+                result.nonStandard.map((h) => (
+                  <HatCard
+                    key={h.slug}
+                    name={h.name}
+                    level={h.level === "none" ? "partial" : h.level}
+                    scoreWhole={h.scoreWhole}
+                    detail={h.detail}
+                    evidence={evidenceFor(result.matched, h.slug)}
+                  />
+                ))
               )}
             </>
           ),
