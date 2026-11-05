@@ -134,3 +134,20 @@ history is the receipt.
   Vitest suite (11 cases) and the gateway `recognizeMatches` has one (7 cases, fetch mocked);
   `check:architecture`, `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS.
+
+## 2026-11-04 — T18 Reading screen and cancel for a running decode
+- Audience: job-seeker. New feature `decode/decode-request.feature` proves the client contract
+  that keeps working, cancelled, and failed apart (the seam behind the Reading screen's Cancel):
+  - `decode-request-ok` (happy, functional, high)
+  - `decode-request-cancel` (negative, reliability, high) — a deliberate cancel re-throws
+    `AbortError` and is never shown as a failure
+  - `decode-request-network-error` (adverse, reliability, high) — a network failure surfaces the
+    `error` reason, not a cancel
+  - `decode-request-rate-limited` (boundary, functional, medium) — a 429 keeps its own reason
+- The DOM interactions sit in the component layer (vitest, blocking via `test:run`), matching the
+  repo's split: `Reading.test.tsx` (focus on mount, still-working after 8s via fake timers, Cancel,
+  axe); `DecodeFlow.test.tsx` (submit→Reading, cancel→form restored with the title and posting, and
+  a concurrency guard proving a cancelled decode never lands even if its request resolves late);
+  `decodeClient.test.ts` (abort re-throw, 429/500/network mapping, signal passthrough).
+- Gate result: `test:bdd` 40 scenarios green; `check:architecture`, `check-gherkin-valid`,
+  `check-bdd-tags`, `check-bdd-coverage`, `check-bdd-executed` all PASS; ADR-0044 recorded.

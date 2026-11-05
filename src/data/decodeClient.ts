@@ -15,12 +15,17 @@ export type DecodeResponse =
   | { ok: true; result: DecodeResultWithPrep }
   | { ok: false; error: string; reason: DecodeFailReason };
 
-export async function decodePosting(title: string, posting: string): Promise<DecodeResponse> {
+export async function decodePosting(
+  title: string,
+  posting: string,
+  signal?: AbortSignal,
+): Promise<DecodeResponse> {
   try {
     const res = await fetch("/api/decode", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ title, posting }),
+      signal,
     });
     if (!res.ok) {
       const body = (await res.json().catch(() => ({}))) as { error?: string };
@@ -33,7 +38,10 @@ export async function decodePosting(title: string, posting: string): Promise<Dec
       };
     }
     return { ok: true, result: (await res.json()) as DecodeResultWithPrep };
-  } catch {
+  } catch (err) {
+    // A cancel aborts the fetch; let the caller handle that (it returns to the form and keeps
+    // the input), rather than showing a failure screen for a deliberate cancel.
+    if (err instanceof DOMException && err.name === "AbortError") throw err;
     return {
       ok: false,
       error: "We could not reach the decoder. Check your connection and try again.",

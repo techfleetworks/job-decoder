@@ -15,6 +15,10 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | data-tier | The framework data tier and snapshot build | The content hash does not depend on record order | engineer | content-hash-stable | boundary | reliability | medium | covered |
 | data-tier | The framework data tier and snapshot build | The framework tables are closed to the browser | engineer | framework-rls | permission | security | critical | covered |
 | data-tier | The framework data tier and snapshot build | The pinned framework data builds the snapshot read model | engineer | snapshot-build | happy | functional | high | covered |
+| decode | The decode request tells working, cancelled, and failed apart | A cancelled request is surfaced as a cancel, not a failure | job-seeker | decode-request-cancel | negative | reliability | high | covered |
+| decode | The decode request tells working, cancelled, and failed apart | A network failure is surfaced as an error, not a cancel | job-seeker | decode-request-network-error | adverse | reliability | high | covered |
+| decode | The decode request tells working, cancelled, and failed apart | A rate-limited request keeps its own reason so the right screen shows | job-seeker | decode-request-rate-limited | boundary | functional | medium | covered |
+| decode | The decode request tells working, cancelled, and failed apart | A successful request returns the decoded result | job-seeker | decode-request-ok | happy | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | A covered title with matching work reads as a strong fit | job-seeker | decode-covered | happy | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | An expected hat that is not named is reported as missing | job-seeker | decode-missing | boundary | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | An unknown title is reported as not covered, never guessed | job-seeker | decode-not-covered | negative | functional | high | covered |
@@ -41,4 +45,4 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | security | The LLM recognizer cannot change the decode result (T03) | Garbled model output yields no matches instead of an error | job-seeker | recognizer-garbled-output | error | reliability | medium | covered |
 | security | The decode endpoint rate-limits each client | A client past the per-window decode limit is turned away | job-seeker | decode-rate-limit | boundary | security | high | covered |
 
-Total: 36 scenario(s).
+Total: 40 scenario(s).
