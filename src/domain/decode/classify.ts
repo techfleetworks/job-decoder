@@ -117,7 +117,7 @@ export function classify(
   // A non-standard hat only appears because an item rolled up to it, so it is never "none".
   const nonStandard: ScoredNonStandardHat[] = [...matchedItems.keys()]
     .filter((d) => !standardSlugs.has(d))
-    .map((slug) => ({ slug, name: dutyNames[slug] ?? slug, ...scoreOf(slug) }));
+    .map((slug) => ({ slug, name: dutyNames[slug] ?? slug, ...scoreOf(slug), detail: detailOf(items, slug) }));
 
   // Overall title-fit, Formula D (ADR-0039): a full standard hat counts 1, a partial 0.5,
   // over all the title's standard hats. Non-standard hats do not change it.

@@ -108,6 +108,7 @@ export interface ScoredNonStandardHat extends NonStandardHat {
   score: number;
   scoreWhole: number;
   level: MatchLevel;
+  detail?: HatDetail; // its activities/deliverables/tools, so extra hats get the same card (ADR-0040)
 }
 
 export type Verdict = "strong" | "partial" | "mismatch" | "not-covered";

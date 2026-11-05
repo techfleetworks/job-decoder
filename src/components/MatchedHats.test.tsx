@@ -30,25 +30,31 @@ const matched: Match[] = [
 ];
 
 describe("MatchedHats", () => {
-  it("groups by level with pills and evidence, and has no a11y violations", async () => {
+  it("renders each hat as a card with a share pill and a reference line, no a11y violations", async () => {
     const { container } = renderWithTheme(<MatchedHats covered={covered} matched={matched} />);
-    expect(screen.getByText("Full")).toBeInTheDocument();
-    expect(screen.getByText("Partial")).toBeInTheDocument();
-    expect(screen.getByText(/UX Design — 50% of its work named/)).toBeInTheDocument();
-    expect(screen.getByText(/UX Research — 12% of its work named/)).toBeInTheDocument();
-    expect(screen.getByRole("group", { name: /filter evidence by match type/i })).toBeInTheDocument();
-    // Each hat has a "Why it matters" panel; only the detailed hat has "What it takes".
-    expect(screen.getAllByText("Why it matters")).toHaveLength(2);
-    expect(screen.getByText("What it takes")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "UX Design" })).toBeInTheDocument();
+    expect(screen.getByText("Full · 50%")).toBeInTheDocument();
+    expect(screen.getByText("Partial · 12%")).toBeInTheDocument();
+    // The rephrased reference line attributes the share to the hat itself (T17).
+    expect(
+      screen.getByText(/The posting references 50% of UX Design's work responsibilities/),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: /filter hats by match type/i })).toBeInTheDocument();
     const results = await axe(container);
     expect(results.violations).toHaveLength(0);
   });
 
-  it("filters evidence by match type", async () => {
+  it("filters the visible hat cards by match type, with hat counts on the chips", async () => {
     const user = userEvent.setup();
     renderWithTheme(<MatchedHats covered={covered} matched={matched} />);
-    // The exact-only filter keeps the UX Design quote and drops the similar UX Research quote.
+    expect(screen.getByRole("button", { name: /^all 2$/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "UX Design" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "UX Research" })).toBeInTheDocument();
+    // No covered hat has an alias match, so that chip is disabled.
+    expect(screen.getByRole("button", { name: /a known phrasing 0/i })).toBeDisabled();
+    // Exact-wording shows only the hat with an exact match; the similar-only hat disappears.
     await user.click(screen.getByRole("button", { name: /exact wording 1/i }));
-    expect(screen.getByText(/No matching quotes for this filter/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "UX Design" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "UX Research" })).not.toBeInTheDocument();
   });
 });
