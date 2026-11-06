@@ -9,11 +9,26 @@ import type { DecodeResult, DutyDetail, Match, SkillInfo, SnapshotItem } from ".
 
 export type HatSet = "hidden" | "matched" | "non-standard";
 
+// How a skill reaches one hat: the posting named the work that needs it ("needed"), it is
+// one of the hat's foundational skills ("foundational"), or it is only required by the duty
+// ("required", accordion-only). Per hat, the strongest role wins (needed > foundational >
+// required), so the Skills "By Hat" cards can split Needed vs Foundational without the view
+// re-deriving it (ADR-0045).
+export type SkillRole = "needed" | "foundational" | "required";
+const ROLE_RANK: Record<SkillRole, number> = { needed: 3, foundational: 2, required: 1 };
+
+export interface SkillHat {
+  slug: string;
+  name: string;
+  set: HatSet;
+  role: SkillRole;
+}
+
 export interface SkillPrepItem {
   slug: string;
   label: string;
   type: string; // "Technical" | "Interpersonal"
-  hats: { slug: string; name: string; set: HatSet }[];
+  hats: SkillHat[];
   sourceField: string;
   key: boolean; // true = a key skill to lead with; false = "other skills this hat uses" (accordion)
 }
@@ -108,6 +123,7 @@ export function buildPrepGuide(result: DecodeResult, lookups: PrepLookups): Prep
     hat: { slug: string; name: string; set: HatSet },
     source: string,
     key: boolean,
+    role: SkillRole,
   ) => {
     const info = skillBySlug.get(slug);
     if (!info) return; // dropped and not shown; the build gate (R4) guarantees refs resolve
@@ -116,8 +132,11 @@ export function buildPrepGuide(result: DecodeResult, lookups: PrepLookups): Prep
       agg = { slug, label: info.name, type: info.type, hats: [], sourceField: source, key: false };
       skillAgg.set(slug, agg);
     }
-    if (!agg.hats.some((h) => h.slug === hat.slug)) {
-      agg.hats.push({ slug: hat.slug, name: hat.name, set: hat.set });
+    const existing = agg.hats.find((h) => h.slug === hat.slug);
+    if (!existing) {
+      agg.hats.push({ slug: hat.slug, name: hat.name, set: hat.set, role });
+    } else if (ROLE_RANK[role] > ROLE_RANK[existing.role]) {
+      existing.role = role; // the strongest reason this hat needs the skill wins
     }
     if (key) {
       agg.key = true;
@@ -132,25 +151,25 @@ export function buildPrepGuide(result: DecodeResult, lookups: PrepLookups): Prep
       // No posting evidence, so the key skills are the duty's foundational skills.
       for (const s of duty.foundationalSkills) {
         keySlugs.add(s);
-        addSkill(s, hat, "Foundational Skills", true);
+        addSkill(s, hat, "Foundational Skills", true, "foundational");
       }
     } else {
       // Rank 2: skills required by the activities the posting named for this hat.
       for (const m of (matchedByHat.get(hat.slug) ?? []).filter((x) => x.type === "activity")) {
         for (const s of activityBySlug.get(m.slug)?.skills ?? []) {
           keySlugs.add(s);
-          addSkill(s, hat, "a posting-named activity", true);
+          addSkill(s, hat, "a posting-named activity", true, "needed");
         }
       }
       // Rank 3: the duty's foundational skills.
       for (const s of duty.foundationalSkills) {
         keySlugs.add(s);
-        addSkill(s, hat, "Foundational Skills", true);
+        addSkill(s, hat, "Foundational Skills", true, "foundational");
       }
     }
     // The rest of the duty's required skills are in the pool but not key (accordion).
     for (const s of duty.skillsRequired) {
-      if (!keySlugs.has(s)) addSkill(s, hat, "Skills Required For the Duty", false);
+      if (!keySlugs.has(s)) addSkill(s, hat, "Skills Required For the Duty", false, "required");
     }
   }
   const allSkills = [...skillAgg.values()];

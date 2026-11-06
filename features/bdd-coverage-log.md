@@ -134,3 +134,30 @@ history is the receipt.
   Vitest suite (11 cases) and the gateway `recognizeMatches` has one (7 cases, fetch mocked);
   `check:architecture`, `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS.
+
+## 2026-11-05 — T19/T20/T21 prep flow IA to the prototype (ADR-0045)
+
+- Change: `feat/t20-prep-ia`. Rewrote the prep flow to match the Figma prototype (file
+  `HvbMGxsYUXHCJmt0pv8bg3`, prep frames `53:628`, `53:845`, `53:1181`, `53:1372`, `53:1520`):
+  ATS keywords as five chip sections, Skills as three sections (Named in the posting / Shared by
+  several Hats / By Hat), and per-hat cards with status pills on the Highlights, Cover, and
+  Interview steps, hidden hats first. Backed by a pure per-hat projection `projectPrep`
+  (`src/domain/decode/prepByHat.ts`, ADR-0045) over the existing `PrepGuide`, plus a per-hat
+  `role` enrichment on each skill in `buildPrepGuide` so the By-Hat cards can split Needed vs
+  Foundational. The view (`PrepView.tsx`, `HatPrepCard.tsx`) renders the projection; it computes
+  no grouping.
+- Scenarios added to feature "Prepare your application from the hats" (`@audience:job-seeker`):
+  - `prep-by-hat-order` (happy, functional, high) — the per-hat steps lead with the hidden hat,
+    every card carries a status set.
+  - `prep-named-quote` (happy, functional, medium) — a named-in-the-posting skill carries a
+    grounded posting quote.
+  - `prep-nonstandard-cover` (edge, functional, medium) — a non-standard cover card shows no
+    deliverable chips.
+- Grounding: the projection adds no framework data; it regroups what the guide already carries
+  and uses only grounded quotes (a hat with no matched quote carries none). The "Named in the
+  posting" skills reuse the hat's matched-activity quote (the domain never matches skills
+  directly, ADR-0028); this is stated in ADR-0045 as a limit, not hidden.
+- Gate result: `test:bdd` ran all 39 scenarios green (132 steps); `projectPrep` has a
+  discriminating Vitest suite (8 cases) and `buildPrepGuide`'s role split is covered (prep.test);
+  `PrepView` has a component suite (10 cases, axe clean); `check:architecture`, `check-gherkin`,
+  `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS.

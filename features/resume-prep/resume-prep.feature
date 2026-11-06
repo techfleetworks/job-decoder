@@ -40,3 +40,22 @@ Feature: Prepare your application from the hats
     Given a decoded posting with matched, hidden, and non-standard hats
     When the prep guide is built
     Then every skill, activity, and deliverable names the hat it came from
+
+  @usecase:prep-by-hat-order @category:happy @quality:functional @severity:high
+  Scenario: The per-hat prep steps lead with the hidden hat, each card tagged
+    Given a decoded posting with matched, hidden, and non-standard hats
+    When the prep guide is projected per hat
+    Then the highlights, cover, and interview steps all lead with a hidden hat
+    And every per-hat card carries a status set
+
+  @usecase:prep-named-quote @category:happy @quality:functional @severity:medium
+  Scenario: A skill the posting names carries a grounded quote
+    Given a decoded posting with matched, hidden, and non-standard hats
+    When the prep guide is projected per hat
+    Then a named-in-the-posting skill shows a quote from the posting
+
+  @usecase:prep-nonstandard-cover @category:edge @quality:functional @severity:medium
+  Scenario: A non-standard cover card shows no deliverable chips
+    Given a decoded posting with matched, hidden, and non-standard hats
+    When the prep guide is projected per hat
+    Then the non-standard cover card shows no deliverable chips

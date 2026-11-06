@@ -74,6 +74,20 @@ describe("buildPrepGuide", () => {
     expect(figma.sourceField.length).toBeGreaterThan(0);
   });
 
+  it("records a per-hat role on each skill (needed > foundational > required)", () => {
+    const g = buildPrepGuide(result, lookups)!;
+    // figma-skill reaches matched ux-design via the posting-named wireframing activity, so
+    // "needed" wins over its foundational listing for the same hat.
+    const figma = g.technicalSkills.find((s) => s.slug === "figma-skill")!;
+    expect(figma.hats.find((h) => h.slug === "ux-design")!.role).toBe("needed");
+    // interviewing is a foundational skill of the hidden ux-research hat.
+    const interviewing = g.technicalSkills.find((s) => s.slug === "interviewing")!;
+    expect(interviewing.hats.find((h) => h.slug === "ux-research")!.role).toBe("foundational");
+    // data-analysis is only required by the duty, never key: role "required".
+    const dataAnalysis = g.technicalSkills.find((s) => s.slug === "data-analysis")!;
+    expect(dataAnalysis.hats.find((h) => h.slug === "ux-design")!.role).toBe("required");
+  });
+
   it("cover letter points carry the hat's deliverables", () => {
     const g = buildPrepGuide(result, lookups)!;
     const uxd = g.coverLetterPoints.find((p) => p.hatSlug === "ux-design")!;

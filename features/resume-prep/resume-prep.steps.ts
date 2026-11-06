@@ -1,6 +1,7 @@
 import { Given, Then, When } from "@cucumber/cucumber";
 import assert from "node:assert/strict";
 import { buildPrepGuide } from "../../src/domain/decode/prep";
+import { projectPrep } from "../../src/domain/decode/prepByHat";
 import type { PrepLookups } from "../../src/domain/decode/prep";
 import type { DecodeResult, DutyDetail, SkillInfo, SnapshotItem } from "../../src/domain/decode/types";
 
@@ -51,6 +52,10 @@ Given("a decode for a title the framework does not cover", function () {
 When("the prep guide is built", function () {
   this.guide = buildPrepGuide(this.result, lookups);
 });
+When("the prep guide is projected per hat", function () {
+  this.guide = buildPrepGuide(this.result, lookups);
+  this.prep = projectPrep(this.guide);
+});
 
 Then("technical and interpersonal skills are listed separately, each tied to a hat", function () {
   assert.ok(this.guide.technicalSkills.length > 0);
@@ -81,4 +86,32 @@ Then("every skill, activity, and deliverable names the hat it came from", functi
   for (const s of [...this.guide.technicalSkills, ...this.guide.interpersonalSkills]) assert.ok(s.hats.length > 0);
   for (const a of this.guide.activities) assert.ok(a.hatSlug);
   for (const d of this.guide.deliverables) assert.ok(d.hatSlug);
+});
+Then("the highlights, cover, and interview steps all lead with a hidden hat", function () {
+  assert.equal(this.prep.highlights[0].hat.set, "hidden");
+  assert.equal(this.prep.cover[0].hat.set, "hidden");
+  assert.equal(this.prep.interview[0].hat.set, "hidden");
+});
+Then("every per-hat card carries a status set", function () {
+  const sets = ["hidden", "matched", "non-standard"];
+  const cards = [
+    ...this.prep.skills.byHat,
+    ...this.prep.highlights,
+    ...this.prep.cover,
+    ...this.prep.interview,
+  ];
+  assert.ok(cards.length > 0);
+  for (const c of cards) assert.ok(sets.includes(c.hat.set), `unexpected hat set ${c.hat.set}`);
+});
+Then("a named-in-the-posting skill shows a quote from the posting", function () {
+  assert.ok(this.prep.skills.namedInPosting.length > 0, "no named-in-the-posting skills");
+  assert.ok(
+    this.prep.skills.namedInPosting.some((n: { quote?: string }) => typeof n.quote === "string" && n.quote.length > 0),
+    "no named-in-the-posting skill carried a quote",
+  );
+});
+Then("the non-standard cover card shows no deliverable chips", function () {
+  const ns = this.prep.cover.find((c: { hat: { set: string } }) => c.hat.set === "non-standard");
+  assert.ok(ns, "no non-standard cover card");
+  assert.equal(ns.deliverables.length, 0);
 });
