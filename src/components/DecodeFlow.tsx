@@ -13,6 +13,7 @@ import PrepView from "@/components/PrepView";
 import Results from "@/components/Results";
 import TooManyDecodes from "@/components/TooManyDecodes";
 import DecodeFailed from "@/components/DecodeFailed";
+import Reading from "@/components/Reading";
 import { isBasicRead } from "@/components/resultSummary";
 import { decodePosting } from "@/data/decodeClient";
 import type { DecodeFailReason, DecodeResultWithPrep } from "@/data/decodeClient";
@@ -28,9 +29,11 @@ export default function DecodeFlow() {
   const [working, setWorking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [errorReason, setErrorReason] = useState<DecodeFailReason | null>(null);
-  // True once a decode has shown a result, so returning to the form moves focus to its
-  // heading. It stays false on first load, where focus should start at the top of the page.
-  const decodedOnce = useRef(false);
+  // The last submitted input, so a cancelled decode can restore the form with it filled in.
+  const [submitted, setSubmitted] = useState({ title: "", posting: "" });
+  // Bumped to remount InputForm so it re-seeds from `submitted` (after cancel or start over).
+  const [formKey, setFormKey] = useState(0);
+  const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     // Restore the current scan for this tab, but only if it still matches the result
@@ -41,20 +44,41 @@ export default function DecodeFlow() {
   }, []);
 
   async function handleSubmit(title: string, posting: string) {
+    setSubmitted({ title, posting });
     setWorking(true);
     setError(null);
     setErrorReason(null);
-    const res = await decodePosting(title, posting);
-    setWorking(false);
-    if (res.ok) {
-      decodedOnce.current = true;
-      setResult(res.result);
-      setView("results");
-      saveScan(res.result);
-    } else {
-      setError(res.error);
-      setErrorReason(res.reason);
+    const controller = new AbortController();
+    abortRef.current = controller;
+    try {
+      const res = await decodePosting(title, posting, controller.signal);
+      // Cancelled while the request was in flight but before it aborted: drop the result so a
+      // cancelled decode can never land on the screen (no race with cancel()).
+      if (controller.signal.aborted) return;
+      setWorking(false);
+      if (res.ok) {
+        setResult(res.result);
+        setView("results");
+        saveScan(res.result);
+      } else {
+        setError(res.error);
+        setErrorReason(res.reason);
+      }
+    } catch (err) {
+      // A cancel re-throws AbortError; the cancel handler already reset working and will
+      // restore the form, so there is nothing to do. Any other throw is a real failure.
+      if (!(err instanceof DOMException && err.name === "AbortError")) {
+        setWorking(false);
+        setError("We could not reach the decoder. Check your connection and try again.");
+        setErrorReason("error");
+      }
     }
+  }
+
+  function cancel() {
+    abortRef.current?.abort();
+    setWorking(false);
+    setFormKey((k) => k + 1); // remount InputForm, seeded with the submitted input
   }
 
   function startOver() {
@@ -62,6 +86,8 @@ export default function DecodeFlow() {
     setView("results");
     setError(null);
     setErrorReason(null);
+    setSubmitted({ title: "", posting: "" });
+    setFormKey((k) => k + 1);
     clearScan();
   }
 
@@ -79,15 +105,19 @@ export default function DecodeFlow() {
       <Container component="main" maxWidth="sm">
         <Box sx={{ py: 6 }}>
         {!result ? (
-          errorReason === "rate-limited" ? (
+          working ? (
+            <Reading onCancel={cancel} />
+          ) : errorReason === "rate-limited" ? (
             <TooManyDecodes message={error ?? ""} onBack={startOver} />
           ) : errorReason === "error" ? (
             <DecodeFailed message={error ?? ""} onRetry={startOver} />
           ) : (
             <InputForm
+              key={formKey}
               onSubmit={handleSubmit}
-              working={working}
-              autoFocusHeading={decodedOnce.current}
+              autoFocusHeading={formKey > 0}
+              initialTitle={submitted.title}
+              initialPosting={submitted.posting}
             />
           )
         ) : view === "prep" && result.prepGuide ? (

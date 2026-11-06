@@ -13,17 +13,25 @@ import { MAX_POSTING, MAX_TITLE } from "@/domain/decode";
 
 interface Props {
   onSubmit: (title: string, posting: string) => void;
-  working: boolean;
   /** Move focus to the heading on mount, used when returning to a fresh form from a result,
    *  so focus is not left on the body. Off on first load, where focus starts at the top. */
   autoFocusHeading?: boolean;
+  /** Seed the fields, used to restore the title and posting after a cancelled decode. */
+  initialTitle?: string;
+  initialPosting?: string;
 }
 
-// The input screen: one job title, one pasted posting, one primary action (ADR-0013). Decode
-// failures are shown on their own screens (DecodeFailed, TooManyDecodes), not inline here.
-export default function InputForm({ onSubmit, working, autoFocusHeading }: Props) {
-  const [title, setTitle] = useState("");
-  const [posting, setPosting] = useState("");
+// The input screen: one job title, one pasted posting, one primary action (ADR-0013). While a
+// decode runs the Reading screen is shown instead of this form, and decode failures have their
+// own screens (DecodeFailed, TooManyDecodes), so no "working" or error state lives here.
+export default function InputForm({
+  onSubmit,
+  autoFocusHeading,
+  initialTitle = "",
+  initialPosting = "",
+}: Props) {
+  const [title, setTitle] = useState(initialTitle);
+  const [posting, setPosting] = useState(initialPosting);
   const [touched, setTouched] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
@@ -46,7 +54,7 @@ export default function InputForm({ onSubmit, working, autoFocusHeading }: Props
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setTouched(true);
-    if (titleEmpty || postingEmpty || working) return;
+    if (titleEmpty || postingEmpty) return;
     onSubmit(title.trim(), posting);
   }
 
@@ -80,7 +88,6 @@ export default function InputForm({ onSubmit, working, autoFocusHeading }: Props
         onChange={(e) => setTitle(e.target.value)}
         fullWidth
         required
-        disabled={working}
         inputProps={{ maxLength: MAX_TITLE }}
         error={touched && titleEmpty}
         helperText={
@@ -97,7 +104,6 @@ export default function InputForm({ onSubmit, working, autoFocusHeading }: Props
         required
         multiline
         minRows={8}
-        disabled={working}
         inputProps={{ maxLength: MAX_POSTING }}
         error={touched && postingEmpty}
         helperText={
@@ -108,29 +114,9 @@ export default function InputForm({ onSubmit, working, autoFocusHeading }: Props
         sx={{ mb: 3 }}
       />
 
-      <Button type="submit" variant="contained" disabled={working}>
-        {working ? "Reading the posting…" : "Decode this posting"}
+      <Button type="submit" variant="contained">
+        Decode this posting
       </Button>
-
-      {/* A visually hidden live region, so a screen-reader user hears that the decode is
-          running even if they have moved focus away from the button. */}
-      <Box
-        role="status"
-        aria-live="polite"
-        sx={{
-          position: "absolute",
-          width: 1,
-          height: 1,
-          p: 0,
-          m: "-1px",
-          overflow: "hidden",
-          clip: "rect(0 0 0 0)",
-          whiteSpace: "nowrap",
-          border: 0,
-        }}
-      >
-        {working ? "Reading the posting." : ""}
-      </Box>
 
       {/* The framework credit on the input screen too, so every screen carries the
           attribution the prototype shows in its footer (ADR-0009 NFR-9). */}
