@@ -443,6 +443,28 @@
     {
       "file": "features/resume-prep/resume-prep.feature",
       "feature": "Prepare your application from the hats",
+      "scenario": "A non-standard cover card shows no deliverable chips",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-nonstandard-cover"
+      ],
+      "categories": [
+        "edge"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
       "scenario": "A posting with no non-standard hats has no extra-scope items",
       "domain": "resume-prep",
       "audiences": [
@@ -453,6 +475,28 @@
       ],
       "categories": [
         "empty-overflow"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "medium"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "A skill the posting names carries a grounded quote",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-named-quote"
+      ],
+      "categories": [
+        "happy"
       ],
       "qualities": [
         "functional"
@@ -560,6 +604,28 @@
       ],
       "usecases": [
         "prep-skills"
+      ],
+      "categories": [
+        "happy"
+      ],
+      "qualities": [
+        "functional"
+      ],
+      "severities": [
+        "high"
+      ],
+      "status": "covered"
+    },
+    {
+      "file": "features/resume-prep/resume-prep.feature",
+      "feature": "Prepare your application from the hats",
+      "scenario": "The per-hat prep steps lead with the hidden hat, each card tagged",
+      "domain": "resume-prep",
+      "audiences": [
+        "job-seeker"
+      ],
+      "usecases": [
+        "prep-by-hat-order"
       ],
       "categories": [
         "happy"

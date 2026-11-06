@@ -1,11 +1,11 @@
-# BDD coverage log
+﻿# BDD coverage log
 
 Append-only. Each behavioral change adds a dated entry naming the change, the
 scenarios added, updated, or removed with their audience, use case, and severity,
 and the gate result that proved them. Never edit or delete a past entry; the
 history is the receipt.
 
-## 2026-11-01 — BDD harness and the architecture feature
+## 2026-11-01 â€” BDD harness and the architecture feature
 
 - Change: `feat/bdd-harness` (the PR after T10). Stands up Cucumber.js in strict
   mode and the gate suite (`check-gherkin-valid`, `check-bdd-tags`,
@@ -24,7 +24,7 @@ history is the receipt.
   `check-bdd-executed` all PASS. The ticket feature files (T01 to T16) are added
   with their implementations in later PRs, each appending an entry here.
 
-## 2026-11-02 — T11 framework data tier and snapshot build
+## 2026-11-02 â€” T11 framework data tier and snapshot build
 
 - Change: `feat/data-tier` (T11). Adds the Supabase data tier (`spf_release` and
   `spf_record` JSONB, RLS on), the shared relation logic, the ADR-0008 integrity
@@ -41,7 +41,7 @@ history is the receipt.
   `check:snapshot-integrity` all PASS. The decode-engine and screen tickets add
   their own feature files and entries in later PRs.
 
-## 2026-11-02 — T03 to T09 decode engine (keyword path)
+## 2026-11-02 â€” T03 to T09 decode engine (keyword path)
 
 - Change: `feat/decode-engine`. Ports the matcher and scoring into a pure TypeScript
   domain (`src/domain/decode`), adds the server snapshot reader (`src/data/server`) and
@@ -58,7 +58,7 @@ history is the receipt.
   `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The route
   and domain also carry Vitest tests (13 cases).
 
-## 2026-11-02 — T01, T02, T06 to T08 result screens (keyword flow)
+## 2026-11-02 â€” T01, T02, T06 to T08 result screens (keyword flow)
 
 - Change: `feat/screens` (stacked on the decode PR). The input screen, the result stepper,
   the receipt per hat, the how-it-works panel, and the session-only store, calling
@@ -71,7 +71,7 @@ history is the receipt.
   `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS. The screens
   also carry Vitest component and jest-axe accessibility tests (9 cases).
 
-## 2026-11-02 — T16 resume and application prep (logic and data)
+## 2026-11-02 â€” T16 resume and application prep (logic and data)
 
 - Change: `feat/resume-prep`. Adds the skills entity to the data tier and enriches the
   snapshot (per-hat skills, activities, deliverables, tools; a skills index with Skill Type;
@@ -89,7 +89,7 @@ history is the receipt.
   discriminating test; `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`,
   `check-bdd-executed`, and `check:snapshot-integrity` all PASS.
 
-## 2026-11-02 — T13 decode input validation (OWASP security gate)
+## 2026-11-02 â€” T13 decode input validation (OWASP security gate)
 
 - Change: `feat/t13-owasp-gate` (T13). Extracts the `/api/decode` request rules into a pure
   domain check (`src/domain/decode/validate.ts`, `validateDecodeInput`) and has the route call
@@ -107,7 +107,7 @@ history is the receipt.
   Vitest suite (8 cases); `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS.
 
-## 2026-11-03 — T03 live LLM recognizer in /api/decode
+## 2026-11-03 â€” T03 live LLM recognizer in /api/decode
 
 - Change: `feat/t03-live-recognizer` (T03, ADR-0037). Runs the grounded LLM recognizer live on
   the request path: a pure parser/validator in the decode domain
@@ -135,19 +135,45 @@ history is the receipt.
   `check:architecture`, `check-gherkin-valid`, `check-bdd-tags`, `check-bdd-coverage`, and
   `check-bdd-executed` all PASS.
 
-## 2026-11-04 — T18 Reading screen and cancel for a running decode
+## 2026-11-04 â€” T18 Reading screen and cancel for a running decode
 - Audience: job-seeker. New feature `decode/decode-request.feature` proves the client contract
   that keeps working, cancelled, and failed apart (the seam behind the Reading screen's Cancel):
   - `decode-request-ok` (happy, functional, high)
-  - `decode-request-cancel` (negative, reliability, high) — a deliberate cancel re-throws
+  - `decode-request-cancel` (negative, reliability, high) â€” a deliberate cancel re-throws
     `AbortError` and is never shown as a failure
-  - `decode-request-network-error` (adverse, reliability, high) — a network failure surfaces the
+  - `decode-request-network-error` (adverse, reliability, high) â€” a network failure surfaces the
     `error` reason, not a cancel
-  - `decode-request-rate-limited` (boundary, functional, medium) — a 429 keeps its own reason
+  - `decode-request-rate-limited` (boundary, functional, medium) â€” a 429 keeps its own reason
 - The DOM interactions sit in the component layer (vitest, blocking via `test:run`), matching the
   repo's split: `Reading.test.tsx` (focus on mount, still-working after 8s via fake timers, Cancel,
-  axe); `DecodeFlow.test.tsx` (submit→Reading, cancel→form restored with the title and posting, and
+  axe); `DecodeFlow.test.tsx` (submitâ†’Reading, cancelâ†’form restored with the title and posting, and
   a concurrency guard proving a cancelled decode never lands even if its request resolves late);
   `decodeClient.test.ts` (abort re-throw, 429/500/network mapping, signal passthrough).
 - Gate result: `test:bdd` 40 scenarios green; `check:architecture`, `check-gherkin-valid`,
   `check-bdd-tags`, `check-bdd-coverage`, `check-bdd-executed` all PASS; ADR-0044 recorded.
+## 2026-11-05 â€” T19/T20/T21 prep flow IA to the prototype (ADR-0045)
+
+- Change: `feat/t20-prep-ia`. Rewrote the prep flow to match the Figma prototype (file
+  `HvbMGxsYUXHCJmt0pv8bg3`, prep frames `53:628`, `53:845`, `53:1181`, `53:1372`, `53:1520`):
+  ATS keywords as five chip sections, Skills as three sections (Named in the posting / Shared by
+  several Hats / By Hat), and per-hat cards with status pills on the Highlights, Cover, and
+  Interview steps, hidden hats first. Backed by a pure per-hat projection `projectPrep`
+  (`src/domain/decode/prepByHat.ts`, ADR-0045) over the existing `PrepGuide`, plus a per-hat
+  `role` enrichment on each skill in `buildPrepGuide` so the By-Hat cards can split Needed vs
+  Foundational. The view (`PrepView.tsx`, `HatPrepCard.tsx`) renders the projection; it computes
+  no grouping.
+- Scenarios added to feature "Prepare your application from the hats" (`@audience:job-seeker`):
+  - `prep-by-hat-order` (happy, functional, high) â€” the per-hat steps lead with the hidden hat,
+    every card carries a status set.
+  - `prep-named-quote` (happy, functional, medium) â€” a named-in-the-posting skill carries a
+    grounded posting quote.
+  - `prep-nonstandard-cover` (edge, functional, medium) â€” a non-standard cover card shows no
+    deliverable chips.
+- Grounding: the projection adds no framework data; it regroups what the guide already carries
+  and uses only grounded quotes (a hat with no matched quote carries none). The "Named in the
+  posting" skills reuse the hat's matched-activity quote (the domain never matches skills
+  directly, ADR-0028); this is stated in ADR-0045 as a limit, not hidden.
+- Gate result: `test:bdd` ran all 39 scenarios green (132 steps); `projectPrep` has a
+  discriminating Vitest suite (8 cases) and `buildPrepGuide`'s role split is covered (prep.test);
+  `PrepView` has a component suite (10 cases, axe clean); `check:architecture`, `check-gherkin`,
+  `check-bdd-tags`, `check-bdd-coverage`, and `check-bdd-executed` all PASS.
