@@ -10,7 +10,7 @@
 // The upstream commit the framework data is pinned to (ADR-0008 rule 7). The sync
 // step stamps this onto the release so every result can name the exact bytes it came
 // from. Override with FRAMEWORK_SHA when syncing a different pin.
-export const PINNED_SHA = process.env.FRAMEWORK_SHA || "636635a";
+export const PINNED_SHA = process.env.FRAMEWORK_SHA || "393b40a";
 
 // The manifest version string never changes (ADR-0008 rule 7); the release is pinned
 // by the commit SHA and content hash, not by this string.

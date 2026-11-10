@@ -4224,6 +4224,22 @@
       {
         "slug": "go-to-market-plan",
         "label": "Go-To-Market Plan"
+      },
+      {
+        "slug": "mission-statement",
+        "label": "Mission Statement"
+      },
+      {
+        "slug": "vision-statement",
+        "label": "Vision Statement"
+      },
+      {
+        "slug": "organizational-values",
+        "label": "Organizational Values"
+      },
+      {
+        "slug": "commitment-statement",
+        "label": "Commitment Statement"
       }
     ],
     "UNIQUE AUTOMATED Milestones": [

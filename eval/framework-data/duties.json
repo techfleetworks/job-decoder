@@ -1335,6 +1335,12 @@
         "label": "SEO Strategy"
       }
     ],
+    "Workshops - What RACI Hat Owns This Workshop?": [
+      {
+        "slug": "brand-strategy-and-identity-workshop-template",
+        "label": "Brand Strategy and Identity Workshop Template"
+      }
+    ],
     "Duty Description": "The UX Design duty is about shaping how a product actually works for the people using it, turning rough ideas into screens and flows that feel simple. Day to day that means sketching wireframes, building clickable prototypes, and pulling patterns together into a design system so the whole product feels like one coherent thing. Designers rarely work in a straight line; they try something, put it in front of people, and refine it as the team learns.",
     "What Does It Take for This Duty To Succeed?": "It takes a mix of craft and people skills: interaction design, information architecture, and prototyping to build the work, plus the openness to share ownership and take feedback without ego. Comfort in tools like Figma and Figjam helps, but the real skill is staying curious about whether a design truly makes sense for a real person.",
     "Why Is This Duty Important to Project Success?": "Design is where a plan becomes something people can see and touch. This duty owns deliverables like wireframes and prototypes that the rest of the team builds on, and it stays active from early discovery through launch, so the product keeps improving instead of freezing at version one.",
@@ -6728,6 +6734,22 @@
       {
         "slug": "customer-segmentation",
         "label": "Customer Segmentation"
+      },
+      {
+        "slug": "mission-statement",
+        "label": "Mission Statement"
+      },
+      {
+        "slug": "vision-statement",
+        "label": "Vision Statement"
+      },
+      {
+        "slug": "organizational-values",
+        "label": "Organizational Values"
+      },
+      {
+        "slug": "commitment-statement",
+        "label": "Commitment Statement"
       }
     ],
     "Workshops - What RACI Hat Owns This Workshop?": [
@@ -6754,6 +6776,10 @@
       {
         "slug": "product-and-service-development-milestones-for-different-types-of-projects-works",
         "label": "Product and Service Development Milestones for Different Types of Projects Workshop Template"
+      },
+      {
+        "slug": "nonprofit-strategy-definition-workshop",
+        "label": "Nonprofit Strategy Definition Workshop"
       }
     ],
     "Duty Description": "The Product Management duty sets the direction for a product, the what and the why behind the work. Managers dig into users and the market, shape the vision and strategy, and rally the team around which problems are worth solving. They do not build it all themselves; they help everyone pull in the same direction.",
