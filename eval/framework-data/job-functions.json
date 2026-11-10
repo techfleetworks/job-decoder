@@ -7596,10 +7596,6 @@
     ],
     "Responsible Deliverables": [
       {
-        "slug": "statement-of-work",
-        "label": "Statement of Work"
-      },
-      {
         "slug": "vision-boards",
         "label": "Vision Boards"
       },
@@ -7678,6 +7674,26 @@
       {
         "slug": "customer-segmentation",
         "label": "Customer Segmentation"
+      },
+      {
+        "slug": "mission-statement",
+        "label": "Mission Statement"
+      },
+      {
+        "slug": "vision-statement",
+        "label": "Vision Statement"
+      },
+      {
+        "slug": "organizational-values",
+        "label": "Organizational Values"
+      },
+      {
+        "slug": "commitment-statement",
+        "label": "Commitment Statement"
+      },
+      {
+        "slug": "statement-of-work",
+        "label": "Statement of Work"
       }
     ],
     "Job Function Description": "A Product Manager sets the direction for a product, the what and the why behind the work. You spend time understanding users and the business, choosing which problems are worth solving, and rallying the team around a shared goal. You do not do all the work yourself; you help everyone pull in the same direction. It fits people who like strategy, enjoy connecting people, business, and technology, and are comfortable with a good deal of ambiguity.",
