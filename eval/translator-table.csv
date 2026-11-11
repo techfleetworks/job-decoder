@@ -299,3 +299,12 @@ user journey map,deliverable,user-journey-map,User Journey Map,exact,0,0.0,,doma
 customer journey map,deliverable,user-journey-map,User Journey Map,synonym,0,0.0,,domain
 agile coach,duty,agile-coaching,Agile Coaching,variant,0,0.0,,domain
 product ops,duty,product-operations,Product Operations,variant,0,0.0,,domain
+prioritize the backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+prioritizing the backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+prioritized backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+build the schedule,deliverable,gantt-chart,Gantt Chart,variant,0,0.0,,domain
+build the schedule,deliverable,project-plan,Project Plan,variant,0,0.0,,domain
+frame the problem,deliverable,problem-statements,Problem Statements,variant,0,0.0,,domain
+framing the problem,deliverable,problem-statements,Problem Statements,variant,0,0.0,,domain
+icons and illustrations,deliverable,logo-and-brand-assets,Logo and Brand Assets,variant,0,0.0,,domain
+onboarding copy,deliverable,copywriting-document,Copywriting Document,variant,0,0.0,,domain

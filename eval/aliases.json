@@ -324,7 +324,20 @@
     "pmf"
   ],
   "deliverable:project-plan": [
-    "project plan"
+    "project plan",
+    "build the schedule"
+  ],
+  "deliverable:prioritized-backlog-tasks": [
+    "prioritize the backlog",
+    "prioritizing the backlog",
+    "prioritized backlog"
+  ],
+  "deliverable:problem-statements": [
+    "frame the problem",
+    "framing the problem"
+  ],
+  "deliverable:copywriting-document": [
+    "onboarding copy"
   ],
   "deliverable:taxonomy": [
     "taxonomy"
@@ -382,7 +395,8 @@
     "content inventory"
   ],
   "deliverable:logo-and-brand-assets": [
-    "brand assets"
+    "brand assets",
+    "icons and illustrations"
   ],
   "deliverable:low-fidelity-prototypes": [
     "low fidelity prototypes"
@@ -455,7 +469,8 @@
     "erd"
   ],
   "deliverable:gantt-chart": [
-    "gantt chart"
+    "gantt chart",
+    "build the schedule"
   ],
   "deliverable:go-to-market-plan": [
     "go-to-market plan"

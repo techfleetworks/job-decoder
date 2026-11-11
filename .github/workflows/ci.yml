@@ -35,6 +35,10 @@ jobs:
         run: npm run check:bdd-executed
       - name: Snapshot integrity (build the read model from local framework data)
         run: npm run check:snapshot-integrity
+      - name: Fixture evidence guard discriminates (ADR-0048, not vacuous)
+        run: npm run check:fixture-evidence -- --self-test
+      - name: Fixture evidence symmetry (every expected deliverable cites a verbatim phrase)
+        run: npm run check:fixture-evidence
       - name: Dependency scan (production high/critical advisories)
         run: npm run check:dependencies
       - name: Build

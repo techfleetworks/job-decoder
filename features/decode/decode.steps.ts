@@ -58,7 +58,14 @@ Given("the title {string} and a posting with a matching line and an unrelated li
 });
 
 When("the posting is decoded", function () {
-  this.result = decode({ posting: this.posting, items, slice: this.slice, dutyNames });
+  // this.llm is set only by the meaning-confirm scenario; undefined elsewhere (keyword-only).
+  this.result = decode({
+    posting: this.posting,
+    items,
+    slice: this.slice,
+    dutyNames,
+    llmMatches: this.llm,
+  });
 });
 
 Then("both standard hats are covered", function () {
@@ -91,4 +98,39 @@ Then("no hats are covered", function () {
 
 Then("every line is either matched or unplaced", function () {
   assert.equal(this.result.linesMatched + this.result.unplaced.length, this.result.linesAudited);
+});
+
+Given(
+  "the title {string} and a posting naming wireframing and user research, with the recognizer confirming only user research",
+  function (title: string) {
+    this.title = title;
+    this.posting = "You will do Wireframing and User Research.";
+    this.slice = sliceFor(title);
+    // The recognizer (meaning check, ADR-0047) confirms only user research. Wireframing is a
+    // keyword-only match it did not recognize, so it must read as unconfirmed after union.
+    this.llm = [
+      {
+        slug: "user-research",
+        type: "activity",
+        label: "User Research",
+        tier: "exact",
+        term: "User Research",
+        via: ["llm"],
+        duties: ["ux-research"],
+        quote: "User Research",
+      },
+    ];
+  },
+);
+
+Then("the {string} match is unconfirmed", function (name: string) {
+  const m = this.result.matched.find((x: { label: string }) => x.label.toLowerCase() === name.toLowerCase());
+  assert.ok(m, `no match found for ${name}`);
+  assert.equal(m.confirmed, false);
+});
+
+Then("the {string} match is confirmed", function (name: string) {
+  const m = this.result.matched.find((x: { label: string }) => x.label.toLowerCase() === name.toLowerCase());
+  assert.ok(m, `no match found for ${name}`);
+  assert.equal(m.confirmed, true);
 });

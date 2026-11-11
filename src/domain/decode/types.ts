@@ -65,6 +65,7 @@ export interface Match {
   tier: MatchTier;
   term: string; // the label or alias phrase that matched
   via: MatchVia[];
+  confirmed?: boolean; // meaning-confirmed by the recognizer (via includes "llm"); set at union (ADR-0047)
   duties: string[];
   quote?: string; // a verbatim phrase from the posting (from the LLM recognizer)
   unit?: number; // which posting line matched

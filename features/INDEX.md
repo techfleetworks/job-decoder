@@ -20,6 +20,7 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | decode | The decode request tells working, cancelled, and failed apart | A rate-limited request keeps its own reason so the right screen shows | job-seeker | decode-request-rate-limited | boundary | functional | medium | covered |
 | decode | The decode request tells working, cancelled, and failed apart | A successful request returns the decoded result | job-seeker | decode-request-ok | happy | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | A covered title with matching work reads as a strong fit | job-seeker | decode-covered | happy | functional | high | covered |
+| decode | Decode a job posting into the hats it expects | A keyword match the recognizer does not confirm is flagged unconfirmed | job-seeker | decode-meaning-confirm | adverse | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | An expected hat that is not named is reported as missing | job-seeker | decode-missing | boundary | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | An unknown title is reported as not covered, never guessed | job-seeker | decode-not-covered | negative | functional | high | covered |
 | decode | Decode a job posting into the hats it expects | Every posting line is accounted for | job-seeker | decode-line-audit | happy | reliability | medium | covered |
@@ -48,4 +49,4 @@ Generated from the feature files by `npm run bdd:index`. Do not edit by hand.
 | security | The LLM recognizer cannot change the decode result (T03) | Garbled model output yields no matches instead of an error | job-seeker | recognizer-garbled-output | error | reliability | medium | covered |
 | security | The decode endpoint rate-limits each client | A client past the per-window decode limit is turned away | job-seeker | decode-rate-limit | boundary | security | high | covered |
 
-Total: 43 scenario(s).
+Total: 44 scenario(s).
