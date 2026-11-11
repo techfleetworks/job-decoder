@@ -7,7 +7,9 @@ flight. Status values are Done, In progress, and To do.
 The ticket numbers below match the Notion backlog (Backlog — Hat Check). An earlier
 version of this board used a different shorthand; it has been realigned.
 
-Last updated: 2026-11-04 — added the ADR-0039 proportional-scoring refactor as owed work
+Last updated: 2026-11-10 — MVP1 scope decision: T12's accuracy gate is parked and out of MVP1. CI stays deterministic only, with no LLM step and no accuracy threshold in any merge gate; the eval harness and labeled fixtures stay a run-on-demand tool. A full keyword + LLM eval on 2026-11-10 measured overall item F1 92% and hat-level 97% (single run), recorded for reference only. The remaining MVP1 bones are the OpenRouter production key on Vercel and merging the in-flight PRs.
+
+Previously updated: 2026-11-04 — added the ADR-0039 proportional-scoring refactor as owed work
 (T-prop-1 to T-prop-4), reopened T05 and T06 (the refactor changes how hats are classified
 and shown), settled T15 to In progress, and updated the decisions row to ADR-0039. The refactor is now
 built (classify + eval twins, the result screen, and eval hat-level accuracy; typecheck,
@@ -45,7 +47,7 @@ last update: T03 live recognizer (PR #19, ADR-0037) and the T14 manual WCAG 2.2 
 | T07 | Receipt + unplaced lines per hat | Screens | ✅ Done (PR #11) |
 | T08 | How-it-works (the 16 steps) | Screens | ✅ Done (PR #11) |
 | T09 | AI-unavailable fallback ("basic read" label) | Decode engine | ✅ Done (PR #9) |
-| T12 | Eval accuracy gate (threshold + labels) | Quality gates | 🟢 In progress — harness merged; hand-labeled starter fixtures added (PR #21), keyword baseline measured (overall P 97% / R 37%); a model run against the labels is unblocked once the key is set, and the selection threshold is Morgan's decision · T-prop-4 (ADR-0039) adds an expected match level per standard hat to the fixtures |
+| T12 | Eval harness + labeled fixtures (accuracy gate parked) | Quality gates | ⏸️ Parked — out of MVP1 scope. The eval harness and labeled fixtures (all 11 covered functions) are a run-on-demand tool, not a CI gate. A full keyword + LLM run on 2026-11-10 measured overall item F1 92% (P 95 / R 89) and hat-level 97% (36/37), single run with one 429 fallback; recorded for reference, not gating. Decision 2026-11-10: CI stays deterministic only, no LLM, no accuracy threshold in a merge gate; model-quality tracking is a later concern |
 | T13 | Security / OWASP scenarios + gate | Quality gates | ✅ Done — dependency-scan gate (PR #12, ADR-0030) and `/api/decode` input-validation gate (PR #17, ADR-0035, pure `validateDecodeInput` + 5 `@security` scenarios) both merged; per-IP rate limiting is a noted follow-up |
 | T14 | Accessibility (WCAG / axe gate) | Quality gates | ✅ Done — axe coverage for all components (PR #16); manual WCAG 2.2 AA pass merged (PR #20, ADR-0038): keyboard + a11y-tree audit on the live site, conformance record committed, 4 focus/announcement findings fixed; one audio screen-reader pass is the remaining human step |
 | T15 | Licensing (attribution + license gate) | Quality gates | 🟢 In progress — inline CC BY credit added to the Prep screen on `feat/a11y-licensing-gaps`; closes on merge |
@@ -57,12 +59,13 @@ last update: T03 live recognizer (PR #19, ADR-0037) and the T14 manual WCAG 2.2 
 | — | Branch protection on `main` (CI checks block merge) | Infra | ✅ Done |
 
 Tally: 14 MVP tickets done (T01–T11, T13, T14, T16) plus the foundation/infra rows;
-2 in progress (T12 model selection — labeled fixtures and the keyword baseline are in,
-PR #21, the live model run needs the key and the threshold is Morgan's decision; and T15
-licensing — the CC BY credit on the Prep screen, closing on merge);
+1 in progress (T15 licensing — the CC BY credit on the Prep screen, closing on merge);
+T12's accuracy gate is parked and out of MVP1 scope (the eval harness stays a run-on-demand
+tool);
 4 built and in review (T-prop-1 to T-prop-4, the ADR-0039 proportional-scoring refactor —
 code, tests, and the arch gate are green in the PR; the reopened T05 and T06 are addressed
-by it). T12 remains unblocked for a model run once `OPENROUTER_API_KEY` is set.
+by it). The remaining MVP1 bones are the OpenRouter production key on Vercel and merging the
+in-flight PRs.
 
 ## T16 sub-progress (resume & application prep)
 
@@ -95,10 +98,11 @@ by it). T12 remains unblocked for a model run once `OPENROUTER_API_KEY` is set.
 
 ## Still open for MVP 1
 
-- **T12 — Eval accuracy gate:** the harness and the hand-labeled starter fixtures are merged
-  (PR #21) and the keyword baseline is measured; a live model run is unblocked once
-  `OPENROUTER_API_KEY` is set, and the selection threshold is Morgan's decision. T-prop-4
-  adds an expected match level per standard hat to the fixtures.
+- **T12 — Eval harness (accuracy gate parked, out of MVP1):** the harness and the labeled
+  fixtures (all 11 covered functions) are a run-on-demand tool, not a CI gate. The 2026-11-10
+  run measured overall item F1 92% and hat-level 97% (single run, recorded for reference).
+  Decision: CI stays deterministic only, with no LLM step and no accuracy threshold in a merge
+  gate. Model-quality tracking is a later concern, not MVP1.
 - **T15 — licensing gate:** the inline CC BY credit is on the Prep screen
   (`feat/a11y-licensing-gaps`); closes on merge.
 - **T-prop-1 to T-prop-4 — proportional scoring (ADR-0039):** the per-hat score becomes a
