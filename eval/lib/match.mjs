@@ -93,5 +93,8 @@ export function unionMatches(...lists) {
       if (!prev.quote && m.quote) prev.quote = m.quote;
     }
   }
-  return [...byKey.values()];
+  // Meaning-confirmation (mechanism B, ADR-0047): a match the recognizer recognized carries
+  // 'llm' in its sources, so it is meaning-confirmed; a keyword match it did not also recognize
+  // is unconfirmed. Set once here from the final merged sources, identically to the app twin.
+  return [...byKey.values()].map((m) => ({ ...m, confirmed: m.via.includes('llm') }));
 }

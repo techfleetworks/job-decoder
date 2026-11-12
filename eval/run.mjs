@@ -231,6 +231,8 @@ async function main() {
   let hatCorrect = 0;
   let hatTotal = 0;
   let llmDown = 0;
+  let negCount = 0;
+  let negConfirmedFp = 0;
   for (const fx of fixtures) {
     let llm = [];
     if (args.llm) {
@@ -243,6 +245,19 @@ async function main() {
       }
     }
     const res = decodePosting(fw, fx, llm, aliasMap);
+    // Negative out-of-domain fixtures (ADR-0047): no hat should be meaning-confirmed. Count the
+    // confirmed false matches so a regression in the meaning check shows up as a rising number.
+    if (fx.negative) {
+      const confirmed = res.matched.filter((m) => m.confirmed);
+      negCount++;
+      negConfirmedFp += confirmed.length;
+      console.log(`\n- ${fx.name}  [NEGATIVE: out of domain]`);
+      console.log(
+        `    confirmed matches (want 0): ${confirmed.length}` +
+          (confirmed.length ? ' -> ' + confirmed.map((m) => `${m.type}:${m.slug}`).join(', ') : ''),
+      );
+      continue;
+    }
     const exp = fx.expected;
     const hasLabels =
       exp && ((exp.activities && exp.activities.length) ||
@@ -271,6 +286,21 @@ async function main() {
   } else {
     console.log('\nNo fixtures carried an "expected" set, so precision/recall was not computed.');
     console.log('Add expected slugs to the fixtures to measure accuracy.');
+  }
+  if (negCount) {
+    if (!args.llm) {
+      // Keyword-only run: nothing is meaning-confirmed, so this count is always 0 and proves
+      // nothing. Say so, rather than let a vacuous 0 read as a passing guard.
+      console.log(
+        `\nNegative fixtures (out-of-domain, ADR-0047): not measured without the recognizer ` +
+          `(--no-llm confirms nothing). Run with the recognizer to exercise the meaning check.`,
+      );
+    } else {
+      console.log(
+        `\nNegative fixtures (out-of-domain, ADR-0047): ${negConfirmedFp} confirmed false ` +
+          `match(es) across ${negCount} posting(s) (want 0).`,
+      );
+    }
   }
   if (hatTotal) {
     console.log(

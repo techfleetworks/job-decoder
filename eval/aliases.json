@@ -12,7 +12,15 @@
   ],
   "deliverable:roadmap": [
     "roadmap",
-    "product roadmap"
+    "product roadmap",
+    "roadmapping"
+  ],
+  "deliverable:user-story-statements": [
+    "user stories",
+    "writing user stories"
+  ],
+  "deliverable:design-annotation": [
+    "redlines"
   ],
   "activity:collecting-analytics": [
     "analytics",
@@ -319,12 +327,28 @@
   "activity:storyboarding": [
     "storyboarding"
   ],
+  "deliverable:storyboard": [
+    "storyboarding"
+  ],
   "deliverable:product-market-fit-analysis": [
     "product-market fit",
     "pmf"
   ],
   "deliverable:project-plan": [
-    "project plan"
+    "project plan",
+    "build the schedule"
+  ],
+  "deliverable:prioritized-backlog-tasks": [
+    "prioritize the backlog",
+    "prioritizing the backlog",
+    "prioritized backlog"
+  ],
+  "deliverable:problem-statements": [
+    "frame the problem",
+    "framing the problem"
+  ],
+  "deliverable:copywriting-document": [
+    "onboarding copy"
   ],
   "deliverable:taxonomy": [
     "taxonomy"
@@ -382,7 +406,8 @@
     "content inventory"
   ],
   "deliverable:logo-and-brand-assets": [
-    "brand assets"
+    "brand assets",
+    "icons and illustrations"
   ],
   "deliverable:low-fidelity-prototypes": [
     "low fidelity prototypes"
@@ -396,7 +421,9 @@
   "deliverable:user-journey-map": [
     "journey map",
     "user journey map",
-    "customer journey map"
+    "customer journey map",
+    "journey mapping",
+    "customer journey mapping"
   ],
   "tool:maze-co": [
     "maze"
@@ -455,7 +482,8 @@
     "erd"
   ],
   "deliverable:gantt-chart": [
-    "gantt chart"
+    "gantt chart",
+    "build the schedule"
   ],
   "deliverable:go-to-market-plan": [
     "go-to-market plan"

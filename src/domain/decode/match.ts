@@ -94,5 +94,10 @@ export function unionMatches(...lists: Match[][]): Match[] {
       if (!prev.quote && m.quote) prev.quote = m.quote;
     }
   }
-  return [...byKey.values()];
+  // Meaning-confirmation (mechanism B, ADR-0047): a match the recognizer recognized carries
+  // "llm" in its sources, so it is meaning-confirmed. A keyword/alias/similar match the
+  // recognizer did not also recognize is unconfirmed (kept, but flagged low confidence; the
+  // results confidence gate in T23 decides how it is shown). The flag is set here, once, from
+  // the final merged sources so both twins compute it identically.
+  return [...byKey.values()].map((m) => ({ ...m, confirmed: m.via.includes("llm") }));
 }

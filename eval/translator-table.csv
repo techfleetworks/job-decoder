@@ -299,3 +299,19 @@ user journey map,deliverable,user-journey-map,User Journey Map,exact,0,0.0,,doma
 customer journey map,deliverable,user-journey-map,User Journey Map,synonym,0,0.0,,domain
 agile coach,duty,agile-coaching,Agile Coaching,variant,0,0.0,,domain
 product ops,duty,product-operations,Product Operations,variant,0,0.0,,domain
+prioritize the backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+prioritizing the backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+prioritized backlog,deliverable,prioritized-backlog-tasks,Prioritized Backlog Tasks,variant,0,0.0,,domain
+build the schedule,deliverable,gantt-chart,Gantt Chart,variant,0,0.0,,domain
+build the schedule,deliverable,project-plan,Project Plan,variant,0,0.0,,domain
+frame the problem,deliverable,problem-statements,Problem Statements,variant,0,0.0,,domain
+framing the problem,deliverable,problem-statements,Problem Statements,variant,0,0.0,,domain
+icons and illustrations,deliverable,logo-and-brand-assets,Logo and Brand Assets,variant,0,0.0,,domain
+onboarding copy,deliverable,copywriting-document,Copywriting Document,variant,0,0.0,,domain
+user stories,deliverable,user-story-statements,User Story Statements,variant,32,3.4,Business Analyst (15); Product Manager (7); Product Owner (6),domain
+writing user stories,deliverable,user-story-statements,User Story Statements,variant,5,0.5,Business Analyst (3); Project Manager (1); Product Owner (1),domain
+roadmapping,deliverable,roadmap,Roadmap,variant,5,0.5,Project Manager (4); Product Manager (1),domain
+journey mapping,deliverable,user-journey-map,User Journey Map,variant,5,0.5,UX Designer (3); UX Researcher (1); Business Analyst (1),domain
+customer journey mapping,deliverable,user-journey-map,User Journey Map,variant,2,0.2,UX Researcher (1); Business Analyst (1),domain
+storyboarding,deliverable,storyboard,Storyboard,variant,4,0.4,UX Designer (4),domain
+redlines,deliverable,design-annotation,Design Annotation,variant,2,0.2,UX Designer (2),domain

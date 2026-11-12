@@ -1,7 +1,7 @@
 [
   {
     "_about": "LABELED STARTER SET for T12 (model selection). Each posting is written in natural hiring language (original text, not a verbatim real posting, to avoid reproducing copyrighted material). 'expected' is the set of framework leaf items a human reader says the posting describes, by slug, independent of what the matcher predicts. Labels are best-judgment ground truth pending Morgan's review. Labeling convention: an activity is labeled when the posting describes DOING the work; a deliverable when it names the ARTIFACT produced; a tool when it is named. Paraphrase is deliberate, so the keyword baseline will miss items the LLM step should catch. See README 'Fixtures'.",
-    "_labeling_rule": "Named-artifact rule (guidance for human labelers, NOT enforced by code): map each posting phrase to EVERY framework deliverable it names or refers to as a noun. A single phrase can carry several deliverables (for example 'annotated designs' -> design-annotation AND high-fidelity-prototypes). Do NOT label a deliverable when only the producing activity is described and no artifact noun is referred to (for example 'call out risks' is the activity analyzing-project-risk, not a risk-analysis deliverable). Borderline cases are a recorded human judgment call. The recognizer already returns multiple items per quote and the scorer counts per slug, so many-deliverables-per-phrase needs no engine change. The eval validates that every expected slug EXISTS in the framework, but never decides what should be labeled.",
+    "_labeling_rule": "Named-artifact rule (guidance for human labelers, NOT enforced by code): map each posting phrase to EVERY framework deliverable it names or refers to as a noun. A single phrase can carry several deliverables (for example 'annotated designs' -> design-annotation AND high-fidelity-prototypes). A gerund or verb form of producing a SPECIFICALLY NAMED SPF deliverable refers to that deliverable too (ADR-0049): 'roadmapping' -> roadmap, 'storyboarding' -> storyboard, 'journey mapping' -> user-journey-map. Do NOT label a deliverable when only the producing activity is described and no named artifact is referred to (for example 'call out risks' is the activity analyzing-project-risk, not a risk-analysis deliverable; 'database design' is the activity, not an entity-relationship-diagram the posting never names). Borderline cases are a recorded human judgment call. The recognizer already returns multiple items per quote and the scorer counts per slug, so many-deliverables-per-phrase needs no engine change. The eval validates that every expected slug EXISTS in the framework, but never decides what should be labeled.",
     "_scope": "A strong-match posting for all eleven covered job functions, plus a title-fit mismatch and a not-covered title (both unscored). Expand with more postings per function before trusting the aggregate numbers; the set is still small, so run-to-run variance is not yet characterized."
   },
   {
@@ -22,6 +22,12 @@
         "high-fidelity-prototypes",
         "design-annotation"
       ],
+      "deliverableEvidence": {
+        "sketches": "sketch early concepts",
+        "low-fidelity-prototypes": "low and high fidelity mockups",
+        "high-fidelity-prototypes": "low and high fidelity mockups",
+        "design-annotation": "annotated designs"
+      },
       "tools": ["figma", "figjam"]
     }
   },
@@ -42,6 +48,7 @@
         "presenting-research-results"
       ],
       "deliverables": ["research-plan"],
+      "deliverableEvidence": { "research-plan": "research plan" },
       "tools": ["dovetail", "optimal-workshop"]
     }
   },
@@ -62,6 +69,7 @@
         "price-testing"
       ],
       "deliverables": ["roadmap"],
+      "deliverableEvidence": { "roadmap": "the roadmap" },
       "tools": []
     }
   },
@@ -81,6 +89,11 @@
         "investigating-competitors"
       ],
       "deliverables": ["acceptance-criteria", "prioritized-backlog-tasks", "epics-and-features"],
+      "deliverableEvidence": {
+        "acceptance-criteria": "the acceptance criteria",
+        "epics-and-features": "our epics",
+        "prioritized-backlog-tasks": "prioritize the backlog"
+      },
       "tools": ["trello", "notion"]
     }
   },
@@ -100,7 +113,11 @@
         "analyzing-project-risk",
         "scheduling-meetings"
       ],
-      "deliverables": ["gantt-chart"],
+      "deliverables": ["gantt-chart", "project-plan"],
+      "deliverableEvidence": {
+        "gantt-chart": "build the schedule",
+        "project-plan": "build the schedule"
+      },
       "tools": ["trello", "zoom", "notion"]
     }
   },
@@ -124,6 +141,11 @@
         "user-story-statements",
         "acceptance-criteria"
       ],
+      "deliverableEvidence": {
+        "user-story-statements": "the user stories",
+        "acceptance-criteria": "the acceptance criteria",
+        "problem-statements": "frame the problem"
+      },
       "tools": ["notion"]
     }
   },
@@ -143,6 +165,10 @@
         "qa-testing"
       ],
       "deliverables": ["code", "coding-documentation"],
+      "deliverableEvidence": {
+        "code": "write both the front end and the server side",
+        "coding-documentation": "document what you build"
+      },
       "tools": ["github"]
     }
   },
@@ -159,7 +185,12 @@
         "developing-information-architecture",
         "feature-vision-definition"
       ],
-      "deliverables": ["user-journey-map", "design-system"],
+      "deliverables": ["user-journey-map", "design-system", "wireframes"],
+      "deliverableEvidence": {
+        "user-journey-map": "map customer journeys",
+        "design-system": "the design system",
+        "wireframes": "wireframe and prototype the solutions"
+      },
       "tools": ["figma", "figjam"]
     }
   },
@@ -169,7 +200,16 @@
     "posting": "We are hiring a UI Designer to turn product flows into polished, consistent screens. You will build wireframes, assemble a reusable component library, and maintain the design system the team builds against. You will craft the product's icons and illustrations, produce high fidelity prototypes, and write clear UI development specs, annotating your designs so engineering builds exactly what you intend. We design in Figma and FigJam.",
     "expected": {
       "activities": ["wireframing", "design-component-creation", "icon-and-logo-creation", "creating-illustrations", "prototype-creation", "creating-annotations"],
-      "deliverables": ["wireframes", "component-library", "design-system", "high-fidelity-prototypes", "ui-development-specifications", "logo-and-brand-assets"],
+      "deliverables": ["wireframes", "component-library", "design-system", "high-fidelity-prototypes", "ui-development-specifications", "logo-and-brand-assets", "design-annotation"],
+      "deliverableEvidence": {
+        "wireframes": "build wireframes",
+        "component-library": "a reusable component library",
+        "design-system": "the design system",
+        "high-fidelity-prototypes": "high fidelity prototypes",
+        "ui-development-specifications": "UI development specs",
+        "design-annotation": "annotating your designs",
+        "logo-and-brand-assets": "icons and illustrations"
+      },
       "tools": ["figma", "figjam"]
     }
   },
@@ -180,6 +220,14 @@
     "expected": {
       "activities": ["copywriting", "inventorying-content", "brand-identity-formation", "usability-testing"],
       "deliverables": ["microcopy", "copywriting-document", "content-inventory", "editorial-style-guide", "brand-identity", "brand-archetypes"],
+      "deliverableEvidence": {
+        "microcopy": "interface microcopy",
+        "content-inventory": "inventory of our existing content",
+        "editorial-style-guide": "editorial style guide",
+        "brand-identity": "the brand identity",
+        "brand-archetypes": "archetypes",
+        "copywriting-document": "onboarding copy"
+      },
       "tools": ["notion"]
     }
   },
@@ -190,7 +238,60 @@
     "expected": {
       "activities": ["sprint-planning", "sprint-retrospective-facilitation", "sprint-demo-facilitation", "level-of-effort-estimation", "velocity-calculation", "tracking-sprint-progress", "coaching-team-mates"],
       "deliverables": ["burn-down-chart", "personal-growth-roadmap", "agile-maturity-measurements"],
+      "deliverableEvidence": {
+        "burn-down-chart": "burn down chart",
+        "personal-growth-roadmap": "personal growth roadmap",
+        "agile-maturity-measurements": "agile maturity measurements"
+      },
       "tools": ["zoom", "trello"]
+    }
+  },
+  {
+    "name": "Product Manager (ADR-0049 multi-item demonstrator: roadmapping)",
+    "_note": "ADR-0049 demonstrator. The single phrase 'roadmapping' maps to BOTH the activity product-roadmap-maintenance and the deliverable roadmap. The posting deliberately omits the bare noun 'roadmap' so the deliverable match can only come from the gerund wire. Proves the wire, not generalization.",
+    "title": "Product Manager",
+    "posting": "We need a Product Manager to set product direction. You will spend your weeks roadmapping the next two quarters for the team.",
+    "expected": {
+      "activities": ["product-roadmap-maintenance"],
+      "deliverables": ["roadmap"],
+      "deliverableEvidence": { "roadmap": "roadmapping" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Researcher (ADR-0049 multi-item demonstrator: journey mapping)",
+    "_note": "ADR-0049 demonstrator. 'journey mapping' maps to BOTH the activity customer-experience-mapping and the deliverable user-journey-map. The posting omits the noun 'journey map'. Proves the wire, not generalization.",
+    "title": "UX Researcher",
+    "posting": "As a UX Researcher you will run discovery end to end. A core part of the role is journey mapping how customers move through the product, from first touch to renewal.",
+    "expected": {
+      "activities": ["customer-experience-mapping"],
+      "deliverables": ["user-journey-map"],
+      "deliverableEvidence": { "user-journey-map": "journey mapping" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Designer (ADR-0049 multi-item demonstrator: storyboarding)",
+    "_note": "ADR-0049 demonstrator. 'storyboarding' maps to BOTH the activity storyboarding and the deliverable storyboard. Proves the wire, not generalization.",
+    "title": "UX Designer",
+    "posting": "We are hiring a UX Designer to shape new flows. You will spend time storyboarding how a feature unfolds step by step before any screens are designed.",
+    "expected": {
+      "activities": ["storyboarding"],
+      "deliverables": ["storyboard"],
+      "deliverableEvidence": { "storyboard": "storyboarding" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Designer (ADR-0049 multi-item demonstrator: redlines)",
+    "_note": "ADR-0049 demonstrator. 'redlines' is a direct synonym for design annotations: it maps to BOTH the activity creating-annotations and the deliverable design-annotation. Proves the wire, not generalization.",
+    "title": "UX Designer",
+    "posting": "As a UX Designer you will work hand in hand with engineering. You will produce design redlines so developers build each screen exactly as intended.",
+    "expected": {
+      "activities": ["creating-annotations"],
+      "deliverables": ["design-annotation"],
+      "deliverableEvidence": { "design-annotation": "redlines" },
+      "tools": []
     }
   },
   {
@@ -204,5 +305,19 @@
     "_note": "No 'expected' set. The title is outside the framework, so the decode should leave it unresolved and never guess a function (ADR-0008, 0012).",
     "title": "Data Scientist",
     "posting": "Join us as a Data Scientist to build machine learning models, train and tune neural networks, run large scale experiments, and productionize models with Python, PyTorch, and Spark."
+  },
+  {
+    "name": "Building commissioning Project Manager (NEGATIVE, out of domain)",
+    "_note": "ADR-0047 negative fixture. Borrows words the vocabulary bank matches ('quality assurance', 'requirements', 'maintain the relationship', 'scope of work') but the work is physical building construction, not software or product. After the meaning check, no framework hat should be confirmed.",
+    "negative": true,
+    "title": "Project Manager",
+    "posting": "We are hiring a Project Manager to lead commissioning on large commercial construction sites. You will verify that installed HVAC, electrical, and plumbing systems meet the design intent, run quality assurance inspections on the finished equipment, coordinate the mechanical and electrical subcontractors, maintain the relationship with the building owner, and close out punch lists against the contract scope of work. Field experience with building systems and OSHA safety is required."
+  },
+  {
+    "name": "RV electrical compliance engineer (NEGATIVE, out of domain)",
+    "_note": "ADR-0047 negative fixture. Borrows 'product', 'requirements', and 'quality assurance' but the work is recreational-vehicle electrical hardware, not software. After the meaning check, no framework hat should be confirmed.",
+    "negative": true,
+    "title": "Product Engineer",
+    "posting": "We are hiring an RV Product Development and Compliance Engineer to design the electrical systems in our recreational vehicles. You will lay out wiring harnesses, select 12-volt components, write the engineering requirements for each build, run compliance testing against RVIA and DOT standards, and document quality assurance test results for the production line. Hands-on experience with automotive wiring and bench testing is required."
   }
 ]

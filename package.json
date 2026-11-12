@@ -30,6 +30,8 @@
     "build:snapshot:local": "node pipeline/build-snapshot.mjs --source=local",
     "check:snapshot-integrity": "node pipeline/build-snapshot.mjs --source=local --out=.snapshot-check",
     "check:dependencies": "node scripts/check-dependencies.mjs",
+    "check:fixture-evidence": "node scripts/check-fixture-evidence.mjs",
+    "check:alias-csv-parity": "node scripts/check-alias-csv-parity.mjs",
     "prepare": "node .githooks/install-hooks.mjs"
   },
   "dependencies": {

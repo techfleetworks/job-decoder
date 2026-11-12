@@ -36,3 +36,10 @@ Feature: Decode a job posting into the hats it expects
     Given the title "UX Designer" and a posting with a matching line and an unrelated line
     When the posting is decoded
     Then every line is either matched or unplaced
+
+  @usecase:decode-meaning-confirm @category:adverse @quality:functional @severity:high
+  Scenario: A keyword match the recognizer does not confirm is flagged unconfirmed
+    Given the title "UX Designer" and a posting naming wireframing and user research, with the recognizer confirming only user research
+    When the posting is decoded
+    Then the "Wireframing" match is unconfirmed
+    And the "User Research" match is confirmed
