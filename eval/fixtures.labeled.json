@@ -1,7 +1,7 @@
 [
   {
     "_about": "LABELED STARTER SET for T12 (model selection). Each posting is written in natural hiring language (original text, not a verbatim real posting, to avoid reproducing copyrighted material). 'expected' is the set of framework leaf items a human reader says the posting describes, by slug, independent of what the matcher predicts. Labels are best-judgment ground truth pending Morgan's review. Labeling convention: an activity is labeled when the posting describes DOING the work; a deliverable when it names the ARTIFACT produced; a tool when it is named. Paraphrase is deliberate, so the keyword baseline will miss items the LLM step should catch. See README 'Fixtures'.",
-    "_labeling_rule": "Named-artifact rule (guidance for human labelers, NOT enforced by code): map each posting phrase to EVERY framework deliverable it names or refers to as a noun. A single phrase can carry several deliverables (for example 'annotated designs' -> design-annotation AND high-fidelity-prototypes). Do NOT label a deliverable when only the producing activity is described and no artifact noun is referred to (for example 'call out risks' is the activity analyzing-project-risk, not a risk-analysis deliverable). Borderline cases are a recorded human judgment call. The recognizer already returns multiple items per quote and the scorer counts per slug, so many-deliverables-per-phrase needs no engine change. The eval validates that every expected slug EXISTS in the framework, but never decides what should be labeled.",
+    "_labeling_rule": "Named-artifact rule (guidance for human labelers, NOT enforced by code): map each posting phrase to EVERY framework deliverable it names or refers to as a noun. A single phrase can carry several deliverables (for example 'annotated designs' -> design-annotation AND high-fidelity-prototypes). A gerund or verb form of producing a SPECIFICALLY NAMED SPF deliverable refers to that deliverable too (ADR-0049): 'roadmapping' -> roadmap, 'storyboarding' -> storyboard, 'journey mapping' -> user-journey-map. Do NOT label a deliverable when only the producing activity is described and no named artifact is referred to (for example 'call out risks' is the activity analyzing-project-risk, not a risk-analysis deliverable; 'database design' is the activity, not an entity-relationship-diagram the posting never names). Borderline cases are a recorded human judgment call. The recognizer already returns multiple items per quote and the scorer counts per slug, so many-deliverables-per-phrase needs no engine change. The eval validates that every expected slug EXISTS in the framework, but never decides what should be labeled.",
     "_scope": "A strong-match posting for all eleven covered job functions, plus a title-fit mismatch and a not-covered title (both unscored). Expand with more postings per function before trusting the aggregate numbers; the set is still small, so run-to-run variance is not yet characterized."
   },
   {
@@ -244,6 +244,54 @@
         "agile-maturity-measurements": "agile maturity measurements"
       },
       "tools": ["zoom", "trello"]
+    }
+  },
+  {
+    "name": "Product Manager (ADR-0049 multi-item demonstrator: roadmapping)",
+    "_note": "ADR-0049 demonstrator. The single phrase 'roadmapping' maps to BOTH the activity product-roadmap-maintenance and the deliverable roadmap. The posting deliberately omits the bare noun 'roadmap' so the deliverable match can only come from the gerund wire. Proves the wire, not generalization.",
+    "title": "Product Manager",
+    "posting": "We need a Product Manager to set product direction. You will spend your weeks roadmapping the next two quarters for the team.",
+    "expected": {
+      "activities": ["product-roadmap-maintenance"],
+      "deliverables": ["roadmap"],
+      "deliverableEvidence": { "roadmap": "roadmapping" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Researcher (ADR-0049 multi-item demonstrator: journey mapping)",
+    "_note": "ADR-0049 demonstrator. 'journey mapping' maps to BOTH the activity customer-experience-mapping and the deliverable user-journey-map. The posting omits the noun 'journey map'. Proves the wire, not generalization.",
+    "title": "UX Researcher",
+    "posting": "As a UX Researcher you will run discovery end to end. A core part of the role is journey mapping how customers move through the product, from first touch to renewal.",
+    "expected": {
+      "activities": ["customer-experience-mapping"],
+      "deliverables": ["user-journey-map"],
+      "deliverableEvidence": { "user-journey-map": "journey mapping" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Designer (ADR-0049 multi-item demonstrator: storyboarding)",
+    "_note": "ADR-0049 demonstrator. 'storyboarding' maps to BOTH the activity storyboarding and the deliverable storyboard. Proves the wire, not generalization.",
+    "title": "UX Designer",
+    "posting": "We are hiring a UX Designer to shape new flows. You will spend time storyboarding how a feature unfolds step by step before any screens are designed.",
+    "expected": {
+      "activities": ["storyboarding"],
+      "deliverables": ["storyboard"],
+      "deliverableEvidence": { "storyboard": "storyboarding" },
+      "tools": []
+    }
+  },
+  {
+    "name": "UX Designer (ADR-0049 multi-item demonstrator: redlines)",
+    "_note": "ADR-0049 demonstrator. 'redlines' is a direct synonym for design annotations: it maps to BOTH the activity creating-annotations and the deliverable design-annotation. Proves the wire, not generalization.",
+    "title": "UX Designer",
+    "posting": "As a UX Designer you will work hand in hand with engineering. You will produce design redlines so developers build each screen exactly as intended.",
+    "expected": {
+      "activities": ["creating-annotations"],
+      "deliverables": ["design-annotation"],
+      "deliverableEvidence": { "design-annotation": "redlines" },
+      "tools": []
     }
   },
   {

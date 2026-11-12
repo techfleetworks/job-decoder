@@ -12,7 +12,15 @@
   ],
   "deliverable:roadmap": [
     "roadmap",
-    "product roadmap"
+    "product roadmap",
+    "roadmapping"
+  ],
+  "deliverable:user-story-statements": [
+    "user stories",
+    "writing user stories"
+  ],
+  "deliverable:design-annotation": [
+    "redlines"
   ],
   "activity:collecting-analytics": [
     "analytics",
@@ -319,6 +327,9 @@
   "activity:storyboarding": [
     "storyboarding"
   ],
+  "deliverable:storyboard": [
+    "storyboarding"
+  ],
   "deliverable:product-market-fit-analysis": [
     "product-market fit",
     "pmf"
@@ -410,7 +421,9 @@
   "deliverable:user-journey-map": [
     "journey map",
     "user journey map",
-    "customer journey map"
+    "customer journey map",
+    "journey mapping",
+    "customer journey mapping"
   ],
   "tool:maze-co": [
     "maze"
