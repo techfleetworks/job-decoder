@@ -61,10 +61,10 @@ describe("recognizeMatches", () => {
     const [url, init] = fetchMock.mock.calls[0]!;
     expect(url).toBe("https://openrouter.ai/api/v1/chat/completions");
     const body = parseBody(fetchMock);
-    expect(body.model).toBe("deepseek/deepseek-v4.1-flash-1017");
+    expect(body.model).toBe("deepseek/deepseek-chat-v3-0324");
     expect(body.provider).toEqual({
       data_collection: "deny",
-      only: ["deepinfra"],
+      only: ["gmicloud"],
       allow_fallbacks: false,
     });
     // The key rides in the header, never in the URL or the logged body.

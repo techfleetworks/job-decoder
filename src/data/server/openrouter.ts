@@ -22,8 +22,12 @@ import { buildRecognizerPrompt, parseRecognitions } from "@/domain/decode";
 import type { Match, SnapshotItem } from "@/domain/decode/types";
 
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
-const DEFAULT_MODEL = "deepseek/deepseek-v4.1-flash-1017";
-const DEFAULT_PROVIDERS = "deepinfra";
+// A NON-reasoning instruct model on purpose (ADR-0050): the deepseek *flash* variants are
+// reasoning models (~50s/call), which the 8s budget below aborts, degrading every decode to
+// keyword-only. deepseek-chat-v3-0324 keeps deepseek-family accuracy at ~3-5s. It is served on
+// OpenRouter only by gmicloud (US company) and siliconflow (China, excluded by the ADR-0036 pin).
+const DEFAULT_MODEL = "deepseek/deepseek-chat-v3-0324";
+const DEFAULT_PROVIDERS = "gmicloud";
 // The request path degrades to keyword-only, so the LLM is given a short budget rather than
 // stalling the decode (the repo's 8s recognizer-timeout rule).
 const TIMEOUT_MS = 8000;
