@@ -4,6 +4,7 @@
 - Date: 2026-11-02
 - Deciders: Morgan (mdenner@techfleet.org)
 - Builds on: [ADR-0007](0007-grounded-llm-matching.md) (grounded LLM matching), [ADR-0019](0019-eval-harness-for-model-selection.md) (eval harness).
+- Refined by: [ADR-0050](0050-recognizer-non-reasoning-model-for-interactive-budget.md) (default model/provider updated to deepseek-chat-v3-0324 on gmicloud, 2026-11-13; routing mechanism unchanged).
 
 ## Context
 

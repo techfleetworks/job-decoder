@@ -15,10 +15,10 @@ node eval/run.mjs --no-llm
 
 # keyword + LLM (reads the key from the environment)
 export OPENROUTER_API_KEY=...        # never pass the key on the command line
-node eval/run.mjs                    # default model deepseek/deepseek-v4.1-flash-1017, pinned to US providers
+node eval/run.mjs                    # default model deepseek/deepseek-chat-v3-0324 on gmicloud (US), pinned
 
 # pick a model and the US-based provider allow-list (pinned, no fallback, data collection denied)
-node eval/run.mjs --model deepseek/deepseek-v4.1-flash-1017 --providers deepinfra
+node eval/run.mjs --model deepseek/deepseek-chat-v3-0324 --providers gmicloud
 
 # compare models on the same fixtures
 node eval/run.mjs --model anthropic/claude-3.5-haiku
@@ -112,7 +112,7 @@ Two fixture files ship:
 node eval/run.mjs --no-llm --fixtures eval/fixtures.labeled.json
 
 # compare a model against the same labels
-node eval/run.mjs --fixtures eval/fixtures.labeled.json --model deepseek/deepseek-v4.1-flash-1017
+node eval/run.mjs --fixtures eval/fixtures.labeled.json --model deepseek/deepseek-chat-v3-0324 --providers gmicloud
 ```
 
 **Labeling convention** (so the labels are repeatable, not a vibe): the postings are
@@ -140,7 +140,7 @@ lowering the score.
   fake item or change the result.
 - The endpoint is fixed, so there is no user-controlled URL (no SSRF).
 - The request is pinned to a US-based provider allow-list (`--providers` or
-  `OPENROUTER_PROVIDERS`, default `deepinfra`) with no fallback, and data collection is
+  `OPENROUTER_PROVIDERS`, default `gmicloud`) with no fallback, and data collection is
   always denied, so the posting only reaches a US-based provider that will not retain or
   train on it, or the call fails closed to keyword-only. Honest limit: OpenRouter does not
   expose a provider's datacenter country, so this pins to US-based provider companies, not a
